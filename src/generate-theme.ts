@@ -51,6 +51,7 @@ const JACK_FONT_PALETTE = {
   aqua: "oklch(82.40% 0.1120 205.00)",
   blue: "oklch(81.20% 0.1220 242.00)",
   violet: "oklch(82.80% 0.1100 292.00)",
+  purple: "oklch(82.40% 0.1180 318.00)",
   rose: "oklch(77.20% 0.1550 10.00)",
   red: "oklch(75.20% 0.1750 28.00)",
   coral: "oklch(82.40% 0.1420 42.00)"
@@ -577,7 +578,7 @@ const createTokenColors = (C: Palette): TokenRule[] => [
   token("Booleans and nullish values", ["constant.language.boolean", "constant.language.null", "constant.language.undefined"], C.amber),
   token("Functions", ["entity.name.function", "support.function", "meta.function-call", "variable.function", "support.function.console"], C.blue),
   token("Methods", ["entity.name.function.member", "support.function.dom", "meta.method-call"], C.blue),
-  token("Classes and constructors", ["entity.name.type.class", "entity.name.class", "support.class", "support.type"], C.blue),
+  token("Classes and constructors", ["entity.name.type.class", "entity.name.class", "support.class", "support.type"], C.purple),
   token("Interfaces, aliases, and type parameters", [
     "entity.name.type.interface",
     "entity.name.type.alias",
@@ -587,7 +588,7 @@ const createTokenColors = (C: Palette): TokenRule[] => [
     "support.type.primitive",
     "meta.type.parameters",
     "meta.type.annotation"
-  ], C.blue),
+  ], C.purple),
   token("Object keys and properties", [
     "meta.object-literal.key",
     "support.type.property-name",
@@ -618,12 +619,12 @@ const createTokenColors = (C: Palette): TokenRule[] => [
 
 const createSemanticTokenColors = (C: Palette): Theme["semanticTokenColors"] => ({
   namespace: C.blue,
-  type: C.blue,
-  class: C.blue,
+  type: C.purple,
+  class: C.purple,
   enum: C.blue,
-  interface: C.blue,
-  struct: C.blue,
-  typeParameter: C.blue,
+  interface: C.purple,
+  struct: C.purple,
+  typeParameter: C.purple,
   parameter: C.text,
   variable: C.text,
   property: C.text,
@@ -646,9 +647,9 @@ const createSemanticTokenColors = (C: Palette): Theme["semanticTokenColors"] => 
   "parameter.declaration": C.text,
   "function.declaration": C.blue,
   "method.declaration": C.blue,
-  "class.declaration": C.blue,
-  "interface.declaration": C.blue,
-  "type.declaration": C.blue,
+  "class.declaration": C.purple,
+  "interface.declaration": C.purple,
+  "type.declaration": C.purple,
   "enum.declaration": C.blue,
   "*.deprecated": C.faint
 });

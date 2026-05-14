@@ -549,7 +549,7 @@
         "support.type"
       ],
       "settings": {
-        "foreground": "#75cbff"
+        "foreground": "#e6adf7"
       }
     },
     {
@@ -565,7 +565,7 @@
         "meta.type.annotation"
       ],
       "settings": {
-        "foreground": "#75cbff"
+        "foreground": "#e6adf7"
       }
     },
     {
@@ -768,12 +768,12 @@
   ],
   "semanticTokenColors": {
     "namespace": "#75cbff",
-    "type": "#75cbff",
-    "class": "#75cbff",
+    "type": "#e6adf7",
+    "class": "#e6adf7",
     "enum": "#75cbff",
-    "interface": "#75cbff",
-    "struct": "#75cbff",
-    "typeParameter": "#75cbff",
+    "interface": "#e6adf7",
+    "struct": "#e6adf7",
+    "typeParameter": "#e6adf7",
     "parameter": "#d7d7d7",
     "variable": "#d7d7d7",
     "property": "#d7d7d7",
@@ -796,9 +796,9 @@
     "parameter.declaration": "#d7d7d7",
     "function.declaration": "#75cbff",
     "method.declaration": "#75cbff",
-    "class.declaration": "#75cbff",
-    "interface.declaration": "#75cbff",
-    "type.declaration": "#75cbff",
+    "class.declaration": "#e6adf7",
+    "interface.declaration": "#e6adf7",
+    "type.declaration": "#e6adf7",
     "enum.declaration": "#75cbff",
     "*.deprecated": "#747474"
   }

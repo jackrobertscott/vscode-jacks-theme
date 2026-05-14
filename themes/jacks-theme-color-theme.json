@@ -684,7 +684,7 @@
         "entity.name.section.markdown"
       ],
       "settings": {
-        "foreground": "#d2c58d"
+        "foreground": "#fdbd63"
       }
     },
     {
@@ -741,7 +741,7 @@
         "markup.changed"
       ],
       "settings": {
-        "foreground": "#d2c58d"
+        "foreground": "#fdbd63"
       }
     },
     {
@@ -789,9 +789,9 @@
     "number": "#d2c58d",
     "regexp": "#99d49a",
     "operator": "#9f9f9f",
-    "decorator": "#dbb0ee",
-    "variable.readonly": "#d2c58d",
-    "property.readonly": "#d2c58d",
+    "decorator": "#fdbd63",
+    "variable.readonly": "#d7d7d7",
+    "property.readonly": "#d7d7d7",
     "property.declaration": "#d7d7d7",
     "parameter.declaration": "#d2c58d",
     "function.declaration": "#7ac9fc",
@@ -799,7 +799,7 @@
     "class.declaration": "#dbb0ee",
     "interface.declaration": "#dbb0ee",
     "type.declaration": "#dbb0ee",
-    "enum.declaration": "#dbb0ee",
+    "enum.declaration": "#fdbd63",
     "*.deprecated": "#747474"
   }
 }

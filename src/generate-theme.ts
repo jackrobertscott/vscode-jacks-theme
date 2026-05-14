@@ -783,7 +783,7 @@ const createTokenColors = (C: Palette): TokenRule[] => [
   token(
     "Markdown headings",
     ["markup.heading", "entity.name.section.markdown"],
-    C.sand,
+    C.ember,
   ),
   token(
     "Markdown links",
@@ -802,7 +802,7 @@ const createTokenColors = (C: Palette): TokenRule[] => [
     ["markup.deleted", "meta.diff.header.from-file"],
     C.clay,
   ),
-  token("Changed content", ["markup.changed"], C.sand),
+  token("Changed content", ["markup.changed"], C.ember),
   token("Invalid", ["invalid", "invalid.illegal"], C.clay),
   token(
     "Punctuation",
@@ -836,9 +836,9 @@ const createSemanticTokenColors = (
   number: C.sand,
   regexp: C.moss,
   operator: C.muted,
-  decorator: C.plum,
-  "variable.readonly": C.sand,
-  "property.readonly": C.sand,
+  decorator: C.ember,
+  "variable.readonly": C.text,
+  "property.readonly": C.text,
   "property.declaration": C.text,
   "parameter.declaration": C.sand,
   "function.declaration": C.sky,
@@ -846,7 +846,7 @@ const createSemanticTokenColors = (
   "class.declaration": C.plum,
   "interface.declaration": C.plum,
   "type.declaration": C.plum,
-  "enum.declaration": C.plum,
+  "enum.declaration": C.ember,
   "*.deprecated": C.faint,
 });
 

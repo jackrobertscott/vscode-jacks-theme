@@ -38,14 +38,16 @@ const JACK_COLOR_PALETTE = {
   textMuted: "oklch(64.01% 0 0)",
   textFaint: "oklch(48.55% 0 0)",
 
-  amber: "oklch(78.40% 0.1601 63.27)",
-  gold: "oklch(85.35% 0.1306 96.95)",
-  sage: "oklch(75.82% 0.1056 126.55)",
-  sageMuted: "oklch(67.70% 0.0735 140.49)",
-  red: "oklch(66.72% 0.1837 22.01)",
-  coral: "oklch(73.50% 0.1683 40.55)",
-  blue: "oklch(74.05% 0.0844 218.77)",
-  violet: "oklch(75.33% 0.1123 309.21)"
+  amber: "oklch(79.40% 0.1770 62.00)",
+  gold: "oklch(86.20% 0.1450 94.00)",
+  sage: "oklch(78.00% 0.1450 143.00)",
+  sageMuted: "oklch(67.70% 0.0860 144.00)",
+  aqua: "oklch(80.30% 0.1280 184.00)",
+  blue: "oklch(76.80% 0.1280 224.00)",
+  violet: "oklch(77.80% 0.1480 303.00)",
+  rose: "oklch(76.30% 0.1650 348.00)",
+  red: "oklch(67.80% 0.2050 24.00)",
+  coral: "oklch(74.80% 0.1900 42.00)"
 } as const satisfies Record<string, Oklch>;
 
 const JACK_ALPHA_PALETTE = {
@@ -314,9 +316,9 @@ const createWorkbenchColors = (C: Palette, A: AlphaPalette): Theme["colors"] => 
   "editorBracketHighlight.foreground1": C.amber,
   "editorBracketHighlight.foreground2": C.gold,
   "editorBracketHighlight.foreground3": C.sage,
-  "editorBracketHighlight.foreground4": C.blue,
+  "editorBracketHighlight.foreground4": C.aqua,
   "editorBracketHighlight.foreground5": C.violet,
-  "editorBracketHighlight.foreground6": C.coral,
+  "editorBracketHighlight.foreground6": C.blue,
   "editorBracketHighlight.unexpectedBracket.foreground": C.red,
   "editorBracketPairGuide.background1": withAlpha(C.textFaint, A.a16),
   "editorBracketPairGuide.activeBackground1": withAlpha(C.amber, A.a48),
@@ -379,13 +381,13 @@ const createWorkbenchColors = (C: Palette, A: AlphaPalette): Theme["colors"] => 
   "terminal.ansiBlue": C.blue,
   "terminal.ansiBrightBlack": C.textFaint,
   "terminal.ansiBrightBlue": C.blue,
-  "terminal.ansiBrightCyan": C.sage,
+  "terminal.ansiBrightCyan": C.aqua,
   "terminal.ansiBrightGreen": C.sage,
   "terminal.ansiBrightMagenta": C.violet,
   "terminal.ansiBrightRed": C.coral,
   "terminal.ansiBrightWhite": C.textBright,
   "terminal.ansiBrightYellow": C.gold,
-  "terminal.ansiCyan": C.blue,
+  "terminal.ansiCyan": C.aqua,
   "terminal.ansiGreen": C.sage,
   "terminal.ansiMagenta": C.violet,
   "terminal.ansiRed": C.red,
@@ -547,13 +549,13 @@ const createTokenColors = (C: Palette): TokenRule[] => [
   token("Keywords and control flow", ["keyword", "keyword.control", "keyword.operator.expression", "storage.modifier"], C.amber),
   token("Imports and exports", ["keyword.control.import", "keyword.control.export", "storage.modifier.async", "keyword.control.from"], C.amber),
   token("Storage and declarations", ["storage.type", "storage.type.function", "storage.type.class", "storage.type.interface", "storage.type.type"], C.gold),
-  token("Operators", ["keyword.operator", "punctuation.accessor", "punctuation.separator.key-value", "keyword.operator.type"], C.amber),
+  token("Operators", ["keyword.operator", "punctuation.accessor", "punctuation.separator.key-value", "keyword.operator.type"], C.coral),
   token("Strings", ["string", "constant.other.symbol"], C.sage),
-  token("Template strings", ["string.template", "punctuation.definition.template-expression"], C.sage),
-  token("Regular expressions", ["string.regexp", "constant.character.escape"], C.sage),
+  token("Template strings", ["string.template", "punctuation.definition.template-expression"], C.aqua),
+  token("Regular expressions", ["string.regexp", "constant.character.escape"], C.rose),
   token("Numbers and constants", ["constant.numeric", "constant.language", "constant.character", "variable.other.constant", "constant.other.enum"], C.coral),
-  token("Booleans and nullish values", ["constant.language.boolean", "constant.language.null", "constant.language.undefined"], C.coral),
-  token("Functions", ["entity.name.function", "support.function", "meta.function-call", "variable.function", "support.function.console"], C.textBright),
+  token("Booleans and nullish values", ["constant.language.boolean", "constant.language.null", "constant.language.undefined"], C.rose),
+  token("Functions", ["entity.name.function", "support.function", "meta.function-call", "variable.function", "support.function.console"], C.aqua),
   token("Methods", ["entity.name.function.member", "support.function.dom", "meta.method-call"], C.blue),
   token("Classes and constructors", ["entity.name.type.class", "entity.name.class", "support.class", "support.type"], C.gold),
   token("Interfaces, aliases, and type parameters", [
@@ -565,7 +567,7 @@ const createTokenColors = (C: Palette): TokenRule[] => [
     "support.type.primitive",
     "meta.type.parameters",
     "meta.type.annotation"
-  ], C.amber),
+  ], C.violet),
   token("Object keys and properties", [
     "meta.object-literal.key",
     "support.type.property-name",
@@ -574,17 +576,17 @@ const createTokenColors = (C: Palette): TokenRule[] => [
     "meta.property.object",
     "support.variable.property"
   ], C.blue),
-  token("Parameters", ["variable.parameter", "meta.parameters", "entity.name.variable.parameter"], C.violet),
+  token("Parameters", ["variable.parameter", "meta.parameters", "entity.name.variable.parameter"], C.rose),
   token("Variables", ["variable", "variable.other.readwrite", "entity.name.variable", "variable.language.this"], C.text),
   token("Decorators and annotations", ["meta.decorator", "entity.name.function.decorator", "punctuation.decorator"], C.gold),
   token("JSX components", ["entity.name.tag.tsx", "support.class.component.tsx"], C.gold),
-  token("JSX attributes", ["entity.other.attribute-name"], C.amber),
+  token("JSX attributes", ["entity.other.attribute-name"], C.aqua),
   token("Tag punctuation", ["punctuation.definition.tag", "punctuation.definition.tag.begin", "punctuation.definition.tag.end"], C.textMuted),
   token("HTML and XML tags", ["entity.name.tag", "meta.tag"], C.gold),
-  token("CSS selectors", ["entity.other.attribute-name.class.css", "entity.other.attribute-name.id.css", "entity.name.tag.css"], C.gold),
+  token("CSS selectors", ["entity.other.attribute-name.class.css", "entity.other.attribute-name.id.css", "entity.name.tag.css"], C.violet),
   token("CSS properties", ["support.type.property-name.css", "support.type.vendored.property-name.css"], C.text),
   token("Markdown headings", ["markup.heading", "entity.name.section.markdown"], C.amber),
-  token("Markdown links", ["markup.underline.link", "string.other.link"], C.amber),
+  token("Markdown links", ["markup.underline.link", "string.other.link"], C.blue),
   token("Markup emphasis", ["markup.italic"], C.text),
   token("Markup bold", ["markup.bold"], C.gold),
   token("Inserted content", ["markup.inserted", "meta.diff.header.to-file"], C.sage),
@@ -595,19 +597,19 @@ const createTokenColors = (C: Palette): TokenRule[] => [
 ];
 
 const createSemanticTokenColors = (C: Palette): Theme["semanticTokenColors"] => ({
-  namespace: C.amber,
-  type: C.amber,
+  namespace: C.violet,
+  type: C.violet,
   class: C.gold,
   enum: C.gold,
-  interface: C.amber,
+  interface: C.violet,
   struct: C.gold,
-  typeParameter: C.amber,
-  parameter: C.violet,
+  typeParameter: C.violet,
+  parameter: C.rose,
   variable: C.text,
   property: C.blue,
   enumMember: C.coral,
-  event: C.violet,
-  function: C.textBright,
+  event: C.rose,
+  function: C.aqua,
   method: C.blue,
   macro: C.gold,
   keyword: C.amber,
@@ -615,18 +617,18 @@ const createSemanticTokenColors = (C: Palette): Theme["semanticTokenColors"] => 
   comment: C.sageMuted,
   string: C.sage,
   number: C.coral,
-  regexp: C.sage,
-  operator: C.amber,
+  regexp: C.rose,
+  operator: C.coral,
   decorator: C.gold,
   "variable.readonly": C.amber,
   "property.readonly": C.amber,
   "property.declaration": C.blue,
-  "parameter.declaration": C.violet,
-  "function.declaration": C.textBright,
+  "parameter.declaration": C.rose,
+  "function.declaration": C.aqua,
   "method.declaration": C.blue,
   "class.declaration": C.gold,
-  "interface.declaration": C.amber,
-  "type.declaration": C.amber,
+  "interface.declaration": C.violet,
+  "type.declaration": C.violet,
   "enum.declaration": C.gold,
   "*.deprecated": C.textFaint
 });
@@ -637,7 +639,39 @@ const assertHex = (value: string, path: string) => {
   }
 };
 
+const hexToRgb = (value: Hex): { red: number; green: number; blue: number } => {
+  const rgb = stripHash(value).slice(0, 6);
+
+  return {
+    red: Number.parseInt(rgb.slice(0, 2), 16) / 255,
+    green: Number.parseInt(rgb.slice(2, 4), 16) / 255,
+    blue: Number.parseInt(rgb.slice(4, 6), 16) / 255
+  };
+};
+
+const srgbToRelativeLuminance = (value: number) =>
+  value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+
+const relativeLuminance = (value: Hex) => {
+  const { red, green, blue } = hexToRgb(value);
+
+  return 0.2126 * srgbToRelativeLuminance(red)
+    + 0.7152 * srgbToRelativeLuminance(green)
+    + 0.0722 * srgbToRelativeLuminance(blue);
+};
+
+const contrastRatio = (foreground: Hex, background: Hex) => {
+  const foregroundLuminance = relativeLuminance(foreground);
+  const backgroundLuminance = relativeLuminance(background);
+  const light = Math.max(foregroundLuminance, backgroundLuminance);
+  const dark = Math.min(foregroundLuminance, backgroundLuminance);
+
+  return (light + 0.05) / (dark + 0.05);
+};
+
 const colorSettingKeys = new Set(["foreground", "background"]);
+const minimumEditorTextContrast = 4.5;
+const decorativeSemanticTokens = new Set(["*.deprecated"]);
 
 const assertThemeIntegrity = (theme: Theme, palette: Palette) => {
   for (const [id, value] of Object.entries(theme.colors)) assertHex(value, `colors.${id}`);
@@ -649,8 +683,22 @@ const assertThemeIntegrity = (theme: Theme, palette: Palette) => {
     }
     if (rule.settings.foreground) assertHex(rule.settings.foreground, `tokenColors[${index}].foreground`);
     if (rule.settings.background) assertHex(rule.settings.background, `tokenColors[${index}].background`);
+    if (rule.settings.foreground) {
+      const ratio = contrastRatio(rule.settings.foreground, palette.editor);
+      if (ratio < minimumEditorTextContrast) {
+        throw new Error(`tokenColors[${index}] "${rule.name}" contrast ${ratio.toFixed(2)} is below ${minimumEditorTextContrast}`);
+      }
+    }
   });
-  for (const [id, value] of Object.entries(theme.semanticTokenColors)) assertHex(value, `semanticTokenColors.${id}`);
+  for (const [id, value] of Object.entries(theme.semanticTokenColors)) {
+    assertHex(value, `semanticTokenColors.${id}`);
+    if (decorativeSemanticTokens.has(id)) continue;
+
+    const ratio = contrastRatio(value, palette.editor);
+    if (ratio < minimumEditorTextContrast) {
+      throw new Error(`semanticTokenColors.${id} contrast ${ratio.toFixed(2)} is below ${minimumEditorTextContrast}`);
+    }
+  }
 
   const editorSurfaceDrift = editorSurfaceIds.filter((id) => theme.colors[id] !== palette.editor);
   const editorUnderlayDrift = editorUnderlayIds.filter((id) => theme.colors[id] !== palette.editorUnderlay);

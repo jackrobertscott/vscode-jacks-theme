@@ -15,3 +15,4 @@
 - do commit at meaningful milestones of code, such as after a coherent source change, after generated output has been refreshed, and after verification passes.
 - do add user instructions to this file when the user says to remember something.
 - do keep palette property names to single words only.
+- do install the theme into the user's local VS Code after making or preparing changes to the extension.

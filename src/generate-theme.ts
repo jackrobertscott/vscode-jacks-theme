@@ -35,7 +35,7 @@ const JACK_BACKGROUND_PALETTE = {
   accent: "oklch(35.40% 0.0680 72.00)",
   success: "oklch(28.80% 0.0580 148.00)",
   danger: "oklch(28.50% 0.0620 28.00)",
-  info: "oklch(27.20% 0.0450 235.00)"
+  info: "oklch(27.20% 0.0450 235.00)",
 } as const satisfies Record<string, Oklch>;
 
 const JACK_FONT_PALETTE = {
@@ -54,17 +54,16 @@ const JACK_FONT_PALETTE = {
   purple: "oklch(82.40% 0.1180 318.00)",
   rose: "oklch(77.20% 0.1550 10.00)",
   red: "oklch(75.20% 0.1750 28.00)",
-  coral: "oklch(82.40% 0.1420 42.00)"
+  coral: "oklch(82.40% 0.1420 42.00)",
 } as const satisfies Record<string, Oklch>;
 
 const JACK_ALPHA_PALETTE = {
   none: 0,
   shadow: 0.22,
-  minimap: 0.22
+  minimap: 0.22,
 } as const;
 
 type AlphaPalette = typeof JACK_ALPHA_PALETTE;
-type Alpha = AlphaPalette[keyof AlphaPalette];
 type ColorPalette = typeof JACK_BACKGROUND_PALETTE & typeof JACK_FONT_PALETTE;
 type Palette = Record<keyof ColorPalette, Hex> & {
   shadow: Hex;
@@ -74,20 +73,26 @@ type Palette = Record<keyof ColorPalette, Hex> & {
 
 const clamp01 = (value: number) => Math.max(0, Math.min(1, value));
 const stripHash = (value: Hex) => value.slice(1);
-const toByte = (value: number) => Math.round(clamp01(value) * 255)
-  .toString(16)
-  .padStart(2, "0");
-const withAlpha = (value: Hex, opacity: Alpha): Hex => `#${stripHash(value).slice(0, 6)}${toByte(opacity)}`;
-const keys = (ids: readonly string[], value: Hex): Record<string, Hex> => Object.fromEntries(ids.map((id) => [id, value]));
+const toByte = (value: number) =>
+  Math.round(clamp01(value) * 255)
+    .toString(16)
+    .padStart(2, "0");
+const withAlpha = (value: Hex, opacity: number): Hex =>
+  `#${stripHash(value).slice(0, 6)}${toByte(opacity)}`;
+const keys = (ids: readonly string[], value: Hex): Record<string, Hex> =>
+  Object.fromEntries(ids.map((id) => [id, value]));
 
 const parseOklch = (value: Oklch): { l: number; c: number; h: number } => {
-  const match = /^oklch\((\d+(?:\.\d+)?)%\s+(\d+(?:\.\d+)?)\s+(\d+(?:\.\d+)?)\)$/.exec(value);
+  const match =
+    /^oklch\((\d+(?:\.\d+)?)%\s+(\d+(?:\.\d+)?)\s+(\d+(?:\.\d+)?)\)$/.exec(
+      value,
+    );
   if (!match) throw new Error(`Invalid OKLCH color: ${value}`);
 
   return {
     l: Number(match[1]) / 100,
     c: Number(match[2]),
-    h: Number(match[3])
+    h: Number(match[3]),
   };
 };
 
@@ -108,16 +113,22 @@ const oklchToHex = (value: Oklch): Hex => {
   const mCone = mPrime ** 3;
   const sCone = sPrime ** 3;
 
-  const red = linearToSrgb(4.0767416621 * lCone - 3.3077115913 * mCone + 0.2309699292 * sCone);
-  const green = linearToSrgb(-1.2684380046 * lCone + 2.6097574011 * mCone - 0.3413193965 * sCone);
-  const blue = linearToSrgb(-0.0041960863 * lCone - 0.7034186147 * mCone + 1.707614701 * sCone);
+  const red = linearToSrgb(
+    4.0767416621 * lCone - 3.3077115913 * mCone + 0.2309699292 * sCone,
+  );
+  const green = linearToSrgb(
+    -1.2684380046 * lCone + 2.6097574011 * mCone - 0.3413193965 * sCone,
+  );
+  const blue = linearToSrgb(
+    -0.0041960863 * lCone - 0.7034186147 * mCone + 1.707614701 * sCone,
+  );
 
   return `#${toByte(red)}${toByte(green)}${toByte(blue)}`;
 };
 
 const createPalette = (colors: ColorPalette, alphas: AlphaPalette): Palette => {
   const converted = Object.fromEntries(
-    Object.entries(colors).map(([id, value]) => [id, oklchToHex(value)])
+    Object.entries(colors).map(([id, value]) => [id, oklchToHex(value)]),
   ) as Record<keyof ColorPalette, Hex>;
   const transparent = withAlpha(converted.black, alphas.none);
 
@@ -125,7 +136,7 @@ const createPalette = (colors: ColorPalette, alphas: AlphaPalette): Palette => {
     ...converted,
     shadow: withAlpha(converted.black, alphas.shadow),
     minimap: withAlpha(converted.black, alphas.minimap),
-    transparent
+    transparent,
   };
 };
 
@@ -144,7 +155,7 @@ const editorSurfaceIds = [
   "peekViewEditorStickyScroll.background",
   "peekViewEditorStickyScrollGutter.background",
   "peekViewResult.background",
-  "walkThrough.embeddedEditorBackground"
+  "walkThrough.embeddedEditorBackground",
 ] as const;
 
 // These surfaces appear below the editor's rendered line layer in VS Code's compositor.
@@ -157,7 +168,7 @@ const editorUnderlayIds = [
   "outputView.background",
   "terminal.background",
   "terminalStickyScroll.background",
-  "welcomePage.background"
+  "welcomePage.background",
 ] as const;
 
 const transparentEditorOverlayIds = [
@@ -171,384 +182,393 @@ const transparentEditorOverlayIds = [
   "editor.wordHighlightStrongBorder",
   "editor.wordHighlightTextBorder",
   "scrollbar.background",
-  "scrollbar.shadow"
+  "scrollbar.shadow",
 ] as const;
 
-const createWorkbenchColors = (C: Palette): Theme["colors"] => ({
-  ...keys(editorSurfaceIds, C.editor),
-  ...keys(editorUnderlayIds, C.editor),
-  ...keys(transparentEditorOverlayIds, C.transparent),
+const createWorkbenchColors = (C: Palette): Theme["colors"] => {
+  const subtle = withAlpha(C.hover, 0.72);
+  const medium = withAlpha(C.active, 0.72);
+  const accent = withAlpha(C.accent, 0.76);
+  const gold = withAlpha(C.gold, 0.76);
+  const success = withAlpha(C.success, 0.74);
+  const danger = withAlpha(C.danger, 0.74);
 
-  focusBorder: C.transparent,
-  foreground: C.text,
-  disabledForeground: C.faint,
-  descriptionForeground: C.muted,
-  errorForeground: C.red,
-  "icon.foreground": C.muted,
-  "selection.background": C.accent,
-  "sash.hoverBorder": C.transparent,
-  "widget.shadow": C.shadow,
+  return {
+    ...keys(editorSurfaceIds, C.editor),
+    ...keys(editorUnderlayIds, C.editor),
+    ...keys(transparentEditorOverlayIds, C.transparent),
 
-  "window.activeBorder": C.transparent,
-  "window.inactiveBorder": C.transparent,
+    focusBorder: C.transparent,
+    foreground: C.text,
+    disabledForeground: C.faint,
+    descriptionForeground: C.muted,
+    errorForeground: C.red,
+    "icon.foreground": C.muted,
+    "selection.background": C.accent,
+    "sash.hoverBorder": C.transparent,
+    "widget.shadow": C.shadow,
 
-  "textBlockQuote.background": C.panel,
-  "textBlockQuote.border": C.transparent,
-  "textCodeBlock.background": C.popup,
-  "textLink.activeForeground": C.gold,
-  "textLink.foreground": C.amber,
-  "textPreformat.background": C.popup,
-  "textPreformat.foreground": C.text,
-  "textSeparator.foreground": C.transparent,
+    "window.activeBorder": C.transparent,
+    "window.inactiveBorder": C.transparent,
 
-  "toolbar.hoverBackground": C.hover,
-  "toolbar.hoverOutline": C.transparent,
-  "toolbar.activeBackground": C.active,
+    "textBlockQuote.background": C.panel,
+    "textBlockQuote.border": C.transparent,
+    "textCodeBlock.background": C.popup,
+    "textLink.activeForeground": C.gold,
+    "textLink.foreground": C.amber,
+    "textPreformat.background": C.popup,
+    "textPreformat.foreground": C.text,
+    "textSeparator.foreground": C.transparent,
 
-  "button.background": C.amber,
-  "button.foreground": C.editor,
-  "button.hoverBackground": C.amber,
-  "button.secondaryBackground": C.active,
-  "button.secondaryForeground": C.bright,
-  "button.secondaryHoverBackground": C.hover,
-  "checkbox.background": C.panel,
-  "checkbox.border": C.transparent,
-  "checkbox.foreground": C.amber,
-  "dropdown.background": C.popup,
-  "dropdown.border": C.transparent,
-  "dropdown.foreground": C.text,
-  "dropdown.listBackground": C.popup,
-  "input.background": C.panel,
-  "input.border": C.transparent,
-  "input.foreground": C.bright,
-  "input.placeholderForeground": C.faint,
-  "inputOption.activeBackground": C.active,
-  "inputOption.activeBorder": C.transparent,
-  "inputOption.activeForeground": C.bright,
-  "inputOption.hoverBackground": C.hover,
-  "inputValidation.errorBackground": C.danger,
-  "inputValidation.errorBorder": C.transparent,
-  "inputValidation.infoBackground": C.info,
-  "inputValidation.infoBorder": C.transparent,
-  "inputValidation.warningBackground": C.accent,
-  "inputValidation.warningBorder": C.transparent,
+    "toolbar.hoverBackground": C.hover,
+    "toolbar.hoverOutline": C.transparent,
+    "toolbar.activeBackground": C.active,
 
-  "badge.background": C.active,
-  "badge.foreground": C.bright,
-  "progressBar.background": C.amber,
+    "button.background": C.amber,
+    "button.foreground": C.editor,
+    "button.hoverBackground": C.amber,
+    "button.secondaryBackground": C.active,
+    "button.secondaryForeground": C.bright,
+    "button.secondaryHoverBackground": C.hover,
+    "checkbox.background": C.panel,
+    "checkbox.border": C.transparent,
+    "checkbox.foreground": C.amber,
+    "dropdown.background": C.popup,
+    "dropdown.border": C.transparent,
+    "dropdown.foreground": C.text,
+    "dropdown.listBackground": C.popup,
+    "input.background": C.panel,
+    "input.border": C.transparent,
+    "input.foreground": C.bright,
+    "input.placeholderForeground": C.faint,
+    "inputOption.activeBackground": C.active,
+    "inputOption.activeBorder": C.transparent,
+    "inputOption.activeForeground": C.bright,
+    "inputOption.hoverBackground": C.hover,
+    "inputValidation.errorBackground": C.danger,
+    "inputValidation.errorBorder": C.transparent,
+    "inputValidation.infoBackground": C.info,
+    "inputValidation.infoBorder": C.transparent,
+    "inputValidation.warningBackground": C.accent,
+    "inputValidation.warningBorder": C.transparent,
 
-  "list.activeSelectionBackground": C.active,
-  "list.activeSelectionForeground": C.bright,
-  "list.dropBackground": C.info,
-  "list.errorForeground": C.red,
-  "list.focusBackground": C.active,
-  "list.focusForeground": C.bright,
-  "list.highlightForeground": C.amber,
-  "list.hoverBackground": C.hover,
-  "list.inactiveFocusBackground": C.active,
-  "list.inactiveSelectionBackground": C.active,
-  "list.invalidItemForeground": C.coral,
-  "list.warningForeground": C.gold,
+    "badge.background": C.active,
+    "badge.foreground": C.bright,
+    "progressBar.background": C.amber,
 
-  "activityBar.background": C.editor,
-  "activityBar.border": C.transparent,
-  "activityBar.foreground": C.text,
-  "activityBar.inactiveForeground": C.faint,
-  "activityBar.activeBackground": C.hover,
-  "activityBar.activeBorder": C.transparent,
-  "activityBarBadge.background": C.amber,
-  "activityBarBadge.foreground": C.editor,
-  "activityBarTop.background": C.editor,
-  "activityBarTop.foreground": C.text,
-  "activityBarTop.inactiveForeground": C.faint,
-  "activityBarTop.activeBackground": C.hover,
-  "activityBarTop.activeBorder": C.transparent,
+    "list.activeSelectionBackground": C.active,
+    "list.activeSelectionForeground": C.bright,
+    "list.dropBackground": C.info,
+    "list.errorForeground": C.red,
+    "list.focusBackground": C.active,
+    "list.focusForeground": C.bright,
+    "list.highlightForeground": C.amber,
+    "list.hoverBackground": C.hover,
+    "list.inactiveFocusBackground": C.active,
+    "list.inactiveSelectionBackground": C.active,
+    "list.invalidItemForeground": C.coral,
+    "list.warningForeground": C.gold,
 
-  "sideBar.background": C.editor,
-  "sideBar.border": C.transparent,
-  "sideBar.foreground": C.text,
-  "sideBarTitle.background": C.editor,
-  "sideBarTitle.foreground": C.bright,
-  "sideBarSectionHeader.background": C.panel,
-  "sideBarSectionHeader.border": C.transparent,
-  "sideBarSectionHeader.foreground": C.text,
-  "sideBarStickyScroll.background": C.editor,
+    "activityBar.background": C.editor,
+    "activityBar.border": C.transparent,
+    "activityBar.foreground": C.text,
+    "activityBar.inactiveForeground": C.faint,
+    "activityBar.activeBackground": C.hover,
+    "activityBar.activeBorder": C.transparent,
+    "activityBarBadge.background": C.amber,
+    "activityBarBadge.foreground": C.editor,
+    "activityBarTop.background": C.editor,
+    "activityBarTop.foreground": C.text,
+    "activityBarTop.inactiveForeground": C.faint,
+    "activityBarTop.activeBackground": C.hover,
+    "activityBarTop.activeBorder": C.transparent,
 
-  "editorGroup.border": C.transparent,
-  "editorGroup.dropBackground": C.info,
-  "editorGroupHeader.tabsBorder": C.transparent,
-  "editorGroupHeader.border": C.transparent,
-  "tab.activeBackground": C.editor,
-  "tab.activeBorder": C.transparent,
-  "tab.activeBorderTop": C.transparent,
-  "tab.activeForeground": C.bright,
-  "tab.border": C.transparent,
-  "tab.hoverBackground": C.hover,
-  "tab.hoverForeground": C.bright,
-  "tab.inactiveBackground": C.editor,
-  "tab.inactiveForeground": C.faint,
-  "tab.unfocusedActiveForeground": C.text,
-  "tab.unfocusedInactiveForeground": C.faint,
+    "sideBar.background": C.editor,
+    "sideBar.border": C.transparent,
+    "sideBar.foreground": C.text,
+    "sideBarTitle.background": C.editor,
+    "sideBarTitle.foreground": C.bright,
+    "sideBarSectionHeader.background": C.panel,
+    "sideBarSectionHeader.border": C.transparent,
+    "sideBarSectionHeader.foreground": C.text,
+    "sideBarStickyScroll.background": C.editor,
 
-  "editor.foreground": C.text,
-  "editorLineNumber.foreground": C.faint,
-  "editorLineNumber.activeForeground": C.muted,
-  "editorLineNumber.dimmedForeground": C.faint,
-  "editorCursor.background": C.editor,
-  "editorCursor.foreground": C.amber,
-  "editor.selectionBackground": C.accent,
-  "editor.selectionForeground": C.bright,
-  "editor.selectionHighlightBackground": C.hover,
-  "editor.inactiveSelectionBackground": C.hover,
-  "editor.wordHighlightBackground": C.hover,
-  "editor.wordHighlightStrongBackground": C.active,
-  "editor.wordHighlightTextBackground": C.hover,
-  "editor.findMatchBackground": C.accent,
-  "editor.findMatchBorder": C.transparent,
-  "editor.findMatchHighlightBackground": C.accent,
-  "editor.findRangeHighlightBackground": C.active,
-  "editor.hoverHighlightBackground": C.hover,
-  "editor.linkedEditingBackground": C.active,
-  "editor.rangeHighlightBackground": C.hover,
-  "editor.symbolHighlightBackground": C.active,
-  "editorWhitespace.foreground": C.guide,
-  "editorIndentGuide.background1": C.guide,
-  "editorIndentGuide.activeBackground1": C.faint,
-  "editorRuler.foreground": C.guide,
-  "editorCodeLens.foreground": C.faint,
-  "editorLightBulb.foreground": C.gold,
-  "editorLightBulbAutoFix.foreground": C.sage,
-  "editorBracketMatch.background": C.active,
-  "editorBracketMatch.border": C.transparent,
-  "editorBracketHighlight.foreground1": C.muted,
-  "editorBracketHighlight.foreground2": C.muted,
-  "editorBracketHighlight.foreground3": C.muted,
-  "editorBracketHighlight.foreground4": C.muted,
-  "editorBracketHighlight.foreground5": C.muted,
-  "editorBracketHighlight.foreground6": C.muted,
-  "editorBracketHighlight.unexpectedBracket.foreground": C.red,
-  "editorBracketPairGuide.background1": C.guide,
-  "editorBracketPairGuide.activeBackground1": C.faint,
-  "editorUnicodeHighlight.border": C.transparent,
-  "editorUnicodeHighlight.background": C.accent,
-  "editor.foldBackground": C.editor,
-  "editor.inlineValuesBackground": C.editor,
-  "editor.inlineValuesForeground": C.muted,
+    "editorGroup.border": C.transparent,
+    "editorGroup.dropBackground": C.info,
+    "editorGroupHeader.tabsBorder": C.transparent,
+    "editorGroupHeader.border": C.transparent,
+    "tab.activeBackground": C.editor,
+    "tab.activeBorder": C.transparent,
+    "tab.activeBorderTop": C.transparent,
+    "tab.activeForeground": C.bright,
+    "tab.border": C.transparent,
+    "tab.hoverBackground": C.hover,
+    "tab.hoverForeground": C.bright,
+    "tab.inactiveBackground": C.editor,
+    "tab.inactiveForeground": C.faint,
+    "tab.unfocusedActiveForeground": C.text,
+    "tab.unfocusedInactiveForeground": C.faint,
 
-  "editorGutter.addedBackground": C.sage,
-  "editorGutter.deletedBackground": C.red,
-  "editorGutter.modifiedBackground": C.blue,
-  "editorGutter.commentRangeForeground": C.smoke,
-  "editorOverviewRuler.addedForeground": C.sage,
-  "editorOverviewRuler.deletedForeground": C.red,
-  "editorOverviewRuler.modifiedForeground": C.blue,
-  "editorOverviewRuler.border": C.transparent,
-  "editorOverviewRuler.errorForeground": C.red,
-  "editorOverviewRuler.warningForeground": C.gold,
-  "editorOverviewRuler.infoForeground": C.blue,
-  "editorOverviewRuler.findMatchForeground": C.gold,
-  "editorOverviewRuler.rangeHighlightForeground": C.hover,
-  "editorOverviewRuler.selectionHighlightForeground": C.accent,
-  "editorOverviewRuler.wordHighlightForeground": C.hover,
-  "editorOverviewRuler.wordHighlightStrongForeground": C.active,
-  "editorError.foreground": C.red,
-  "editorError.border": C.transparent,
-  "editorError.background": C.transparent,
-  "editorWarning.foreground": C.gold,
-  "editorWarning.border": C.transparent,
-  "editorWarning.background": C.transparent,
-  "editorInfo.foreground": C.blue,
-  "editorInfo.border": C.transparent,
-  "editorInfo.background": C.transparent,
-  "editorHint.foreground": C.sage,
-  "editorHint.border": C.transparent,
-  "problemsErrorIcon.foreground": C.red,
-  "problemsWarningIcon.foreground": C.gold,
-  "problemsInfoIcon.foreground": C.blue,
+    "editor.foreground": C.text,
+    "editorLineNumber.foreground": C.faint,
+    "editorLineNumber.activeForeground": C.muted,
+    "editorLineNumber.dimmedForeground": C.faint,
+    "editorCursor.background": C.editor,
+    "editorCursor.foreground": C.amber,
+    "editor.selectionBackground": C.accent,
+    "editor.selectionForeground": C.bright,
+    "editor.selectionHighlightBackground": subtle,
+    "editor.inactiveSelectionBackground": subtle,
+    "editor.wordHighlightBackground": subtle,
+    "editor.wordHighlightStrongBackground": medium,
+    "editor.wordHighlightTextBackground": subtle,
+    "editor.findMatchBackground": C.accent,
+    "editor.findMatchBorder": C.transparent,
+    "editor.findMatchHighlightBackground": accent,
+    "editor.findRangeHighlightBackground": medium,
+    "editor.hoverHighlightBackground": subtle,
+    "editor.linkedEditingBackground": C.active,
+    "editor.rangeHighlightBackground": subtle,
+    "editor.symbolHighlightBackground": medium,
+    "editorWhitespace.foreground": C.guide,
+    "editorIndentGuide.background1": C.guide,
+    "editorIndentGuide.activeBackground1": C.faint,
+    "editorRuler.foreground": C.guide,
+    "editorCodeLens.foreground": C.faint,
+    "editorLightBulb.foreground": C.gold,
+    "editorLightBulbAutoFix.foreground": C.sage,
+    "editorBracketMatch.background": C.active,
+    "editorBracketMatch.border": C.transparent,
+    "editorBracketHighlight.foreground1": C.muted,
+    "editorBracketHighlight.foreground2": C.muted,
+    "editorBracketHighlight.foreground3": C.muted,
+    "editorBracketHighlight.foreground4": C.muted,
+    "editorBracketHighlight.foreground5": C.muted,
+    "editorBracketHighlight.foreground6": C.muted,
+    "editorBracketHighlight.unexpectedBracket.foreground": C.red,
+    "editorBracketPairGuide.background1": C.guide,
+    "editorBracketPairGuide.activeBackground1": C.faint,
+    "editorUnicodeHighlight.border": C.transparent,
+    "editorUnicodeHighlight.background": C.accent,
+    "editor.foldBackground": withAlpha(C.editor, 0.72),
+    "editor.inlineValuesBackground": C.editor,
+    "editor.inlineValuesForeground": C.muted,
 
-  "diffEditor.insertedTextBackground": C.success,
-  "diffEditor.insertedLineBackground": C.success,
-  "diffEditor.removedTextBackground": C.danger,
-  "diffEditor.removedLineBackground": C.danger,
-  "diffEditorGutter.insertedLineBackground": C.success,
-  "diffEditorGutter.removedLineBackground": C.danger,
-  "diffEditorGutter.modifiedLineBackground": C.info,
-  "diffEditor.border": C.transparent,
-  "diffEditor.diagonalFill": C.guide,
-  "diffEditor.unchangedRegionBackground": C.panel,
-  "diffEditor.unchangedRegionForeground": C.faint,
-  "diffEditor.unchangedCodeBackground": C.editor,
+    "editorGutter.addedBackground": C.sage,
+    "editorGutter.deletedBackground": C.red,
+    "editorGutter.modifiedBackground": C.blue,
+    "editorGutter.commentRangeForeground": C.smoke,
+    "editorOverviewRuler.addedForeground": C.sage,
+    "editorOverviewRuler.deletedForeground": C.red,
+    "editorOverviewRuler.modifiedForeground": C.blue,
+    "editorOverviewRuler.border": C.transparent,
+    "editorOverviewRuler.errorForeground": C.red,
+    "editorOverviewRuler.warningForeground": C.gold,
+    "editorOverviewRuler.infoForeground": C.blue,
+    "editorOverviewRuler.findMatchForeground": gold,
+    "editorOverviewRuler.rangeHighlightForeground": subtle,
+    "editorOverviewRuler.selectionHighlightForeground": accent,
+    "editorOverviewRuler.wordHighlightForeground": subtle,
+    "editorOverviewRuler.wordHighlightStrongForeground": medium,
+    "editorError.foreground": C.red,
+    "editorError.border": C.transparent,
+    "editorError.background": C.transparent,
+    "editorWarning.foreground": C.gold,
+    "editorWarning.border": C.transparent,
+    "editorWarning.background": C.transparent,
+    "editorInfo.foreground": C.blue,
+    "editorInfo.border": C.transparent,
+    "editorInfo.background": C.transparent,
+    "editorHint.foreground": C.sage,
+    "editorHint.border": C.transparent,
+    "problemsErrorIcon.foreground": C.red,
+    "problemsWarningIcon.foreground": C.gold,
+    "problemsInfoIcon.foreground": C.blue,
 
-  "panel.background": C.editor,
-  "panel.border": C.transparent,
-  "panelTitle.activeBorder": C.transparent,
-  "panelTitle.activeForeground": C.bright,
-  "panelTitle.inactiveForeground": C.faint,
-  "panelInput.border": C.transparent,
+    "diffEditor.insertedTextBackground": success,
+    "diffEditor.insertedLineBackground": success,
+    "diffEditor.removedTextBackground": danger,
+    "diffEditor.removedLineBackground": danger,
+    "diffEditorGutter.insertedLineBackground": C.success,
+    "diffEditorGutter.removedLineBackground": C.danger,
+    "diffEditor.border": C.transparent,
+    "diffEditor.diagonalFill": C.guide,
+    "diffEditor.unchangedRegionBackground": C.panel,
+    "diffEditor.unchangedRegionForeground": C.faint,
+    "diffEditor.unchangedCodeBackground": C.editor,
 
-  "terminal.foreground": C.text,
-  "terminal.ansiBlack": C.editor,
-  "terminal.ansiBlue": C.blue,
-  "terminal.ansiBrightBlack": C.faint,
-  "terminal.ansiBrightBlue": C.blue,
-  "terminal.ansiBrightCyan": C.aqua,
-  "terminal.ansiBrightGreen": C.sage,
-  "terminal.ansiBrightMagenta": C.violet,
-  "terminal.ansiBrightRed": C.coral,
-  "terminal.ansiBrightWhite": C.bright,
-  "terminal.ansiBrightYellow": C.gold,
-  "terminal.ansiCyan": C.aqua,
-  "terminal.ansiGreen": C.sage,
-  "terminal.ansiMagenta": C.violet,
-  "terminal.ansiRed": C.red,
-  "terminal.ansiWhite": C.text,
-  "terminal.ansiYellow": C.amber,
-  "terminal.border": C.transparent,
-  "terminalCursor.background": C.editor,
-  "terminalCursor.foreground": C.amber,
-  "terminal.selectionBackground": C.accent,
+    "panel.background": C.editor,
+    "panel.border": C.transparent,
+    "panelTitle.activeBorder": C.transparent,
+    "panelTitle.activeForeground": C.bright,
+    "panelTitle.inactiveForeground": C.faint,
+    "panelInput.border": C.transparent,
 
-  "statusBar.background": C.editor,
-  "statusBar.border": C.transparent,
-  "statusBar.foreground": C.text,
-  "statusBar.debuggingBackground": C.amber,
-  "statusBar.debuggingForeground": C.editor,
-  "statusBar.noFolderBackground": C.editor,
-  "statusBar.noFolderForeground": C.text,
-  "statusBarItem.activeBackground": C.active,
-  "statusBarItem.hoverBackground": C.hover,
-  "statusBarItem.prominentBackground": C.hover,
-  "statusBarItem.prominentForeground": C.bright,
-  "statusBarItem.remoteBackground": C.amber,
-  "statusBarItem.remoteForeground": C.editor,
-  "statusBarItem.errorBackground": C.red,
-  "statusBarItem.errorForeground": C.editor,
-  "statusBarItem.warningBackground": C.gold,
-  "statusBarItem.warningForeground": C.editor,
+    "terminal.foreground": C.text,
+    "terminal.ansiBlack": C.editor,
+    "terminal.ansiBlue": C.blue,
+    "terminal.ansiBrightBlack": C.faint,
+    "terminal.ansiBrightBlue": C.blue,
+    "terminal.ansiBrightCyan": C.aqua,
+    "terminal.ansiBrightGreen": C.sage,
+    "terminal.ansiBrightMagenta": C.violet,
+    "terminal.ansiBrightRed": C.coral,
+    "terminal.ansiBrightWhite": C.bright,
+    "terminal.ansiBrightYellow": C.gold,
+    "terminal.ansiCyan": C.aqua,
+    "terminal.ansiGreen": C.sage,
+    "terminal.ansiMagenta": C.violet,
+    "terminal.ansiRed": C.red,
+    "terminal.ansiWhite": C.text,
+    "terminal.ansiYellow": C.amber,
+    "terminal.border": C.transparent,
+    "terminalCursor.background": C.editor,
+    "terminalCursor.foreground": C.amber,
+    "terminal.selectionBackground": C.accent,
 
-  "titleBar.activeBackground": C.editor,
-  "titleBar.activeForeground": C.bright,
-  "titleBar.border": C.transparent,
-  "titleBar.inactiveBackground": C.editor,
-  "titleBar.inactiveForeground": C.faint,
+    "statusBar.background": C.editor,
+    "statusBar.border": C.transparent,
+    "statusBar.foreground": C.text,
+    "statusBar.debuggingBackground": C.amber,
+    "statusBar.debuggingForeground": C.editor,
+    "statusBar.noFolderBackground": C.editor,
+    "statusBar.noFolderForeground": C.text,
+    "statusBarItem.activeBackground": C.active,
+    "statusBarItem.hoverBackground": C.hover,
+    "statusBarItem.prominentBackground": C.hover,
+    "statusBarItem.prominentForeground": C.bright,
+    "statusBarItem.remoteBackground": C.amber,
+    "statusBarItem.remoteForeground": C.editor,
+    "statusBarItem.errorBackground": C.red,
+    "statusBarItem.errorForeground": C.editor,
+    "statusBarItem.warningBackground": C.gold,
+    "statusBarItem.warningForeground": C.editor,
 
-  "menu.background": C.popup,
-  "menu.border": C.transparent,
-  "menu.foreground": C.text,
-  "menu.selectionBackground": C.active,
-  "menu.selectionBorder": C.transparent,
-  "menu.selectionForeground": C.bright,
-  "menu.separatorBackground": C.transparent,
-  "menubar.selectionBackground": C.active,
-  "menubar.selectionBorder": C.transparent,
-  "menubar.selectionForeground": C.bright,
+    "titleBar.activeBackground": C.editor,
+    "titleBar.activeForeground": C.bright,
+    "titleBar.border": C.transparent,
+    "titleBar.inactiveBackground": C.editor,
+    "titleBar.inactiveForeground": C.faint,
 
-  "commandCenter.foreground": C.muted,
-  "commandCenter.activeForeground": C.bright,
-  "commandCenter.background": C.editor,
-  "commandCenter.activeBackground": C.hover,
-  "commandCenter.border": C.transparent,
-  "commandCenter.inactiveForeground": C.faint,
-  "commandCenter.inactiveBorder": C.transparent,
-  "commandCenter.activeBorder": C.transparent,
-  "commandCenter.debuggingBackground": C.editor,
+    "menu.background": C.popup,
+    "menu.border": C.transparent,
+    "menu.foreground": C.text,
+    "menu.selectionBackground": C.active,
+    "menu.selectionBorder": C.transparent,
+    "menu.selectionForeground": C.bright,
+    "menu.separatorBackground": C.transparent,
+    "menubar.selectionBackground": C.active,
+    "menubar.selectionBorder": C.transparent,
+    "menubar.selectionForeground": C.bright,
 
-  "notificationCenter.border": C.transparent,
-  "notificationCenterHeader.background": C.panel,
-  "notificationCenterHeader.foreground": C.bright,
-  "notificationToast.border": C.transparent,
-  "notifications.background": C.popup,
-  "notifications.border": C.transparent,
-  "notifications.foreground": C.text,
-  "notificationsErrorIcon.foreground": C.red,
-  "notificationsInfoIcon.foreground": C.blue,
-  "notificationsWarningIcon.foreground": C.gold,
+    "commandCenter.foreground": C.muted,
+    "commandCenter.activeForeground": C.bright,
+    "commandCenter.background": C.editor,
+    "commandCenter.activeBackground": C.hover,
+    "commandCenter.border": C.transparent,
+    "commandCenter.inactiveForeground": C.faint,
+    "commandCenter.inactiveBorder": C.transparent,
+    "commandCenter.activeBorder": C.transparent,
+    "commandCenter.debuggingBackground": withAlpha(C.editor, 0.96),
 
-  "quickInput.background": C.popup,
-  "quickInput.foreground": C.text,
-  "quickInputList.focusBackground": C.active,
-  "quickInputList.focusForeground": C.bright,
-  "quickInputTitle.background": C.panel,
-  "pickerGroup.border": C.transparent,
-  "pickerGroup.foreground": C.muted,
+    "notificationCenter.border": C.transparent,
+    "notificationCenterHeader.background": C.panel,
+    "notificationCenterHeader.foreground": C.bright,
+    "notificationToast.border": C.transparent,
+    "notifications.background": C.popup,
+    "notifications.border": C.transparent,
+    "notifications.foreground": C.text,
+    "notificationsErrorIcon.foreground": C.red,
+    "notificationsInfoIcon.foreground": C.blue,
+    "notificationsWarningIcon.foreground": C.gold,
 
-  "settings.checkboxBackground": C.panel,
-  "settings.checkboxBorder": C.transparent,
-  "settings.dropdownBackground": C.panel,
-  "settings.dropdownBorder": C.transparent,
-  "settings.headerForeground": C.bright,
-  "settings.modifiedItemIndicator": C.amber,
-  "settings.numberInputBackground": C.panel,
-  "settings.numberInputBorder": C.transparent,
-  "settings.rowHoverBackground": C.hover,
-  "settings.sashBorder": C.transparent,
-  "settings.textInputBackground": C.panel,
-  "settings.textInputBorder": C.transparent,
+    "quickInput.background": C.popup,
+    "quickInput.foreground": C.text,
+    "quickInputList.focusBackground": C.active,
+    "quickInputList.focusForeground": C.bright,
+    "quickInputTitle.background": C.panel,
+    "pickerGroup.border": C.transparent,
+    "pickerGroup.foreground": C.muted,
 
-  "breadcrumb.background": C.editor,
-  "breadcrumb.focusForeground": C.bright,
-  "breadcrumb.foreground": C.faint,
-  "breadcrumb.activeSelectionForeground": C.bright,
-  "breadcrumbPicker.background": C.popup,
+    "settings.checkboxBackground": C.panel,
+    "settings.checkboxBorder": C.transparent,
+    "settings.dropdownBackground": C.panel,
+    "settings.dropdownBorder": C.transparent,
+    "settings.headerForeground": C.bright,
+    "settings.modifiedItemIndicator": C.amber,
+    "settings.numberInputBackground": C.panel,
+    "settings.numberInputBorder": C.transparent,
+    "settings.rowHoverBackground": C.hover,
+    "settings.sashBorder": C.transparent,
+    "settings.textInputBackground": C.panel,
+    "settings.textInputBorder": C.transparent,
 
-  "peekView.border": C.transparent,
-  "peekViewEditor.matchHighlightBackground": C.accent,
-  "peekViewResult.fileForeground": C.bright,
-  "peekViewResult.lineForeground": C.muted,
-  "peekViewResult.matchHighlightBackground": C.accent,
-  "peekViewResult.selectionBackground": C.active,
-  "peekViewResult.selectionForeground": C.bright,
-  "peekViewTitle.background": C.popup,
-  "peekViewTitleDescription.foreground": C.muted,
-  "peekViewTitleLabel.foreground": C.bright,
+    "breadcrumb.background": C.editor,
+    "breadcrumb.focusForeground": C.bright,
+    "breadcrumb.foreground": C.faint,
+    "breadcrumb.activeSelectionForeground": C.bright,
+    "breadcrumbPicker.background": C.popup,
 
-  "gitDecoration.addedResourceForeground": C.sage,
-  "gitDecoration.conflictingResourceForeground": C.amber,
-  "gitDecoration.deletedResourceForeground": C.red,
-  "gitDecoration.ignoredResourceForeground": C.faint,
-  "gitDecoration.modifiedResourceForeground": C.blue,
-  "gitDecoration.renamedResourceForeground": C.sage,
-  "gitDecoration.stageDeletedResourceForeground": C.red,
-  "gitDecoration.stageModifiedResourceForeground": C.blue,
-  "gitDecoration.submoduleResourceForeground": C.blue,
-  "gitDecoration.untrackedResourceForeground": C.sage,
+    "peekView.border": C.transparent,
+    "peekViewEditor.matchHighlightBackground": C.accent,
+    "peekViewResult.fileForeground": C.bright,
+    "peekViewResult.lineForeground": C.muted,
+    "peekViewResult.matchHighlightBackground": C.accent,
+    "peekViewResult.selectionBackground": C.active,
+    "peekViewResult.selectionForeground": C.bright,
+    "peekViewTitle.background": C.popup,
+    "peekViewTitleDescription.foreground": C.muted,
+    "peekViewTitleLabel.foreground": C.bright,
 
-  "minimap.findMatchHighlight": C.gold,
-  "minimap.selectionHighlight": C.accent,
-  "minimap.errorHighlight": C.red,
-  "minimap.warningHighlight": C.gold,
-  "minimap.infoHighlight": C.blue,
-  "minimap.foregroundOpacity": C.minimap,
-  "minimapGutter.addedBackground": C.sage,
-  "minimapGutter.deletedBackground": C.red,
-  "minimapGutter.modifiedBackground": C.blue,
-  "minimapSlider.activeBackground": C.muted,
-  "minimapSlider.background": C.guide,
-  "minimapSlider.hoverBackground": C.faint,
+    "gitDecoration.addedResourceForeground": C.sage,
+    "gitDecoration.conflictingResourceForeground": C.amber,
+    "gitDecoration.deletedResourceForeground": C.red,
+    "gitDecoration.ignoredResourceForeground": C.faint,
+    "gitDecoration.modifiedResourceForeground": C.blue,
+    "gitDecoration.renamedResourceForeground": C.sage,
+    "gitDecoration.stageDeletedResourceForeground": C.red,
+    "gitDecoration.stageModifiedResourceForeground": C.blue,
+    "gitDecoration.submoduleResourceForeground": C.blue,
+    "gitDecoration.untrackedResourceForeground": C.sage,
 
-  "scrollbarSlider.activeBackground": C.muted,
-  "scrollbarSlider.background": C.guide,
-  "scrollbarSlider.hoverBackground": C.faint,
+    "minimap.findMatchHighlight": gold,
+    "minimap.selectionHighlight": accent,
+    "minimap.errorHighlight": C.red,
+    "minimap.warningHighlight": C.gold,
+    "minimap.infoHighlight": C.blue,
+    "minimap.foregroundOpacity": C.minimap,
+    "minimapGutter.addedBackground": C.sage,
+    "minimapGutter.deletedBackground": C.red,
+    "minimapGutter.modifiedBackground": C.blue,
+    "minimapSlider.activeBackground": C.muted,
+    "minimapSlider.background": C.guide,
+    "minimapSlider.hoverBackground": C.faint,
 
-  "charts.blue": C.blue,
-  "charts.foreground": C.text,
-  "charts.green": C.sage,
-  "charts.lines": C.transparent,
-  "charts.orange": C.amber,
-  "charts.purple": C.violet,
-  "charts.red": C.red,
-  "charts.yellow": C.gold,
+    "scrollbarSlider.activeBackground": C.muted,
+    "scrollbarSlider.background": C.guide,
+    "scrollbarSlider.hoverBackground": C.faint,
 
-  "testing.iconErrored": C.red,
-  "testing.iconFailed": C.red,
-  "testing.iconPassed": C.sage,
-  "testing.iconQueued": C.muted,
-  "testing.iconSkipped": C.faint,
-  "testing.iconUnset": C.faint,
+    "charts.blue": C.blue,
+    "charts.foreground": C.text,
+    "charts.green": C.sage,
+    "charts.lines": C.transparent,
+    "charts.orange": C.amber,
+    "charts.purple": C.violet,
+    "charts.red": C.red,
+    "charts.yellow": C.gold,
 
-  "welcomePage.buttonBackground": C.panel,
-  "welcomePage.buttonHoverBackground": C.hover
-});
+    "testing.iconErrored": C.red,
+    "testing.iconFailed": C.red,
+    "testing.iconPassed": C.sage,
+    "testing.iconQueued": C.muted,
+    "testing.iconSkipped": C.faint,
+    "testing.iconUnset": C.faint,
+
+    "welcomePage.tileBackground": C.panel,
+    "welcomePage.tileHoverBackground": C.hover,
+    "welcomePage.tileBorder": C.transparent,
+  };
+};
 
 type ThemeConfig = {
   fileName: string;
@@ -557,67 +577,247 @@ type ThemeConfig = {
   palette: Palette;
 };
 
-const token = (name: string, scope: TokenRule["scope"], foreground: Hex): TokenRule => ({
+const token = (
+  name: string,
+  scope: TokenRule["scope"],
+  foreground: Hex,
+): TokenRule => ({
   name,
   scope,
-  settings: { foreground }
+  settings: { foreground },
 });
 
 const createTokenColors = (C: Palette): TokenRule[] => [
-  token("Source text", ["source", "meta.embedded", "text.html.markdown"], C.text),
+  token(
+    "Source text",
+    ["source", "meta.embedded", "text.html.markdown"],
+    C.text,
+  ),
   token("Comments", ["comment", "punctuation.definition.comment"], C.smoke),
-  token("Documentation comments", ["comment.block.documentation", "storage.type.class.jsdoc", "entity.name.type.instance.jsdoc"], C.smoke),
-  token("Keywords and control flow", ["keyword", "keyword.control", "keyword.operator.expression", "storage.modifier"], C.amber),
-  token("Imports and exports", ["keyword.control.import", "keyword.control.export", "storage.modifier.async", "keyword.control.from"], C.amber),
-  token("Storage and declarations", ["storage.type", "storage.type.function", "storage.type.class", "storage.type.interface", "storage.type.type"], C.amber),
-  token("Operators", ["keyword.operator", "punctuation.accessor", "punctuation.separator.key-value", "keyword.operator.type"], C.muted),
+  token(
+    "Documentation comments",
+    [
+      "comment.block.documentation",
+      "storage.type.class.jsdoc",
+      "entity.name.type.instance.jsdoc",
+    ],
+    C.smoke,
+  ),
+  token(
+    "Keywords and control flow",
+    [
+      "keyword",
+      "keyword.control",
+      "keyword.operator.expression",
+      "storage.modifier",
+    ],
+    C.amber,
+  ),
+  token(
+    "Imports and exports",
+    [
+      "keyword.control.import",
+      "keyword.control.export",
+      "storage.modifier.async",
+      "keyword.control.from",
+    ],
+    C.amber,
+  ),
+  token(
+    "Storage and declarations",
+    [
+      "storage.type",
+      "storage.type.function",
+      "storage.type.class",
+      "storage.type.interface",
+      "storage.type.type",
+    ],
+    C.amber,
+  ),
+  token(
+    "Operators",
+    [
+      "keyword.operator",
+      "punctuation.accessor",
+      "punctuation.separator.key-value",
+      "keyword.operator.type",
+    ],
+    C.muted,
+  ),
   token("Strings", ["string", "constant.other.symbol"], C.sage),
-  token("Template strings", ["string.template", "punctuation.definition.template-expression"], C.sage),
-  token("Regular expressions", ["string.regexp", "constant.character.escape"], C.sage),
-  token("Numbers and constants", ["constant.numeric", "constant.language", "constant.character", "variable.other.constant", "constant.other.enum"], C.amber),
-  token("Booleans and nullish values", ["constant.language.boolean", "constant.language.null", "constant.language.undefined"], C.amber),
-  token("Functions", ["entity.name.function", "support.function", "meta.function-call", "variable.function", "support.function.console"], C.blue),
-  token("Methods", ["entity.name.function.member", "support.function.dom", "meta.method-call"], C.blue),
-  token("Classes and constructors", ["entity.name.type.class", "entity.name.class", "support.class", "support.type"], C.purple),
-  token("Interfaces, aliases, and type parameters", [
-    "entity.name.type.interface",
-    "entity.name.type.alias",
-    "entity.name.type",
-    "entity.name.type.module",
-    "entity.name.type.namespace",
-    "support.type.primitive",
-    "meta.type.parameters",
-    "meta.type.annotation"
-  ], C.purple),
-  token("Object keys and properties", [
-    "meta.object-literal.key",
-    "support.type.property-name",
-    "variable.other.property",
-    "variable.other.member",
-    "meta.property.object",
-    "support.variable.property"
-  ], C.text),
-  token("Parameters", ["variable.parameter", "meta.parameters", "entity.name.variable.parameter"], C.text),
-  token("Variables", ["variable", "variable.other.readwrite", "entity.name.variable", "variable.language.this"], C.text),
-  token("Decorators and annotations", ["meta.decorator", "entity.name.function.decorator", "punctuation.decorator"], C.amber),
-  token("JSX components", ["entity.name.tag.tsx", "support.class.component.tsx"], C.blue),
+  token(
+    "Template strings",
+    ["string.template", "punctuation.definition.template-expression"],
+    C.sage,
+  ),
+  token(
+    "Regular expressions",
+    ["string.regexp", "constant.character.escape"],
+    C.sage,
+  ),
+  token(
+    "Numbers and constants",
+    [
+      "constant.numeric",
+      "constant.language",
+      "constant.character",
+      "variable.other.constant",
+      "constant.other.enum",
+    ],
+    C.amber,
+  ),
+  token(
+    "Booleans and nullish values",
+    [
+      "constant.language.boolean",
+      "constant.language.null",
+      "constant.language.undefined",
+    ],
+    C.amber,
+  ),
+  token(
+    "Functions",
+    [
+      "entity.name.function",
+      "support.function",
+      "meta.function-call",
+      "variable.function",
+      "support.function.console",
+    ],
+    C.blue,
+  ),
+  token(
+    "Methods",
+    ["entity.name.function.member", "support.function.dom", "meta.method-call"],
+    C.blue,
+  ),
+  token(
+    "Classes and constructors",
+    [
+      "entity.name.type.class",
+      "entity.name.class",
+      "support.class",
+      "support.type",
+    ],
+    C.purple,
+  ),
+  token(
+    "Interfaces, aliases, and type parameters",
+    [
+      "entity.name.type.interface",
+      "entity.name.type.alias",
+      "entity.name.type",
+      "entity.name.type.module",
+      "entity.name.type.namespace",
+      "support.type.primitive",
+      "meta.type.parameters",
+      "meta.type.annotation",
+    ],
+    C.purple,
+  ),
+  token(
+    "Object keys and properties",
+    [
+      "meta.object-literal.key",
+      "support.type.property-name",
+      "variable.other.property",
+      "variable.other.member",
+      "meta.property.object",
+      "support.variable.property",
+    ],
+    C.text,
+  ),
+  token(
+    "Parameters",
+    ["variable.parameter", "meta.parameters", "entity.name.variable.parameter"],
+    C.text,
+  ),
+  token(
+    "Variables",
+    [
+      "variable",
+      "variable.other.readwrite",
+      "entity.name.variable",
+      "variable.language.this",
+    ],
+    C.text,
+  ),
+  token(
+    "Decorators and annotations",
+    [
+      "meta.decorator",
+      "entity.name.function.decorator",
+      "punctuation.decorator",
+    ],
+    C.amber,
+  ),
+  token(
+    "JSX components",
+    ["entity.name.tag.tsx", "support.class.component.tsx"],
+    C.blue,
+  ),
   token("JSX attributes", ["entity.other.attribute-name"], C.text),
-  token("Tag punctuation", ["punctuation.definition.tag", "punctuation.definition.tag.begin", "punctuation.definition.tag.end"], C.muted),
+  token(
+    "Tag punctuation",
+    [
+      "punctuation.definition.tag",
+      "punctuation.definition.tag.begin",
+      "punctuation.definition.tag.end",
+    ],
+    C.muted,
+  ),
   token("HTML and XML tags", ["entity.name.tag", "meta.tag"], C.blue),
-  token("CSS selectors", ["entity.other.attribute-name.class.css", "entity.other.attribute-name.id.css", "entity.name.tag.css"], C.blue),
-  token("CSS properties", ["support.type.property-name.css", "support.type.vendored.property-name.css"], C.text),
-  token("Markdown headings", ["markup.heading", "entity.name.section.markdown"], C.amber),
-  token("Markdown links", ["markup.underline.link", "string.other.link"], C.blue),
+  token(
+    "CSS selectors",
+    [
+      "entity.other.attribute-name.class.css",
+      "entity.other.attribute-name.id.css",
+      "entity.name.tag.css",
+    ],
+    C.blue,
+  ),
+  token(
+    "CSS properties",
+    [
+      "support.type.property-name.css",
+      "support.type.vendored.property-name.css",
+    ],
+    C.text,
+  ),
+  token(
+    "Markdown headings",
+    ["markup.heading", "entity.name.section.markdown"],
+    C.amber,
+  ),
+  token(
+    "Markdown links",
+    ["markup.underline.link", "string.other.link"],
+    C.blue,
+  ),
   token("Markup emphasis", ["markup.italic"], C.text),
   token("Markup bold", ["markup.bold"], C.bright),
-  token("Inserted content", ["markup.inserted", "meta.diff.header.to-file"], C.sage),
-  token("Deleted content", ["markup.deleted", "meta.diff.header.from-file"], C.red),
+  token(
+    "Inserted content",
+    ["markup.inserted", "meta.diff.header.to-file"],
+    C.sage,
+  ),
+  token(
+    "Deleted content",
+    ["markup.deleted", "meta.diff.header.from-file"],
+    C.red,
+  ),
   token("Changed content", ["markup.changed"], C.amber),
   token("Invalid", ["invalid", "invalid.illegal"], C.red),
-  token("Punctuation", ["punctuation", "meta.brace", "punctuation.definition.block"], C.muted)
+  token(
+    "Punctuation",
+    ["punctuation", "meta.brace", "punctuation.definition.block"],
+    C.muted,
+  ),
 ];
 
-const createSemanticTokenColors = (C: Palette): Theme["semanticTokenColors"] => ({
+const createSemanticTokenColors = (
+  C: Palette,
+): Theme["semanticTokenColors"] => ({
   namespace: C.blue,
   type: C.purple,
   class: C.purple,
@@ -651,7 +851,7 @@ const createSemanticTokenColors = (C: Palette): Theme["semanticTokenColors"] => 
   "interface.declaration": C.purple,
   "type.declaration": C.purple,
   "enum.declaration": C.blue,
-  "*.deprecated": C.faint
+  "*.deprecated": C.faint,
 });
 
 const assertHex = (value: string, path: string) => {
@@ -666,7 +866,7 @@ const hexToRgb = (value: Hex): { red: number; green: number; blue: number } => {
   return {
     red: Number.parseInt(rgb.slice(0, 2), 16) / 255,
     green: Number.parseInt(rgb.slice(2, 4), 16) / 255,
-    blue: Number.parseInt(rgb.slice(4, 6), 16) / 255
+    blue: Number.parseInt(rgb.slice(4, 6), 16) / 255,
   };
 };
 
@@ -676,9 +876,11 @@ const srgbToRelativeLuminance = (value: number) =>
 const relativeLuminance = (value: Hex) => {
   const { red, green, blue } = hexToRgb(value);
 
-  return 0.2126 * srgbToRelativeLuminance(red)
-    + 0.7152 * srgbToRelativeLuminance(green)
-    + 0.0722 * srgbToRelativeLuminance(blue);
+  return (
+    0.2126 * srgbToRelativeLuminance(red) +
+    0.7152 * srgbToRelativeLuminance(green) +
+    0.0722 * srgbToRelativeLuminance(blue)
+  );
 };
 
 const contrastRatio = (foreground: Hex, background: Hex) => {
@@ -693,43 +895,107 @@ const contrastRatio = (foreground: Hex, background: Hex) => {
 const colorSettingKeys = new Set(["foreground", "background"]);
 const visibleAlphaWorkbenchColors = new Set([
   "minimap.foregroundOpacity",
-  "widget.shadow"
+  "widget.shadow",
+]);
+const transparentWorkbenchColors = new Set([
+  "editor.selectionHighlightBackground",
+  "editor.inactiveSelectionBackground",
+  "editor.wordHighlightBackground",
+  "editor.wordHighlightStrongBackground",
+  "editor.wordHighlightTextBackground",
+  "editor.findMatchHighlightBackground",
+  "editor.findRangeHighlightBackground",
+  "editor.hoverHighlightBackground",
+  "editor.rangeHighlightBackground",
+  "editor.symbolHighlightBackground",
+  "editor.foldBackground",
+  "editorOverviewRuler.findMatchForeground",
+  "editorOverviewRuler.rangeHighlightForeground",
+  "editorOverviewRuler.selectionHighlightForeground",
+  "editorOverviewRuler.wordHighlightForeground",
+  "editorOverviewRuler.wordHighlightStrongForeground",
+  "editorError.background",
+  "editorWarning.background",
+  "editorInfo.background",
+  "diffEditor.insertedTextBackground",
+  "diffEditor.insertedLineBackground",
+  "diffEditor.removedTextBackground",
+  "diffEditor.removedLineBackground",
+  "commandCenter.debuggingBackground",
+  "minimap.findMatchHighlight",
+  "minimap.selectionHighlight",
 ]);
 const borderlessWorkbenchColorPattern = /(?:border|separator|^charts\.lines$)/i;
+const transparentWorkbenchColorPattern =
+  /^#(?:[0-9a-fA-F]{3}[0-9a-eA-E]|[0-9a-fA-F]{6}(?![fF]{2})[0-9a-fA-F]{2})$/;
 const minimumEditorTextContrast = 4.5;
 const decorativeSemanticTokens = new Set(["*.deprecated"]);
-const usesVisibleAlpha = (value: Hex) => stripHash(value).length === 8 && !value.endsWith("00");
+const usesVisibleAlpha = (value: Hex) =>
+  stripHash(value).length === 8 && !value.endsWith("00");
 const isSingleWordPaletteProperty = (value: string) => /^[a-z]+$/.test(value);
 
-const assertSingleWordPaletteProperties = (name: string, palette: Record<string, unknown>) => {
-  const invalid = Object.keys(palette).filter((id) => !isSingleWordPaletteProperty(id));
+const assertSingleWordPaletteProperties = (
+  name: string,
+  palette: Record<string, unknown>,
+) => {
+  const invalid = Object.keys(palette).filter(
+    (id) => !isSingleWordPaletteProperty(id),
+  );
   if (invalid.length) {
-    throw new Error(`${name} palette properties must be single lowercase words: ${invalid.join(", ")}`);
+    throw new Error(
+      `${name} palette properties must be single lowercase words: ${invalid.join(", ")}`,
+    );
   }
 };
 
 const assertThemeIntegrity = (theme: Theme, palette: Palette) => {
   for (const [id, value] of Object.entries(theme.colors)) {
     assertHex(value, `colors.${id}`);
-    if (borderlessWorkbenchColorPattern.test(id) && value !== palette.transparent) {
-      throw new Error(`colors.${id} must be transparent because visible borders are disabled`);
+    if (
+      borderlessWorkbenchColorPattern.test(id) &&
+      value !== palette.transparent
+    ) {
+      throw new Error(
+        `colors.${id} must be transparent because visible borders are disabled`,
+      );
     }
-    if (usesVisibleAlpha(value) && !visibleAlphaWorkbenchColors.has(id)) {
-      throw new Error(`colors.${id} uses visible alpha without being allow-listed`);
+    if (
+      transparentWorkbenchColors.has(id) &&
+      value !== palette.transparent &&
+      !transparentWorkbenchColorPattern.test(value)
+    ) {
+      throw new Error(
+        `colors.${id} must be transparent because VS Code's color theme schema requires it`,
+      );
+    }
+    if (
+      usesVisibleAlpha(value) &&
+      !visibleAlphaWorkbenchColors.has(id) &&
+      !transparentWorkbenchColors.has(id)
+    ) {
+      throw new Error(
+        `colors.${id} uses visible alpha without being allow-listed`,
+      );
     }
   }
   theme.tokenColors.forEach((rule, index) => {
     for (const key of Object.keys(rule.settings)) {
       if (!colorSettingKeys.has(key)) {
-        throw new Error(`tokenColors[${index}].settings.${key} is not a color setting`);
+        throw new Error(
+          `tokenColors[${index}].settings.${key} is not a color setting`,
+        );
       }
     }
-    if (rule.settings.foreground) assertHex(rule.settings.foreground, `tokenColors[${index}].foreground`);
-    if (rule.settings.background) assertHex(rule.settings.background, `tokenColors[${index}].background`);
+    if (rule.settings.foreground)
+      assertHex(rule.settings.foreground, `tokenColors[${index}].foreground`);
+    if (rule.settings.background)
+      assertHex(rule.settings.background, `tokenColors[${index}].background`);
     if (rule.settings.foreground) {
       const ratio = contrastRatio(rule.settings.foreground, palette.editor);
       if (ratio < minimumEditorTextContrast) {
-        throw new Error(`tokenColors[${index}] "${rule.name}" contrast ${ratio.toFixed(2)} is below ${minimumEditorTextContrast}`);
+        throw new Error(
+          `tokenColors[${index}] "${rule.name}" contrast ${ratio.toFixed(2)} is below ${minimumEditorTextContrast}`,
+        );
       }
     }
   });
@@ -739,41 +1005,54 @@ const assertThemeIntegrity = (theme: Theme, palette: Palette) => {
 
     const ratio = contrastRatio(value, palette.editor);
     if (ratio < minimumEditorTextContrast) {
-      throw new Error(`semanticTokenColors.${id} contrast ${ratio.toFixed(2)} is below ${minimumEditorTextContrast}`);
+      throw new Error(
+        `semanticTokenColors.${id} contrast ${ratio.toFixed(2)} is below ${minimumEditorTextContrast}`,
+      );
     }
   }
 
-  const editorSurfaceDrift = editorSurfaceIds.filter((id) => theme.colors[id] !== palette.editor);
-  const editorUnderlayDrift = editorUnderlayIds.filter((id) => theme.colors[id] !== palette.editor);
+  const editorSurfaceDrift = editorSurfaceIds.filter(
+    (id) => theme.colors[id] !== palette.editor,
+  );
+  const editorUnderlayDrift = editorUnderlayIds.filter(
+    (id) => theme.colors[id] !== palette.editor,
+  );
   if (editorSurfaceDrift.length || editorUnderlayDrift.length) {
     throw new Error(
-      `Editor surface drift. Painted: ${editorSurfaceDrift.join(", ") || "none"}. Underlay: ${editorUnderlayDrift.join(", ") || "none"}.`
+      `Editor surface drift. Painted: ${editorSurfaceDrift.join(", ") || "none"}. Underlay: ${editorUnderlayDrift.join(", ") || "none"}.`,
     );
   }
 };
 
-const createTheme = (name: string, type: Theme["type"], palette: Palette): Theme => ({
+const createTheme = (
+  name: string,
+  type: Theme["type"],
+  palette: Palette,
+): Theme => ({
   $schema: "vscode://schemas/color-theme",
   name,
   type,
   semanticHighlighting: true,
   colors: createWorkbenchColors(palette),
   tokenColors: createTokenColors(palette),
-  semanticTokenColors: createSemanticTokenColors(palette)
+  semanticTokenColors: createSemanticTokenColors(palette),
 });
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 assertSingleWordPaletteProperties("background", JACK_BACKGROUND_PALETTE);
 assertSingleWordPaletteProperties("font", JACK_FONT_PALETTE);
 assertSingleWordPaletteProperties("alpha", JACK_ALPHA_PALETTE);
-const JACK_PALETTE = createPalette({ ...JACK_BACKGROUND_PALETTE, ...JACK_FONT_PALETTE }, JACK_ALPHA_PALETTE);
+const JACK_PALETTE = createPalette(
+  { ...JACK_BACKGROUND_PALETTE, ...JACK_FONT_PALETTE },
+  JACK_ALPHA_PALETTE,
+);
 const themes = [
   {
     fileName: "jacks-theme-color-theme.json",
     name: "Jack's Theme",
     type: "dark",
-    palette: JACK_PALETTE
-  }
+    palette: JACK_PALETTE,
+  },
 ] as const satisfies readonly ThemeConfig[];
 
 for (const { fileName, name, type, palette } of themes) {
@@ -782,5 +1061,7 @@ for (const { fileName, name, type, palette } of themes) {
   const outputPath = join(__dirname, "..", "themes", fileName);
   mkdirSync(dirname(outputPath), { recursive: true });
   writeFileSync(outputPath, JSON.stringify(theme, null, 2) + "\n");
-  console.log(`Generated ${outputPath} with ${Object.keys(theme.colors).length} workbench colors`);
+  console.log(
+    `Generated ${outputPath} with ${Object.keys(theme.colors).length} workbench colors`,
+  );
 }

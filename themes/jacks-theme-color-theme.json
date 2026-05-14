@@ -236,13 +236,13 @@
     "terminal.ansiBlue": "#7ac9fc",
     "terminal.ansiBrightBlack": "#747474",
     "terminal.ansiBrightBlue": "#7ac9fc",
-    "terminal.ansiBrightCyan": "#7ac9fc",
+    "terminal.ansiBrightCyan": "#78d5cf",
     "terminal.ansiBrightGreen": "#99d49a",
     "terminal.ansiBrightMagenta": "#dbb0ee",
     "terminal.ansiBrightRed": "#ff8c7a",
     "terminal.ansiBrightWhite": "#f6f6f6",
     "terminal.ansiBrightYellow": "#fdbd63",
-    "terminal.ansiCyan": "#7ac9fc",
+    "terminal.ansiCyan": "#78d5cf",
     "terminal.ansiGreen": "#99d49a",
     "terminal.ansiMagenta": "#dbb0ee",
     "terminal.ansiRed": "#ff8c7a",
@@ -362,7 +362,7 @@
     "scrollbarSlider.activeBackground": "#9f9f9f",
     "scrollbarSlider.background": "#3b3b3b",
     "scrollbarSlider.hoverBackground": "#747474",
-    "charts.blue": "#7ac9fc",
+    "charts.blue": "#78d5cf",
     "charts.foreground": "#d7d7d7",
     "charts.green": "#99d49a",
     "charts.lines": "#00000000",
@@ -623,7 +623,7 @@
         "support.class.component.tsx"
       ],
       "settings": {
-        "foreground": "#7ac9fc"
+        "foreground": "#78d5cf"
       }
     },
     {
@@ -653,7 +653,7 @@
         "meta.tag"
       ],
       "settings": {
-        "foreground": "#7ac9fc"
+        "foreground": "#78d5cf"
       }
     },
     {
@@ -694,7 +694,7 @@
         "string.other.link"
       ],
       "settings": {
-        "foreground": "#7ac9fc"
+        "foreground": "#78d5cf"
       }
     },
     {
@@ -767,7 +767,7 @@
     }
   ],
   "semanticTokenColors": {
-    "namespace": "#7ac9fc",
+    "namespace": "#78d5cf",
     "type": "#dbb0ee",
     "class": "#dbb0ee",
     "enum": "#fdbd63",
@@ -778,7 +778,7 @@
     "variable": "#d7d7d7",
     "property": "#d7d7d7",
     "enumMember": "#d2c58d",
-    "event": "#99d49a",
+    "event": "#78d5cf",
     "function": "#7ac9fc",
     "method": "#7ac9fc",
     "macro": "#fdbd63",

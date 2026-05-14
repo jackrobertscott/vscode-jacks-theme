@@ -47,6 +47,7 @@ const JACK_FONT_PALETTE = {
   ember: "oklch(84.00% 0.1300 74.00)",
   sand: "oklch(82.00% 0.0750 96.00)",
   moss: "oklch(81.50% 0.1020 145.00)",
+  reef: "oklch(81.50% 0.0900 190.00)",
   ash: "oklch(74.80% 0.0140 245.00)",
   sky: "oklch(80.50% 0.1060 238.00)",
   plum: "oklch(81.50% 0.0980 315.00)",
@@ -405,13 +406,13 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
     "terminal.ansiBlue": C.sky,
     "terminal.ansiBrightBlack": C.faint,
     "terminal.ansiBrightBlue": C.sky,
-    "terminal.ansiBrightCyan": C.sky,
+    "terminal.ansiBrightCyan": C.reef,
     "terminal.ansiBrightGreen": C.moss,
     "terminal.ansiBrightMagenta": C.plum,
     "terminal.ansiBrightRed": C.clay,
     "terminal.ansiBrightWhite": C.bright,
     "terminal.ansiBrightYellow": C.ember,
-    "terminal.ansiCyan": C.sky,
+    "terminal.ansiCyan": C.reef,
     "terminal.ansiGreen": C.moss,
     "terminal.ansiMagenta": C.plum,
     "terminal.ansiRed": C.clay,
@@ -544,7 +545,7 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
     "scrollbarSlider.background": C.guide,
     "scrollbarSlider.hoverBackground": C.faint,
 
-    "charts.blue": C.sky,
+    "charts.blue": C.reef,
     "charts.foreground": C.text,
     "charts.green": C.moss,
     "charts.lines": C.transparent,
@@ -750,7 +751,7 @@ const createTokenColors = (C: Palette): TokenRule[] => [
   token(
     "JSX components",
     ["entity.name.tag.tsx", "support.class.component.tsx"],
-    C.sky,
+    C.reef,
   ),
   token("JSX attributes", ["entity.other.attribute-name"], C.sand),
   token(
@@ -762,7 +763,7 @@ const createTokenColors = (C: Palette): TokenRule[] => [
     ],
     C.muted,
   ),
-  token("HTML and XML tags", ["entity.name.tag", "meta.tag"], C.sky),
+  token("HTML and XML tags", ["entity.name.tag", "meta.tag"], C.reef),
   token(
     "CSS selectors",
     [
@@ -788,7 +789,7 @@ const createTokenColors = (C: Palette): TokenRule[] => [
   token(
     "Markdown links",
     ["markup.underline.link", "string.other.link"],
-    C.sky,
+    C.reef,
   ),
   token("Markup emphasis", ["markup.italic"], C.text),
   token("Markup bold", ["markup.bold"], C.bright),
@@ -814,7 +815,7 @@ const createTokenColors = (C: Palette): TokenRule[] => [
 const createSemanticTokenColors = (
   C: Palette,
 ): Theme["semanticTokenColors"] => ({
-  namespace: C.sky,
+  namespace: C.reef,
   type: C.plum,
   class: C.plum,
   enum: C.ember,
@@ -825,7 +826,7 @@ const createSemanticTokenColors = (
   variable: C.text,
   property: C.text,
   enumMember: C.sand,
-  event: C.moss,
+  event: C.reef,
   function: C.sky,
   method: C.sky,
   macro: C.ember,

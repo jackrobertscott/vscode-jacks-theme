@@ -39,18 +39,18 @@ const JACK_BACKGROUND_PALETTE = {
 } as const satisfies Record<string, Oklch>;
 
 const JACK_FONT_PALETTE = {
-  bright: "oklch(96.60% 0.0100 95.00)",
-  text: "oklch(86.80% 0.0120 95.00)",
-  muted: "oklch(70.80% 0.0200 235.00)",
-  faint: "oklch(56.80% 0.0180 235.00)",
+  bright: "oklch(98.00% 0.0100 95.00)",
+  text: "oklch(90.40% 0.0120 95.00)",
+  muted: "oklch(76.20% 0.0200 235.00)",
+  faint: "oklch(63.80% 0.0180 235.00)",
 
-  ember: "oklch(80.80% 0.1150 52.00)",
-  sand: "oklch(82.20% 0.0700 98.00)",
-  moss: "oklch(79.40% 0.0880 148.00)",
-  ash: "oklch(73.60% 0.0260 235.00)",
-  sky: "oklch(80.60% 0.0900 230.00)",
-  plum: "oklch(80.20% 0.0880 305.00)",
-  clay: "oklch(77.40% 0.1120 24.00)",
+  ember: "oklch(85.40% 0.1120 52.00)",
+  sand: "oklch(86.60% 0.0680 98.00)",
+  moss: "oklch(84.20% 0.0860 148.00)",
+  ash: "oklch(79.00% 0.0260 235.00)",
+  sky: "oklch(85.00% 0.0880 230.00)",
+  plum: "oklch(84.80% 0.0860 305.00)",
+  clay: "oklch(82.60% 0.1080 24.00)",
 } as const satisfies Record<string, Oklch>;
 
 const JACK_ALPHA_PALETTE = {

@@ -32,10 +32,10 @@ const JACK_BACKGROUND_PALETTE = {
   hover: "oklch(25.80% 0 0)",
   active: "oklch(29.40% 0 0)",
   guide: "oklch(35.40% 0 0)",
-  accent: "oklch(35.40% 0.0680 72.00)",
-  success: "oklch(28.80% 0.0580 148.00)",
-  danger: "oklch(28.50% 0.0620 28.00)",
-  info: "oklch(27.20% 0.0450 235.00)",
+  accent: "oklch(35.40% 0.0600 74.00)",
+  success: "oklch(28.80% 0.0480 145.00)",
+  danger: "oklch(28.50% 0.0560 30.00)",
+  info: "oklch(27.20% 0.0400 238.00)",
 } as const satisfies Record<string, Oklch>;
 
 const JACK_FONT_PALETTE = {
@@ -44,12 +44,13 @@ const JACK_FONT_PALETTE = {
   muted: "oklch(70.20% 0 0)",
   faint: "oklch(55.80% 0 0)",
 
-  ember: "oklch(84.00% 0.1450 72.00)",
-  moss: "oklch(82.20% 0.1180 148.00)",
-  ash: "oklch(74.80% 0.0200 245.00)",
-  sky: "oklch(81.20% 0.1220 242.00)",
-  plum: "oklch(82.40% 0.1180 318.00)",
-  clay: "oklch(75.20% 0.1750 28.00)",
+  ember: "oklch(84.00% 0.1300 74.00)",
+  sand: "oklch(82.00% 0.0750 96.00)",
+  moss: "oklch(81.50% 0.1020 145.00)",
+  ash: "oklch(74.80% 0.0140 245.00)",
+  sky: "oklch(80.50% 0.1060 238.00)",
+  plum: "oklch(81.50% 0.0980 315.00)",
+  clay: "oklch(76.50% 0.1450 30.00)",
 } as const satisfies Record<string, Oklch>;
 
 const JACK_ALPHA_PALETTE = {
@@ -725,7 +726,7 @@ const createTokenColors = (C: Palette): TokenRule[] => [
   token(
     "Parameters",
     ["variable.parameter", "meta.parameters", "entity.name.variable.parameter"],
-    C.text,
+    C.sand,
   ),
   token(
     "Variables",
@@ -820,7 +821,7 @@ const createSemanticTokenColors = (
   interface: C.plum,
   struct: C.plum,
   typeParameter: C.plum,
-  parameter: C.text,
+  parameter: C.sand,
   variable: C.text,
   property: C.text,
   enumMember: C.ember,
@@ -839,7 +840,7 @@ const createSemanticTokenColors = (
   "variable.readonly": C.ember,
   "property.readonly": C.ember,
   "property.declaration": C.text,
-  "parameter.declaration": C.text,
+  "parameter.declaration": C.sand,
   "function.declaration": C.sky,
   "method.declaration": C.sky,
   "class.declaration": C.plum,

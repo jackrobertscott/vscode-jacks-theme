@@ -2,7 +2,7 @@
 
 A very dark VS Code theme generated from a TypeScript source palette. Colors are authored in OKLCH, then converted to the hex format that VS Code theme JSON requires.
 
-The palette is built around a deep blue-green ink surface, with a cyan/teal primary axis and a warm amber/coral counterpoint. TypeScript token colors emphasize structural reading: declarations and types are distinct from calls, keywords, strings, constants, JSX, and punctuation without pushing the editor into high-contrast neon.
+The palette is built around a near-black neutral graphite surface, with a teal primary axis and a warm gold/coral counterpoint. TypeScript token colors emphasize structural reading: declarations and types are distinct from calls, keywords, strings, constants, JSX, and punctuation without pushing the editor into high-contrast neon.
 
 ## Development
 
@@ -10,8 +10,7 @@ The palette is built around a deep blue-green ink surface, with a cyan/teal prim
 npm install
 npm run generate
 vsce package --allow-missing-repository
-code --install-extension jacks-theme-0.1.0.vsix --force
+code --install-extension jacks-theme-0.1.1.vsix --force
 ```
 
 Do not edit `themes/jacks-theme-color-theme.json` directly. Edit `src/generate-theme.ts` and regenerate.
-

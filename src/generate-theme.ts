@@ -67,14 +67,14 @@ const hex = ({ l, c, h, a = 1 }: Oklch) => {
 const alpha = (color: Oklch, opacity: number) => hex({ ...color, a: opacity });
 
 const palette = {
-  // A near-neutral graphite ramp: very dark, not pure black, and deliberately low-chroma.
-  ink0: oklch(0.138, 0.004, 260),
-  ink1: oklch(0.174, 0.005, 260),
-  ink2: oklch(0.216, 0.006, 260),
-  ink3: oklch(0.268, 0.007, 260),
-  ink4: oklch(0.332, 0.008, 260),
-  ink5: oklch(0.415, 0.009, 260),
-  ink6: oklch(0.505, 0.01, 260),
+  // A true zero-chroma graphite ramp: very dark, not pure black, and carrying no hue.
+  ink0: oklch(0.138, 0, 0),
+  ink1: oklch(0.174, 0, 0),
+  ink2: oklch(0.216, 0, 0),
+  ink3: oklch(0.268, 0, 0),
+  ink4: oklch(0.332, 0, 0),
+  ink5: oklch(0.415, 0, 0),
+  ink6: oklch(0.505, 0, 0),
   text: oklch(0.91, 0.012, 86),
   textSoft: oklch(0.805, 0.014, 86),
   textMuted: oklch(0.655, 0.014, 86),
@@ -93,7 +93,7 @@ const palette = {
   gold: oklch(0.79, 0.096, 94),
   red: oklch(0.685, 0.142, 23),
   orange: oklch(0.765, 0.118, 52),
-  shadow: oklch(0.035, 0.004, 260),
+  shadow: oklch(0.035, 0, 0),
   white: oklch(0.985, 0.003, 86)
 } as const;
 

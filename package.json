@@ -2,7 +2,7 @@
   "name": "jacks-theme",
   "displayName": "Jack's Theme",
   "description": "A quiet dark VS Code theme with consistent editor surfaces and warm blackboard-inspired highlighting.",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "publisher": "jack",
   "type": "module",
   "license": "MIT",
@@ -24,8 +24,7 @@
   "scripts": {
     "generate": "tsc && node out/generate-theme.js",
     "vscode:prepublish": "npm run generate",
-    "package": "vsce package --allow-missing-repository",
-    "install:local": "npm run package && code --install-extension jacks-theme-0.4.2.vsix --force"
+    "package": "vsce package --allow-missing-repository"
   },
   "devDependencies": {
     "@types/node": "^22.15.17",

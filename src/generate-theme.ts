@@ -26,34 +26,34 @@ type Theme = {
 
 const JACK_BACKGROUND_PALETTE = {
   black: "oklch(0% 0 0)",
-  editor: "oklch(13.98% 0 0)",
-  panel: "oklch(16.50% 0 0)",
-  popup: "oklch(18.10% 0 0)",
-  hover: "oklch(21.00% 0 0)",
-  active: "oklch(24.20% 0 0)",
-  guide: "oklch(30.00% 0 0)",
-  accent: "oklch(31.00% 0.0550 72.00)",
-  success: "oklch(24.50% 0.0460 148.00)",
-  danger: "oklch(24.50% 0.0520 28.00)",
-  info: "oklch(22.40% 0.0300 235.00)"
+  editor: "oklch(17.20% 0 0)",
+  panel: "oklch(20.10% 0 0)",
+  popup: "oklch(22.10% 0 0)",
+  hover: "oklch(25.80% 0 0)",
+  active: "oklch(29.40% 0 0)",
+  guide: "oklch(35.40% 0 0)",
+  accent: "oklch(35.40% 0.0680 72.00)",
+  success: "oklch(28.80% 0.0580 148.00)",
+  danger: "oklch(28.50% 0.0620 28.00)",
+  info: "oklch(27.20% 0.0450 235.00)"
 } as const satisfies Record<string, Oklch>;
 
 const JACK_FONT_PALETTE = {
-  bright: "oklch(95.51% 0 0)",
-  text: "oklch(83.28% 0 0)",
-  muted: "oklch(64.01% 0 0)",
-  faint: "oklch(48.55% 0 0)",
+  bright: "oklch(97.20% 0 0)",
+  text: "oklch(87.80% 0 0)",
+  muted: "oklch(70.20% 0 0)",
+  faint: "oklch(55.80% 0 0)",
 
-  amber: "oklch(78.20% 0.1150 72.00)",
-  gold: "oklch(83.00% 0.1100 92.00)",
-  sage: "oklch(75.80% 0.0880 148.00)",
-  smoke: "oklch(67.50% 0.0340 245.00)",
-  aqua: "oklch(76.00% 0.0820 205.00)",
-  blue: "oklch(74.20% 0.0920 242.00)",
-  violet: "oklch(76.00% 0.0820 292.00)",
-  rose: "oklch(70.00% 0.1350 10.00)",
-  red: "oklch(68.00% 0.1550 28.00)",
-  coral: "oklch(76.00% 0.1120 42.00)"
+  amber: "oklch(84.00% 0.1450 72.00)",
+  gold: "oklch(88.00% 0.1300 92.00)",
+  sage: "oklch(82.20% 0.1180 148.00)",
+  smoke: "oklch(74.80% 0.0500 245.00)",
+  aqua: "oklch(82.40% 0.1120 205.00)",
+  blue: "oklch(81.20% 0.1220 242.00)",
+  violet: "oklch(82.80% 0.1100 292.00)",
+  rose: "oklch(77.20% 0.1550 10.00)",
+  red: "oklch(75.20% 0.1750 28.00)",
+  coral: "oklch(82.40% 0.1420 42.00)"
 } as const satisfies Record<string, Oklch>;
 
 const JACK_ALPHA_PALETTE = {

@@ -3,6 +3,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 type Hex = `#${string}`;
+type Oklch = `oklch(${number}% ${number} ${number})`;
 
 type TokenRule = {
   name: string;
@@ -23,40 +24,121 @@ type Theme = {
   semanticTokenColors: Record<string, Hex>;
 };
 
-const JACK_PALETTE = {
-  editor: "#090909",
-  editorUnderlay: "#0b0b0b",
-  panel: "#101010",
-  popup: "#151515",
-  hover: "#1e1e1e",
-  active: "#262626",
-  border: "#00000000",
-  borderStrong: "#00000000",
-  transparent: "#00000000",
+const JACK_COLOR_PALETTE = {
+  editor: "oklch(13.98% 0 0)",
+  editorUnderlay: "oklch(14.96% 0 0)",
+  panel: "oklch(17.30% 0 0)",
+  popup: "oklch(19.57% 0 0)",
+  hover: "oklch(23.50% 0 0)",
+  active: "oklch(26.86% 0 0)",
+  black: "oklch(0% 0 0)",
 
-  textBright: "#f0f0f0",
-  text: "#c8c8c8",
-  textMuted: "#8c8c8c",
-  textFaint: "#5f5f5f",
+  textBright: "oklch(95.51% 0 0)",
+  text: "oklch(83.28% 0 0)",
+  textMuted: "oklch(64.01% 0 0)",
+  textFaint: "oklch(48.55% 0 0)",
 
-  amber: "#ff9f35",
-  gold: "#e7cf63",
-  sage: "#9fbd72",
-  sageMuted: "#7fa378",
-  red: "#f05b5f",
-  coral: "#ff7f4f",
-  blue: "#69b8cf",
-  violet: "#c49be5"
-} as const satisfies Record<string, Hex>;
+  amber: "oklch(78.40% 0.1601 63.27)",
+  gold: "oklch(85.35% 0.1306 96.95)",
+  sage: "oklch(75.82% 0.1056 126.55)",
+  sageMuted: "oklch(67.70% 0.0735 140.49)",
+  red: "oklch(66.72% 0.1837 22.01)",
+  coral: "oklch(73.50% 0.1683 40.55)",
+  blue: "oklch(74.05% 0.0844 218.77)",
+  violet: "oklch(75.33% 0.1123 309.21)"
+} as const satisfies Record<string, Oklch>;
 
-type Palette = Record<keyof typeof JACK_PALETTE, Hex>;
+const JACK_ALPHA_PALETTE = {
+  a00: 0,
+  a04: 0.04,
+  a06: 0.06,
+  a08: 0.08,
+  a10: 0.1,
+  a12: 0.12,
+  a14: 0.14,
+  a16: 0.16,
+  a18: 0.18,
+  a20: 0.2,
+  a22: 0.22,
+  a24: 0.24,
+  a25: 0.25,
+  a26: 0.26,
+  a28: 0.28,
+  a32: 0.32,
+  a34: 0.34,
+  a35: 0.35,
+  a40: 0.4,
+  a45: 0.45,
+  a48: 0.48,
+  a50: 0.5,
+  a55: 0.55,
+  a85: 0.85
+} as const;
 
+type AlphaPalette = typeof JACK_ALPHA_PALETTE;
+type Alpha = AlphaPalette[keyof AlphaPalette];
+type Palette = Record<keyof typeof JACK_COLOR_PALETTE, Hex> & {
+  border: Hex;
+  borderStrong: Hex;
+  transparent: Hex;
+};
+
+const clamp01 = (value: number) => Math.max(0, Math.min(1, value));
 const stripHash = (value: Hex) => value.slice(1);
-const toByte = (value: number) => Math.round(Math.max(0, Math.min(1, value)) * 255)
+const toByte = (value: number) => Math.round(clamp01(value) * 255)
   .toString(16)
   .padStart(2, "0");
-const alpha = (value: Hex, opacity: number): Hex => `#${stripHash(value).slice(0, 6)}${toByte(opacity)}`;
+const withAlpha = (value: Hex, opacity: Alpha): Hex => `#${stripHash(value).slice(0, 6)}${toByte(opacity)}`;
 const keys = (ids: readonly string[], value: Hex): Record<string, Hex> => Object.fromEntries(ids.map((id) => [id, value]));
+
+const parseOklch = (value: Oklch): { l: number; c: number; h: number } => {
+  const match = /^oklch\((\d+(?:\.\d+)?)%\s+(\d+(?:\.\d+)?)\s+(\d+(?:\.\d+)?)\)$/.exec(value);
+  if (!match) throw new Error(`Invalid OKLCH color: ${value}`);
+
+  return {
+    l: Number(match[1]) / 100,
+    c: Number(match[2]),
+    h: Number(match[3])
+  };
+};
+
+const linearToSrgb = (value: number) =>
+  value <= 0.0031308 ? 12.92 * value : 1.055 * value ** (1 / 2.4) - 0.055;
+
+const oklchToHex = (value: Oklch): Hex => {
+  const { l, c, h } = parseOklch(value);
+  const hue = (h * Math.PI) / 180;
+  const a = c * Math.cos(hue);
+  const b = c * Math.sin(hue);
+
+  const lPrime = l + 0.3963377774 * a + 0.2158037573 * b;
+  const mPrime = l - 0.1055613458 * a - 0.0638541728 * b;
+  const sPrime = l - 0.0894841775 * a - 1.291485548 * b;
+
+  const lCone = lPrime ** 3;
+  const mCone = mPrime ** 3;
+  const sCone = sPrime ** 3;
+
+  const red = linearToSrgb(4.0767416621 * lCone - 3.3077115913 * mCone + 0.2309699292 * sCone);
+  const green = linearToSrgb(-1.2684380046 * lCone + 2.6097574011 * mCone - 0.3413193965 * sCone);
+  const blue = linearToSrgb(-0.0041960863 * lCone - 0.7034186147 * mCone + 1.707614701 * sCone);
+
+  return `#${toByte(red)}${toByte(green)}${toByte(blue)}`;
+};
+
+const createPalette = (colors: typeof JACK_COLOR_PALETTE, alphas: AlphaPalette): Palette => {
+  const converted = Object.fromEntries(
+    Object.entries(colors).map(([id, value]) => [id, oklchToHex(value)])
+  ) as Record<keyof typeof JACK_COLOR_PALETTE, Hex>;
+  const transparent = withAlpha(converted.black, alphas.a00);
+
+  return {
+    ...converted,
+    border: transparent,
+    borderStrong: transparent,
+    transparent
+  };
+};
 
 const editorSurfaceIds = [
   "editor.background",
@@ -104,20 +186,20 @@ const transparentEditorOverlayIds = [
   "scrollbar.shadow"
 ] as const;
 
-const createWorkbenchColors = (C: Palette): Theme["colors"] => ({
+const createWorkbenchColors = (C: Palette, A: AlphaPalette): Theme["colors"] => ({
   ...keys(editorSurfaceIds, C.editor),
   ...keys(editorUnderlayIds, C.editorUnderlay),
   ...keys(transparentEditorOverlayIds, C.transparent),
 
   focusBorder: C.transparent,
   foreground: C.text,
-  disabledForeground: alpha(C.textMuted, 0.55),
+  disabledForeground: withAlpha(C.textMuted, A.a55),
   descriptionForeground: C.textMuted,
   errorForeground: C.red,
   "icon.foreground": C.textMuted,
-  "selection.background": alpha(C.amber, 0.24),
+  "selection.background": withAlpha(C.amber, A.a24),
   "sash.hoverBorder": C.transparent,
-  "widget.shadow": alpha("#000000", 0.45),
+  "widget.shadow": withAlpha(C.black, A.a45),
 
   "window.activeBorder": C.transparent,
   "window.inactiveBorder": C.transparent,
@@ -148,29 +230,29 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => ({
   "input.border": C.borderStrong,
   "input.foreground": C.textBright,
   "input.placeholderForeground": C.textFaint,
-  "inputOption.activeBackground": alpha(C.amber, 0.18),
+  "inputOption.activeBackground": withAlpha(C.amber, A.a18),
   "inputOption.activeBorder": C.transparent,
-  "inputValidation.errorBackground": alpha(C.red, 0.16),
+  "inputValidation.errorBackground": withAlpha(C.red, A.a16),
   "inputValidation.errorBorder": C.red,
-  "inputValidation.infoBackground": alpha(C.blue, 0.14),
+  "inputValidation.infoBackground": withAlpha(C.blue, A.a14),
   "inputValidation.infoBorder": C.blue,
-  "inputValidation.warningBackground": alpha(C.gold, 0.14),
+  "inputValidation.warningBackground": withAlpha(C.gold, A.a14),
   "inputValidation.warningBorder": C.gold,
 
-  "badge.background": alpha(C.amber, 0.22),
+  "badge.background": withAlpha(C.amber, A.a22),
   "badge.foreground": C.gold,
   "progressBar.background": C.amber,
 
-  "list.activeSelectionBackground": alpha(C.amber, 0.18),
+  "list.activeSelectionBackground": withAlpha(C.amber, A.a18),
   "list.activeSelectionForeground": C.textBright,
-  "list.dropBackground": alpha(C.sage, 0.18),
+  "list.dropBackground": withAlpha(C.sage, A.a18),
   "list.errorForeground": C.red,
-  "list.focusBackground": alpha(C.amber, 0.14),
+  "list.focusBackground": withAlpha(C.amber, A.a14),
   "list.focusForeground": C.textBright,
   "list.highlightForeground": C.amber,
-  "list.hoverBackground": alpha(C.textBright, 0.045),
-  "list.inactiveFocusBackground": alpha(C.textBright, 0.06),
-  "list.inactiveSelectionBackground": alpha(C.textBright, 0.08),
+  "list.hoverBackground": withAlpha(C.textBright, A.a04),
+  "list.inactiveFocusBackground": withAlpha(C.textBright, A.a06),
+  "list.inactiveSelectionBackground": withAlpha(C.textBright, A.a08),
   "list.invalidItemForeground": C.coral,
   "list.warningForeground": C.gold,
 
@@ -178,14 +260,14 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => ({
   "activityBar.border": C.border,
   "activityBar.foreground": C.text,
   "activityBar.inactiveForeground": C.textFaint,
-  "activityBar.activeBackground": alpha(C.amber, 0.08),
+  "activityBar.activeBackground": withAlpha(C.amber, A.a08),
   "activityBar.activeBorder": C.transparent,
   "activityBarBadge.background": C.amber,
   "activityBarBadge.foreground": C.editor,
   "activityBarTop.background": C.editor,
   "activityBarTop.foreground": C.text,
   "activityBarTop.inactiveForeground": C.textFaint,
-  "activityBarTop.activeBackground": alpha(C.amber, 0.08),
+  "activityBarTop.activeBackground": withAlpha(C.amber, A.a08),
   "activityBarTop.activeBorder": C.transparent,
 
   "sideBar.background": C.editor,
@@ -199,7 +281,7 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => ({
   "sideBarStickyScroll.background": C.editor,
 
   "editorGroup.border": C.border,
-  "editorGroup.dropBackground": alpha(C.amber, 0.12),
+  "editorGroup.dropBackground": withAlpha(C.amber, A.a12),
   "editorGroupHeader.tabsBorder": C.border,
   "editorGroupHeader.border": C.border,
   "tab.activeBackground": C.panel,
@@ -207,7 +289,7 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => ({
   "tab.activeBorderTop": C.transparent,
   "tab.activeForeground": C.textBright,
   "tab.border": C.border,
-  "tab.hoverBackground": alpha(C.textBright, 0.04),
+  "tab.hoverBackground": withAlpha(C.textBright, A.a04),
   "tab.hoverForeground": C.textBright,
   "tab.inactiveBackground": C.editor,
   "tab.inactiveForeground": C.textFaint,
@@ -220,29 +302,29 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => ({
   "editorLineNumber.dimmedForeground": C.textFaint,
   "editorCursor.background": C.editor,
   "editorCursor.foreground": C.amber,
-  "editor.selectionBackground": alpha(C.amber, 0.26),
+  "editor.selectionBackground": withAlpha(C.amber, A.a26),
   "editor.selectionForeground": C.textBright,
-  "editor.selectionHighlightBackground": alpha(C.amber, 0.12),
-  "editor.inactiveSelectionBackground": alpha(C.textBright, 0.1),
-  "editor.wordHighlightBackground": alpha(C.gold, 0.12),
-  "editor.wordHighlightStrongBackground": alpha(C.amber, 0.18),
-  "editor.wordHighlightTextBackground": alpha(C.gold, 0.1),
-  "editor.findMatchBackground": alpha(C.gold, 0.34),
+  "editor.selectionHighlightBackground": withAlpha(C.amber, A.a12),
+  "editor.inactiveSelectionBackground": withAlpha(C.textBright, A.a10),
+  "editor.wordHighlightBackground": withAlpha(C.gold, A.a12),
+  "editor.wordHighlightStrongBackground": withAlpha(C.amber, A.a18),
+  "editor.wordHighlightTextBackground": withAlpha(C.gold, A.a10),
+  "editor.findMatchBackground": withAlpha(C.gold, A.a34),
   "editor.findMatchBorder": C.transparent,
-  "editor.findMatchHighlightBackground": alpha(C.gold, 0.16),
-  "editor.findRangeHighlightBackground": alpha(C.amber, 0.1),
-  "editor.hoverHighlightBackground": alpha(C.amber, 0.08),
-  "editor.linkedEditingBackground": alpha(C.blue, 0.16),
-  "editor.rangeHighlightBackground": alpha(C.amber, 0.075),
-  "editor.symbolHighlightBackground": alpha(C.amber, 0.12),
-  "editorWhitespace.foreground": alpha(C.textFaint, 0.34),
-  "editorIndentGuide.background1": alpha(C.textFaint, 0.2),
-  "editorIndentGuide.activeBackground1": alpha(C.amber, 0.55),
-  "editorRuler.foreground": alpha(C.textFaint, 0.24),
+  "editor.findMatchHighlightBackground": withAlpha(C.gold, A.a16),
+  "editor.findRangeHighlightBackground": withAlpha(C.amber, A.a10),
+  "editor.hoverHighlightBackground": withAlpha(C.amber, A.a08),
+  "editor.linkedEditingBackground": withAlpha(C.blue, A.a16),
+  "editor.rangeHighlightBackground": withAlpha(C.amber, A.a08),
+  "editor.symbolHighlightBackground": withAlpha(C.amber, A.a12),
+  "editorWhitespace.foreground": withAlpha(C.textFaint, A.a34),
+  "editorIndentGuide.background1": withAlpha(C.textFaint, A.a20),
+  "editorIndentGuide.activeBackground1": withAlpha(C.amber, A.a55),
+  "editorRuler.foreground": withAlpha(C.textFaint, A.a24),
   "editorCodeLens.foreground": C.textFaint,
   "editorLightBulb.foreground": C.gold,
   "editorLightBulbAutoFix.foreground": C.sage,
-  "editorBracketMatch.background": alpha(C.amber, 0.12),
+  "editorBracketMatch.background": withAlpha(C.amber, A.a12),
   "editorBracketMatch.border": C.amber,
   "editorBracketHighlight.foreground1": C.amber,
   "editorBracketHighlight.foreground2": C.gold,
@@ -251,10 +333,10 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => ({
   "editorBracketHighlight.foreground5": C.violet,
   "editorBracketHighlight.foreground6": C.coral,
   "editorBracketHighlight.unexpectedBracket.foreground": C.red,
-  "editorBracketPairGuide.background1": alpha(C.textFaint, 0.18),
-  "editorBracketPairGuide.activeBackground1": alpha(C.amber, 0.45),
+  "editorBracketPairGuide.background1": withAlpha(C.textFaint, A.a18),
+  "editorBracketPairGuide.activeBackground1": withAlpha(C.amber, A.a45),
   "editorUnicodeHighlight.border": C.gold,
-  "editorUnicodeHighlight.background": alpha(C.gold, 0.14),
+  "editorUnicodeHighlight.background": withAlpha(C.gold, A.a14),
   "editor.foldBackground": C.editor,
   "editor.inlineValuesBackground": C.editor,
   "editor.inlineValuesForeground": C.textMuted,
@@ -263,39 +345,39 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => ({
   "editorGutter.deletedBackground": C.red,
   "editorGutter.modifiedBackground": C.blue,
   "editorGutter.commentRangeForeground": C.sageMuted,
-  "editorOverviewRuler.addedForeground": alpha(C.sage, 0.85),
-  "editorOverviewRuler.deletedForeground": alpha(C.red, 0.85),
-  "editorOverviewRuler.modifiedForeground": alpha(C.blue, 0.85),
+  "editorOverviewRuler.addedForeground": withAlpha(C.sage, A.a85),
+  "editorOverviewRuler.deletedForeground": withAlpha(C.red, A.a85),
+  "editorOverviewRuler.modifiedForeground": withAlpha(C.blue, A.a85),
   "editorOverviewRuler.border": C.border,
   "editorOverviewRuler.errorForeground": C.red,
   "editorOverviewRuler.warningForeground": C.gold,
   "editorOverviewRuler.infoForeground": C.blue,
   "editorOverviewRuler.findMatchForeground": C.gold,
-  "editorOverviewRuler.rangeHighlightForeground": alpha(C.amber, 0.32),
-  "editorOverviewRuler.selectionHighlightForeground": alpha(C.amber, 0.48),
-  "editorOverviewRuler.wordHighlightForeground": alpha(C.gold, 0.4),
-  "editorOverviewRuler.wordHighlightStrongForeground": alpha(C.amber, 0.5),
+  "editorOverviewRuler.rangeHighlightForeground": withAlpha(C.amber, A.a32),
+  "editorOverviewRuler.selectionHighlightForeground": withAlpha(C.amber, A.a48),
+  "editorOverviewRuler.wordHighlightForeground": withAlpha(C.gold, A.a40),
+  "editorOverviewRuler.wordHighlightStrongForeground": withAlpha(C.amber, A.a50),
   "editorError.foreground": C.red,
-  "editorError.border": alpha(C.red, 0.25),
-  "editorError.background": alpha(C.red, 0.12),
+  "editorError.border": withAlpha(C.red, A.a25),
+  "editorError.background": withAlpha(C.red, A.a12),
   "editorWarning.foreground": C.gold,
-  "editorWarning.border": alpha(C.gold, 0.24),
-  "editorWarning.background": alpha(C.gold, 0.1),
+  "editorWarning.border": withAlpha(C.gold, A.a24),
+  "editorWarning.background": withAlpha(C.gold, A.a10),
   "editorInfo.foreground": C.blue,
-  "editorInfo.border": alpha(C.blue, 0.24),
-  "editorInfo.background": alpha(C.blue, 0.1),
+  "editorInfo.border": withAlpha(C.blue, A.a24),
+  "editorInfo.background": withAlpha(C.blue, A.a10),
   "editorHint.foreground": C.sage,
-  "editorHint.border": alpha(C.sage, 0.24),
+  "editorHint.border": withAlpha(C.sage, A.a24),
   "problemsErrorIcon.foreground": C.red,
   "problemsWarningIcon.foreground": C.gold,
   "problemsInfoIcon.foreground": C.blue,
 
-  "diffEditor.insertedTextBackground": alpha(C.sage, 0.14),
-  "diffEditor.insertedLineBackground": alpha(C.sage, 0.08),
-  "diffEditor.removedTextBackground": alpha(C.red, 0.16),
-  "diffEditor.removedLineBackground": alpha(C.red, 0.08),
+  "diffEditor.insertedTextBackground": withAlpha(C.sage, A.a14),
+  "diffEditor.insertedLineBackground": withAlpha(C.sage, A.a08),
+  "diffEditor.removedTextBackground": withAlpha(C.red, A.a16),
+  "diffEditor.removedLineBackground": withAlpha(C.red, A.a08),
   "diffEditor.border": C.border,
-  "diffEditor.diagonalFill": alpha(C.textFaint, 0.18),
+  "diffEditor.diagonalFill": withAlpha(C.textFaint, A.a18),
   "diffEditor.unchangedRegionBackground": C.panel,
   "diffEditor.unchangedRegionForeground": C.textFaint,
   "diffEditor.unchangedCodeBackground": C.editor,
@@ -327,7 +409,7 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => ({
   "terminal.border": C.border,
   "terminalCursor.background": C.editor,
   "terminalCursor.foreground": C.amber,
-  "terminal.selectionBackground": alpha(C.amber, 0.26),
+  "terminal.selectionBackground": withAlpha(C.amber, A.a26),
 
   "statusBar.background": C.panel,
   "statusBar.border": C.border,
@@ -336,9 +418,9 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => ({
   "statusBar.debuggingForeground": C.editor,
   "statusBar.noFolderBackground": C.panel,
   "statusBar.noFolderForeground": C.text,
-  "statusBarItem.activeBackground": alpha(C.textBright, 0.1),
-  "statusBarItem.hoverBackground": alpha(C.textBright, 0.07),
-  "statusBarItem.prominentBackground": alpha(C.amber, 0.18),
+  "statusBarItem.activeBackground": withAlpha(C.textBright, A.a10),
+  "statusBarItem.hoverBackground": withAlpha(C.textBright, A.a08),
+  "statusBarItem.prominentBackground": withAlpha(C.amber, A.a18),
   "statusBarItem.prominentForeground": C.amber,
   "statusBarItem.remoteBackground": C.amber,
   "statusBarItem.remoteForeground": C.editor,
@@ -356,10 +438,10 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => ({
   "menu.background": C.popup,
   "menu.border": C.borderStrong,
   "menu.foreground": C.text,
-  "menu.selectionBackground": alpha(C.amber, 0.14),
+  "menu.selectionBackground": withAlpha(C.amber, A.a14),
   "menu.selectionForeground": C.textBright,
   "menu.separatorBackground": C.borderStrong,
-  "menubar.selectionBackground": alpha(C.textBright, 0.06),
+  "menubar.selectionBackground": withAlpha(C.textBright, A.a06),
   "menubar.selectionForeground": C.textBright,
 
   "notificationCenter.border": C.borderStrong,
@@ -375,7 +457,7 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => ({
 
   "quickInput.background": C.popup,
   "quickInput.foreground": C.text,
-  "quickInputList.focusBackground": alpha(C.amber, 0.14),
+  "quickInputList.focusBackground": withAlpha(C.amber, A.a14),
   "quickInputList.focusForeground": C.textBright,
   "quickInputTitle.background": C.panel,
   "pickerGroup.border": C.borderStrong,
@@ -389,7 +471,7 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => ({
   "settings.modifiedItemIndicator": C.amber,
   "settings.numberInputBackground": C.panel,
   "settings.numberInputBorder": C.borderStrong,
-  "settings.rowHoverBackground": alpha(C.textBright, 0.04),
+  "settings.rowHoverBackground": withAlpha(C.textBright, A.a04),
   "settings.sashBorder": C.border,
   "settings.textInputBackground": C.panel,
   "settings.textInputBorder": C.borderStrong,
@@ -401,11 +483,11 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => ({
   "breadcrumbPicker.background": C.popup,
 
   "peekView.border": C.transparent,
-  "peekViewEditor.matchHighlightBackground": alpha(C.gold, 0.28),
+  "peekViewEditor.matchHighlightBackground": withAlpha(C.gold, A.a28),
   "peekViewResult.fileForeground": C.textBright,
   "peekViewResult.lineForeground": C.textMuted,
-  "peekViewResult.matchHighlightBackground": alpha(C.gold, 0.22),
-  "peekViewResult.selectionBackground": alpha(C.amber, 0.14),
+  "peekViewResult.matchHighlightBackground": withAlpha(C.gold, A.a22),
+  "peekViewResult.selectionBackground": withAlpha(C.amber, A.a14),
   "peekViewResult.selectionForeground": C.textBright,
   "peekViewTitle.background": C.popup,
   "peekViewTitleDescription.foreground": C.textMuted,
@@ -423,21 +505,21 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => ({
   "gitDecoration.untrackedResourceForeground": C.sage,
 
   "minimap.findMatchHighlight": C.gold,
-  "minimap.selectionHighlight": alpha(C.amber, 0.48),
+  "minimap.selectionHighlight": withAlpha(C.amber, A.a48),
   "minimap.errorHighlight": C.red,
   "minimap.warningHighlight": C.gold,
   "minimap.infoHighlight": C.blue,
-  "minimap.foregroundOpacity": alpha("#000000", 0.35),
+  "minimap.foregroundOpacity": withAlpha(C.black, A.a35),
   "minimapGutter.addedBackground": C.sage,
   "minimapGutter.deletedBackground": C.red,
   "minimapGutter.modifiedBackground": C.blue,
-  "minimapSlider.activeBackground": alpha(C.textBright, 0.2),
-  "minimapSlider.background": alpha(C.textBright, 0.08),
-  "minimapSlider.hoverBackground": alpha(C.textBright, 0.14),
+  "minimapSlider.activeBackground": withAlpha(C.textBright, A.a20),
+  "minimapSlider.background": withAlpha(C.textBright, A.a08),
+  "minimapSlider.hoverBackground": withAlpha(C.textBright, A.a14),
 
-  "scrollbarSlider.activeBackground": alpha(C.textMuted, 0.34),
-  "scrollbarSlider.background": alpha(C.textMuted, 0.16),
-  "scrollbarSlider.hoverBackground": alpha(C.textMuted, 0.25),
+  "scrollbarSlider.activeBackground": withAlpha(C.textMuted, A.a34),
+  "scrollbarSlider.background": withAlpha(C.textMuted, A.a16),
+  "scrollbarSlider.hoverBackground": withAlpha(C.textMuted, A.a25),
 
   "charts.blue": C.blue,
   "charts.foreground": C.text,
@@ -464,6 +546,7 @@ type ThemeConfig = {
   name: string;
   type: Theme["type"];
   palette: Palette;
+  alphaPalette: AlphaPalette;
 };
 
 const token = (name: string, scope: TokenRule["scope"], foreground: Hex): TokenRule => ({
@@ -593,28 +676,30 @@ const assertThemeIntegrity = (theme: Theme, palette: Palette) => {
   }
 };
 
-const createTheme = (name: string, type: Theme["type"], palette: Palette): Theme => ({
+const createTheme = (name: string, type: Theme["type"], palette: Palette, alphaPalette: AlphaPalette): Theme => ({
   $schema: "vscode://schemas/color-theme",
   name,
   type,
   semanticHighlighting: true,
-  colors: createWorkbenchColors(palette),
+  colors: createWorkbenchColors(palette, alphaPalette),
   tokenColors: createTokenColors(palette),
   semanticTokenColors: createSemanticTokenColors(palette)
 });
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const JACK_PALETTE = createPalette(JACK_COLOR_PALETTE, JACK_ALPHA_PALETTE);
 const themes = [
   {
     fileName: "jacks-theme-color-theme.json",
     name: "Jack's Theme",
     type: "dark",
-    palette: JACK_PALETTE
+    palette: JACK_PALETTE,
+    alphaPalette: JACK_ALPHA_PALETTE
   }
 ] as const satisfies readonly ThemeConfig[];
 
-for (const { fileName, name, type, palette } of themes) {
-  const theme = createTheme(name, type, palette);
+for (const { fileName, name, type, palette, alphaPalette } of themes) {
+  const theme = createTheme(name, type, palette, alphaPalette);
   assertThemeIntegrity(theme, palette);
   const outputPath = join(__dirname, "..", "themes", fileName);
   mkdirSync(dirname(outputPath), { recursive: true });

@@ -19,15 +19,15 @@
     "peekViewEditorStickyScrollGutter.background": "#090909",
     "peekViewResult.background": "#090909",
     "walkThrough.embeddedEditorBackground": "#090909",
-    "editorGroup.emptyBackground": "#0b0b0b",
-    "editorGroupHeader.noTabsBackground": "#0b0b0b",
-    "editorGroupHeader.tabsBackground": "#0b0b0b",
-    "editorPane.background": "#0b0b0b",
-    "multiDiffEditor.background": "#0b0b0b",
-    "outputView.background": "#0b0b0b",
-    "terminal.background": "#0b0b0b",
-    "terminalStickyScroll.background": "#0b0b0b",
-    "welcomePage.background": "#0b0b0b",
+    "editorGroup.emptyBackground": "#090909",
+    "editorGroupHeader.noTabsBackground": "#090909",
+    "editorGroupHeader.tabsBackground": "#090909",
+    "editorPane.background": "#090909",
+    "multiDiffEditor.background": "#090909",
+    "outputView.background": "#090909",
+    "terminal.background": "#090909",
+    "terminalStickyScroll.background": "#090909",
+    "welcomePage.background": "#090909",
     "editor.inactiveLineHighlightBackground": "#00000000",
     "editor.lineHighlightBackground": "#00000000",
     "editor.lineHighlightBorder": "#00000000",
@@ -182,7 +182,7 @@
     "editorGutter.addedBackground": "#7ccf78",
     "editorGutter.deletedBackground": "#fd5456",
     "editorGutter.modifiedBackground": "#3dc4f0",
-    "editorGutter.commentRangeForeground": "#77a675",
+    "editorGutter.commentRangeForeground": "#809dbb",
     "editorOverviewRuler.addedForeground": "#7ccf78d6",
     "editorOverviewRuler.deletedForeground": "#fd5456d6",
     "editorOverviewRuler.modifiedForeground": "#3dc4f0d6",
@@ -380,7 +380,7 @@
         "punctuation.definition.comment"
       ],
       "settings": {
-        "foreground": "#77a675"
+        "foreground": "#809dbb"
       }
     },
     {
@@ -391,7 +391,7 @@
         "entity.name.type.instance.jsdoc"
       ],
       "settings": {
-        "foreground": "#77a675"
+        "foreground": "#809dbb"
       }
     },
     {
@@ -765,7 +765,7 @@
     "macro": "#f1cf53",
     "keyword": "#ff9d1b",
     "modifier": "#ff9d1b",
-    "comment": "#77a675",
+    "comment": "#809dbb",
     "string": "#7ccf78",
     "number": "#ff7c3e",
     "regexp": "#fc82c4",

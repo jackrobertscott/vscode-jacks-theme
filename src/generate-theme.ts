@@ -26,7 +26,6 @@ type Theme = {
 
 const JACK_COLOR_PALETTE = {
   editor: "oklch(13.98% 0 0)",
-  editorUnderlay: "oklch(14.96% 0 0)",
   panel: "oklch(17.30% 0 0)",
   popup: "oklch(19.57% 0 0)",
   hover: "oklch(23.50% 0 0)",
@@ -41,7 +40,7 @@ const JACK_COLOR_PALETTE = {
   amber: "oklch(79.40% 0.1770 62.00)",
   gold: "oklch(86.20% 0.1450 94.00)",
   sage: "oklch(78.00% 0.1450 143.00)",
-  sageMuted: "oklch(67.70% 0.0860 144.00)",
+  smokeBlue: "oklch(68.50% 0.0550 250.00)",
   aqua: "oklch(80.30% 0.1280 184.00)",
   blue: "oklch(76.80% 0.1280 224.00)",
   violet: "oklch(77.80% 0.1480 303.00)",
@@ -145,8 +144,7 @@ const editorSurfaceIds = [
   "walkThrough.embeddedEditorBackground"
 ] as const;
 
-// This is the surface that appears below the editor's rendered line layer when scrollBeyondLastLine is active.
-// It needs a tiny lift to visually match the painted editor layer in VS Code's compositor.
+// These surfaces appear below the editor's rendered line layer in VS Code's compositor.
 const editorUnderlayIds = [
   "editorGroup.emptyBackground",
   "editorGroupHeader.noTabsBackground",
@@ -175,7 +173,7 @@ const transparentEditorOverlayIds = [
 
 const createWorkbenchColors = (C: Palette, A: AlphaPalette): Theme["colors"] => ({
   ...keys(editorSurfaceIds, C.editor),
-  ...keys(editorUnderlayIds, C.editorUnderlay),
+  ...keys(editorUnderlayIds, C.editor),
   ...keys(transparentEditorOverlayIds, C.transparent),
 
   focusBorder: C.transparent,
@@ -331,7 +329,7 @@ const createWorkbenchColors = (C: Palette, A: AlphaPalette): Theme["colors"] => 
   "editorGutter.addedBackground": C.sage,
   "editorGutter.deletedBackground": C.red,
   "editorGutter.modifiedBackground": C.blue,
-  "editorGutter.commentRangeForeground": C.sageMuted,
+  "editorGutter.commentRangeForeground": C.smokeBlue,
   "editorOverviewRuler.addedForeground": withAlpha(C.sage, A.a84),
   "editorOverviewRuler.deletedForeground": withAlpha(C.red, A.a84),
   "editorOverviewRuler.modifiedForeground": withAlpha(C.blue, A.a84),
@@ -544,8 +542,8 @@ const token = (name: string, scope: TokenRule["scope"], foreground: Hex): TokenR
 
 const createTokenColors = (C: Palette): TokenRule[] => [
   token("Source text", ["source", "meta.embedded", "text.html.markdown"], C.text),
-  token("Comments", ["comment", "punctuation.definition.comment"], C.sageMuted),
-  token("Documentation comments", ["comment.block.documentation", "storage.type.class.jsdoc", "entity.name.type.instance.jsdoc"], C.sageMuted),
+  token("Comments", ["comment", "punctuation.definition.comment"], C.smokeBlue),
+  token("Documentation comments", ["comment.block.documentation", "storage.type.class.jsdoc", "entity.name.type.instance.jsdoc"], C.smokeBlue),
   token("Keywords and control flow", ["keyword", "keyword.control", "keyword.operator.expression", "storage.modifier"], C.amber),
   token("Imports and exports", ["keyword.control.import", "keyword.control.export", "storage.modifier.async", "keyword.control.from"], C.amber),
   token("Storage and declarations", ["storage.type", "storage.type.function", "storage.type.class", "storage.type.interface", "storage.type.type"], C.gold),
@@ -614,7 +612,7 @@ const createSemanticTokenColors = (C: Palette): Theme["semanticTokenColors"] => 
   macro: C.gold,
   keyword: C.amber,
   modifier: C.amber,
-  comment: C.sageMuted,
+  comment: C.smokeBlue,
   string: C.sage,
   number: C.coral,
   regexp: C.rose,
@@ -701,7 +699,7 @@ const assertThemeIntegrity = (theme: Theme, palette: Palette) => {
   }
 
   const editorSurfaceDrift = editorSurfaceIds.filter((id) => theme.colors[id] !== palette.editor);
-  const editorUnderlayDrift = editorUnderlayIds.filter((id) => theme.colors[id] !== palette.editorUnderlay);
+  const editorUnderlayDrift = editorUnderlayIds.filter((id) => theme.colors[id] !== palette.editor);
   if (editorSurfaceDrift.length || editorUnderlayDrift.length) {
     throw new Error(
       `Editor surface drift. Painted: ${editorSurfaceDrift.join(", ") || "none"}. Underlay: ${editorUnderlayDrift.join(", ") || "none"}.`

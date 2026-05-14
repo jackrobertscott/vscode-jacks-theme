@@ -447,7 +447,7 @@
         "storage.type.type"
       ],
       "settings": {
-        "foreground": "#fdbd63"
+        "foreground": "#dbb0ee"
       }
     },
     {
@@ -502,7 +502,7 @@
         "constant.other.enum"
       ],
       "settings": {
-        "foreground": "#fdbd63"
+        "foreground": "#d2c58d"
       }
     },
     {
@@ -513,7 +513,7 @@
         "constant.language.undefined"
       ],
       "settings": {
-        "foreground": "#fdbd63"
+        "foreground": "#d2c58d"
       }
     },
     {
@@ -632,7 +632,7 @@
         "entity.other.attribute-name"
       ],
       "settings": {
-        "foreground": "#fdbd63"
+        "foreground": "#d2c58d"
       }
     },
     {
@@ -684,7 +684,7 @@
         "entity.name.section.markdown"
       ],
       "settings": {
-        "foreground": "#fdbd63"
+        "foreground": "#d2c58d"
       }
     },
     {
@@ -741,7 +741,7 @@
         "markup.changed"
       ],
       "settings": {
-        "foreground": "#fdbd63"
+        "foreground": "#d2c58d"
       }
     },
     {
@@ -767,17 +767,17 @@
     }
   ],
   "semanticTokenColors": {
-    "namespace": "#dbb0ee",
+    "namespace": "#7ac9fc",
     "type": "#dbb0ee",
     "class": "#dbb0ee",
     "enum": "#fdbd63",
     "interface": "#dbb0ee",
     "struct": "#dbb0ee",
-    "typeParameter": "#dbb0ee",
+    "typeParameter": "#d2c58d",
     "parameter": "#d2c58d",
     "variable": "#d7d7d7",
     "property": "#d7d7d7",
-    "enumMember": "#fdbd63",
+    "enumMember": "#d2c58d",
     "event": "#99d49a",
     "function": "#7ac9fc",
     "method": "#7ac9fc",
@@ -786,12 +786,12 @@
     "modifier": "#fdbd63",
     "comment": "#a6aeb6",
     "string": "#99d49a",
-    "number": "#fdbd63",
+    "number": "#d2c58d",
     "regexp": "#99d49a",
     "operator": "#9f9f9f",
     "decorator": "#dbb0ee",
-    "variable.readonly": "#fdbd63",
-    "property.readonly": "#fdbd63",
+    "variable.readonly": "#d2c58d",
+    "property.readonly": "#d2c58d",
     "property.declaration": "#d7d7d7",
     "parameter.declaration": "#d2c58d",
     "function.declaration": "#7ac9fc",
@@ -799,7 +799,7 @@
     "class.declaration": "#dbb0ee",
     "interface.declaration": "#dbb0ee",
     "type.declaration": "#dbb0ee",
-    "enum.declaration": "#fdbd63",
+    "enum.declaration": "#dbb0ee",
     "*.deprecated": "#747474"
   }
 }

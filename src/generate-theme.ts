@@ -628,7 +628,7 @@ const createTokenColors = (C: Palette): TokenRule[] => [
       "storage.type.interface",
       "storage.type.type",
     ],
-    C.ember,
+    C.plum,
   ),
   token(
     "Operators",
@@ -660,7 +660,7 @@ const createTokenColors = (C: Palette): TokenRule[] => [
       "variable.other.constant",
       "constant.other.enum",
     ],
-    C.ember,
+    C.sand,
   ),
   token(
     "Booleans and nullish values",
@@ -669,7 +669,7 @@ const createTokenColors = (C: Palette): TokenRule[] => [
       "constant.language.null",
       "constant.language.undefined",
     ],
-    C.ember,
+    C.sand,
   ),
   token(
     "Functions",
@@ -752,7 +752,7 @@ const createTokenColors = (C: Palette): TokenRule[] => [
     ["entity.name.tag.tsx", "support.class.component.tsx"],
     C.sky,
   ),
-  token("JSX attributes", ["entity.other.attribute-name"], C.ember),
+  token("JSX attributes", ["entity.other.attribute-name"], C.sand),
   token(
     "Tag punctuation",
     [
@@ -783,7 +783,7 @@ const createTokenColors = (C: Palette): TokenRule[] => [
   token(
     "Markdown headings",
     ["markup.heading", "entity.name.section.markdown"],
-    C.ember,
+    C.sand,
   ),
   token(
     "Markdown links",
@@ -802,7 +802,7 @@ const createTokenColors = (C: Palette): TokenRule[] => [
     ["markup.deleted", "meta.diff.header.from-file"],
     C.clay,
   ),
-  token("Changed content", ["markup.changed"], C.ember),
+  token("Changed content", ["markup.changed"], C.sand),
   token("Invalid", ["invalid", "invalid.illegal"], C.clay),
   token(
     "Punctuation",
@@ -814,17 +814,17 @@ const createTokenColors = (C: Palette): TokenRule[] => [
 const createSemanticTokenColors = (
   C: Palette,
 ): Theme["semanticTokenColors"] => ({
-  namespace: C.plum,
+  namespace: C.sky,
   type: C.plum,
   class: C.plum,
   enum: C.ember,
   interface: C.plum,
   struct: C.plum,
-  typeParameter: C.plum,
+  typeParameter: C.sand,
   parameter: C.sand,
   variable: C.text,
   property: C.text,
-  enumMember: C.ember,
+  enumMember: C.sand,
   event: C.moss,
   function: C.sky,
   method: C.sky,
@@ -833,12 +833,12 @@ const createSemanticTokenColors = (
   modifier: C.ember,
   comment: C.ash,
   string: C.moss,
-  number: C.ember,
+  number: C.sand,
   regexp: C.moss,
   operator: C.muted,
   decorator: C.plum,
-  "variable.readonly": C.ember,
-  "property.readonly": C.ember,
+  "variable.readonly": C.sand,
+  "property.readonly": C.sand,
   "property.declaration": C.text,
   "parameter.declaration": C.sand,
   "function.declaration": C.sky,
@@ -846,7 +846,7 @@ const createSemanticTokenColors = (
   "class.declaration": C.plum,
   "interface.declaration": C.plum,
   "type.declaration": C.plum,
-  "enum.declaration": C.ember,
+  "enum.declaration": C.plum,
   "*.deprecated": C.faint,
 });
 

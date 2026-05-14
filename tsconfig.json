@@ -7,10 +7,12 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
+    "types": [
+      "node"
+    ],
     "outDir": "out"
   },
   "include": [
     "src/**/*.ts"
   ]
 }
-

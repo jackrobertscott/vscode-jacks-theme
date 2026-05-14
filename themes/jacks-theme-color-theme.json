@@ -225,7 +225,7 @@
     "panelTitle.inactiveForeground": "#5f5f5f",
     "panelInput.border": "#00000000",
     "terminal.foreground": "#c8c8c8",
-    "terminal.ansiBlack": "#171717",
+    "terminal.ansiBlack": "#090909",
     "terminal.ansiBlue": "#77b7d1",
     "terminal.ansiBrightBlack": "#5f5f5f",
     "terminal.ansiBrightBlue": "#77b7d1",

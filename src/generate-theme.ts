@@ -375,7 +375,7 @@ const createWorkbenchColors = (C: Palette, A: AlphaPalette): Theme["colors"] => 
   "panelInput.border": C.borderStrong,
 
   "terminal.foreground": C.text,
-  "terminal.ansiBlack": C.active,
+  "terminal.ansiBlack": C.editor,
   "terminal.ansiBlue": C.blue,
   "terminal.ansiBrightBlack": C.textFaint,
   "terminal.ansiBrightBlue": C.blue,

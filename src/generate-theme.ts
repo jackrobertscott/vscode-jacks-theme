@@ -31,7 +31,10 @@ const JACK_BACKGROUND_PALETTE = {
   panel: "oklch(15.80% 0 0)",
   popup: "oklch(16.40% 0 0)",
   hover: "oklch(19.20% 0 0)",
-  active: "oklch(21.00% 0 0)"
+  active: "oklch(21.00% 0 0)",
+  addition: "oklch(21.00% 0.0380 148.00)",
+  deletion: "oklch(20.50% 0.0500 24.00)",
+  change: "oklch(21.00% 0.0380 225.00)"
 } as const satisfies Record<string, Oklch>;
 
 const JACK_FONT_PALETTE = {
@@ -367,12 +370,15 @@ const createWorkbenchColors = (C: Palette, A: AlphaPalette): Theme["colors"] => 
   "problemsWarningIcon.foreground": C.gold,
   "problemsInfoIcon.foreground": C.blue,
 
-  "diffEditor.insertedTextBackground": withAlpha(C.sage, A.hint),
-  "diffEditor.insertedLineBackground": C.transparent,
-  "diffEditor.removedTextBackground": withAlpha(C.red, A.hint),
-  "diffEditor.removedLineBackground": C.transparent,
+  "diffEditor.insertedTextBackground": withAlpha(C.sage, A.firm),
+  "diffEditor.insertedLineBackground": C.addition,
+  "diffEditor.removedTextBackground": withAlpha(C.red, A.firm),
+  "diffEditor.removedLineBackground": C.deletion,
+  "diffEditorGutter.insertedLineBackground": C.addition,
+  "diffEditorGutter.removedLineBackground": C.deletion,
+  "diffEditorGutter.modifiedLineBackground": C.change,
   "diffEditor.border": C.border,
-  "diffEditor.diagonalFill": withAlpha(C.faint, A.wash),
+  "diffEditor.diagonalFill": withAlpha(C.muted, A.soft),
   "diffEditor.unchangedRegionBackground": C.panel,
   "diffEditor.unchangedRegionForeground": C.faint,
   "diffEditor.unchangedCodeBackground": C.editor,

@@ -210,8 +210,7 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
   const F = C.font;
   const subtle = withAlpha(B.hover, 0.72);
   const medium = withAlpha(B.active, 0.72);
-  const accent = withAlpha(B.accent, 0.76);
-  const ember = withAlpha(B.ember, 0.76);
+  const highlight = withAlpha(B.sky, 0.76);
   const success = withAlpha(B.success, 0.74);
   const danger = withAlpha(B.danger, 0.74);
 
@@ -228,7 +227,7 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
     descriptionForeground: F.muted,
     errorForeground: F.clay,
     "icon.foreground": F.muted,
-    "selection.background": B.accent,
+    "selection.background": B.sky,
     "sash.hoverBorder": B.transparent,
     "widget.shadow": B.shadow,
 
@@ -339,16 +338,16 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
     "editorLineNumber.dimmedForeground": F.faint,
     "editorCursor.background": B.editor,
     "editorCursor.foreground": F.sky,
-    "editor.selectionBackground": B.accent,
+    "editor.selectionBackground": B.sky,
     "editor.selectionForeground": F.text,
     "editor.selectionHighlightBackground": subtle,
     "editor.inactiveSelectionBackground": subtle,
     "editor.wordHighlightBackground": subtle,
     "editor.wordHighlightStrongBackground": medium,
     "editor.wordHighlightTextBackground": subtle,
-    "editor.findMatchBackground": B.accent,
+    "editor.findMatchBackground": B.sky,
     "editor.findMatchBorder": B.transparent,
-    "editor.findMatchHighlightBackground": accent,
+    "editor.findMatchHighlightBackground": highlight,
     "editor.findRangeHighlightBackground": medium,
     "editor.hoverHighlightBackground": subtle,
     "editor.linkedEditingBackground": B.active,
@@ -389,9 +388,9 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
     "editorOverviewRuler.errorForeground": F.clay,
     "editorOverviewRuler.warningForeground": F.sand,
     "editorOverviewRuler.infoForeground": F.sky,
-    "editorOverviewRuler.findMatchForeground": ember,
+    "editorOverviewRuler.findMatchForeground": highlight,
     "editorOverviewRuler.rangeHighlightForeground": subtle,
-    "editorOverviewRuler.selectionHighlightForeground": accent,
+    "editorOverviewRuler.selectionHighlightForeground": highlight,
     "editorOverviewRuler.wordHighlightForeground": subtle,
     "editorOverviewRuler.wordHighlightStrongForeground": medium,
     "editorError.foreground": F.clay,
@@ -448,7 +447,7 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
     "terminal.border": B.transparent,
     "terminalCursor.background": B.editor,
     "terminalCursor.foreground": F.sky,
-    "terminal.selectionBackground": B.accent,
+    "terminal.selectionBackground": B.sky,
 
     "debugToolBar.background": B.popup,
     "debugToolBar.border": B.transparent,
@@ -547,10 +546,10 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
     "breadcrumbPicker.background": B.popup,
 
     "peekView.border": B.transparent,
-    "peekViewEditor.matchHighlightBackground": B.accent,
+    "peekViewEditor.matchHighlightBackground": B.sky,
     "peekViewResult.fileForeground": F.text,
     "peekViewResult.lineForeground": F.muted,
-    "peekViewResult.matchHighlightBackground": B.accent,
+    "peekViewResult.matchHighlightBackground": B.sky,
     "peekViewResult.selectionBackground": B.active,
     "peekViewResult.selectionForeground": F.text,
     "peekViewTitle.background": B.popup,
@@ -568,8 +567,8 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
     "gitDecoration.submoduleResourceForeground": F.sky,
     "gitDecoration.untrackedResourceForeground": F.moss,
 
-    "minimap.findMatchHighlight": ember,
-    "minimap.selectionHighlight": accent,
+    "minimap.findMatchHighlight": highlight,
+    "minimap.selectionHighlight": highlight,
     "minimap.errorHighlight": F.clay,
     "minimap.warningHighlight": F.sand,
     "minimap.infoHighlight": F.sky,

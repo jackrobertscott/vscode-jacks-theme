@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.4.15 - 2026-05-15
+
+### Changed
+
+- Changed editor, terminal, peek, and minimap highlights to use the cursor-matched blue color family.
+
 ## 0.4.14 - 2026-05-15
 
 ### Changed

@@ -438,7 +438,7 @@
       }
     },
     {
-      "name": "Storage and declarations",
+      "name": "Declaration keywords",
       "scope": [
         "storage.type",
         "storage.type.function",
@@ -447,7 +447,7 @@
         "storage.type.type"
       ],
       "settings": {
-        "foreground": "#dabffb"
+        "foreground": "#ded4a1"
       }
     },
     {
@@ -498,7 +498,6 @@
         "constant.numeric",
         "constant.language",
         "constant.character",
-        "variable.other.constant",
         "constant.other.enum"
       ],
       "settings": {
@@ -521,7 +520,6 @@
       "scope": [
         "entity.name.function",
         "support.function",
-        "meta.function-call",
         "variable.function",
         "support.function.console"
       ],
@@ -533,8 +531,7 @@
       "name": "Methods",
       "scope": [
         "entity.name.function.member",
-        "support.function.dom",
-        "meta.method-call"
+        "support.function.dom"
       ],
       "settings": {
         "foreground": "#90d9fd"
@@ -560,9 +557,7 @@
         "entity.name.type",
         "entity.name.type.module",
         "entity.name.type.namespace",
-        "support.type.primitive",
-        "meta.type.parameters",
-        "meta.type.annotation"
+        "support.type.primitive"
       ],
       "settings": {
         "foreground": "#dabffb"
@@ -586,11 +581,10 @@
       "name": "Parameters",
       "scope": [
         "variable.parameter",
-        "meta.parameters",
         "entity.name.variable.parameter"
       ],
       "settings": {
-        "foreground": "#ded4a1"
+        "foreground": "#e2dfd7"
       }
     },
     {
@@ -598,6 +592,7 @@
       "scope": [
         "variable",
         "variable.other.readwrite",
+        "variable.other.constant",
         "entity.name.variable",
         "variable.language.this"
       ],
@@ -770,11 +765,11 @@
     "namespace": "#90d9fd",
     "type": "#dabffb",
     "class": "#dabffb",
-    "enum": "#ded4a1",
+    "enum": "#dabffb",
     "interface": "#dabffb",
     "struct": "#dabffb",
     "typeParameter": "#ded4a1",
-    "parameter": "#ded4a1",
+    "parameter": "#e2dfd7",
     "variable": "#e2dfd7",
     "property": "#e2dfd7",
     "enumMember": "#ded4a1",
@@ -791,15 +786,18 @@
     "operator": "#a6b4bd",
     "decorator": "#dabffb",
     "variable.readonly": "#e2dfd7",
+    "variable.declaration": "#e2dfd7",
+    "variable.readonly.declaration": "#e2dfd7",
     "property.readonly": "#e2dfd7",
     "property.declaration": "#e2dfd7",
-    "parameter.declaration": "#ded4a1",
+    "parameter.declaration": "#e2dfd7",
+    "typeParameter.declaration": "#ded4a1",
     "function.declaration": "#90d9fd",
     "method.declaration": "#90d9fd",
     "class.declaration": "#dabffb",
     "interface.declaration": "#dabffb",
     "type.declaration": "#dabffb",
-    "enum.declaration": "#ded4a1",
+    "enum.declaration": "#dabffb",
     "*.deprecated": "#828e95"
   }
 }

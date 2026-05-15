@@ -440,7 +440,7 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
     "terminalCursor.foreground": F.sky,
     "terminal.selectionBackground": B.accent,
 
-    "debugToolBar.background": B.plum,
+    "debugToolBar.background": B.popup,
     "debugToolBar.border": B.transparent,
 
     "statusBar.background": B.editor,

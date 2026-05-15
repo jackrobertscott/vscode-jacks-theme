@@ -252,7 +252,7 @@
     "terminalCursor.background": "#101010",
     "terminalCursor.foreground": "#67b9ff",
     "terminal.selectionBackground": "#583c05",
-    "debugToolBar.background": "#523267",
+    "debugToolBar.background": "#1b1b1b",
     "debugToolBar.border": "#00000000",
     "statusBar.background": "#101010",
     "statusBar.border": "#00000000",

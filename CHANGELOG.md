@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.4.7 - 2026-05-15
+
+### Changed
+
+- Matched the floating debug toolbar background to the theme's dark popup surface.
+
 ## 0.4.6 - 2026-05-15
 
 ### Changed

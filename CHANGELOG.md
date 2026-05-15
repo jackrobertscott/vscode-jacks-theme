@@ -2,6 +2,13 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.4.14 - 2026-05-15
+
+### Changed
+
+- Changed Jack's Theme Bordered to use only grayscale border colors.
+- Matched the active editor line highlight to the cursor color family.
+
 ## 0.4.13 - 2026-05-15
 
 ### Added

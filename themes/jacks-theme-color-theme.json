@@ -38,7 +38,7 @@
     "scrollbar.background": "#00000000",
     "scrollbar.shadow": "#00000000",
     "editor.inactiveLineHighlightBackground": "#101010",
-    "editor.lineHighlightBackground": "#161616",
+    "editor.lineHighlightBackground": "#67b9ff29",
     "focusBorder": "#00000000",
     "foreground": "#d7d7d7",
     "disabledForeground": "#7d7d7d",

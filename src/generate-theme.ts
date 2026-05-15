@@ -59,10 +59,7 @@ const JACK_FONT_PALETTE = {
 const JACK_BORDER_PALETTE = {
   subtle: "oklch(24.80% 0 0)",
   quiet: "oklch(28.40% 0 0)",
-  focus: "oklch(36.00% 0.0300 78.00)",
-  warning: "oklch(38.00% 0.0760 78.00)",
-  danger: "oklch(39.00% 0.0920 28.00)",
-  info: "oklch(37.00% 0.0720 230.00)",
+  focus: "oklch(35.40% 0 0)",
 } as const satisfies Record<string, Oklch>;
 
 type BackgroundPalette = Record<keyof typeof JACK_BACKGROUND_PALETTE, Hex> & {
@@ -224,7 +221,7 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
     ...keys(transparentEditorOverlayIds, B.transparent),
 
     "editor.inactiveLineHighlightBackground": B.editor,
-    "editor.lineHighlightBackground": B.panel,
+    "editor.lineHighlightBackground": withAlpha(F.sky, 0.16),
     focusBorder: B.transparent,
     foreground: F.text,
     disabledForeground: F.faint,
@@ -629,9 +626,9 @@ const createBorderedWorkbenchColors = (C: Palette): Theme["colors"] => {
     "dropdown.border": R.quiet,
     "input.border": R.quiet,
     "inputOption.activeBorder": R.focus,
-    "inputValidation.errorBorder": R.danger,
-    "inputValidation.infoBorder": R.info,
-    "inputValidation.warningBorder": R.warning,
+    "inputValidation.errorBorder": R.focus,
+    "inputValidation.infoBorder": R.focus,
+    "inputValidation.warningBorder": R.focus,
 
     "activityBar.border": R.subtle,
     "activityBar.activeBorder": R.focus,
@@ -1049,6 +1046,7 @@ const visibleAlphaWorkbenchColors = new Set([
   "widget.shadow",
 ]);
 const transparentWorkbenchColors = new Set([
+  "editor.lineHighlightBackground",
   "editor.selectionHighlightBackground",
   "editor.inactiveSelectionBackground",
   "editor.wordHighlightBackground",

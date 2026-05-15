@@ -2,7 +2,7 @@
   "name": "jacks-theme",
   "displayName": "Jack's Theme",
   "description": "A quiet dark VS Code theme with consistent editor surfaces and warm blackboard-inspired highlighting.",
-  "version": "0.4.13",
+  "version": "0.4.14",
   "publisher": "jackrobertscott",
   "type": "module",
   "license": "MIT",
@@ -16,7 +16,7 @@
   ],
   "badges": [
     {
-      "url": "https://img.shields.io/badge/version-0.4.13-d8b84d?style=flat-square",
+      "url": "https://img.shields.io/badge/version-0.4.14-d8b84d?style=flat-square",
       "href": "https://marketplace.visualstudio.com/items?itemName=jackrobertscott.jacks-theme",
       "description": "Jack's Theme extension version"
     },

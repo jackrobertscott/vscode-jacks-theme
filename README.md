@@ -12,7 +12,7 @@ The generated themes only set color values. They do not set token font styles.
 npm install
 npm run generate
 vsce package --allow-missing-repository
-code --install-extension jacks-theme-0.4.2.vsix --force
+code --install-extension "$(ls -t *.vsix | head -n 1)" --force
 ```
 
 Do not edit `themes/jacks-theme-color-theme.json` directly. Edit `src/generate-theme.ts` and regenerate.

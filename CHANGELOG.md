@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.4.12 - 2026-05-15
+
+### Changed
+
+- Added public GitHub repository metadata for `jackrobertscott/vscode-jacks-theme`.
+
 ## 0.4.11 - 2026-05-15
 
 ### Changed

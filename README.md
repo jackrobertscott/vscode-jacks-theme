@@ -1,12 +1,14 @@
 # Jack's Theme
 
-[![Version](https://img.shields.io/badge/version-0.4.11-d8b84d?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=jackrobertscott.jacks-theme)
+[![Version](https://img.shields.io/badge/version-0.4.12-d8b84d?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=jackrobertscott.jacks-theme)
 [![VS Code](https://img.shields.io/badge/VS%20Code-%5E1.90.0-67b9ff?style=flat-square)](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#visual-studio-code-compatibility)
 [![License](https://img.shields.io/badge/license-MIT-76c26e?style=flat-square)](https://opensource.org/license/mit)
 
 A quiet dark theme for Visual Studio Code with consistent editor surfaces, warm blackboard-inspired highlighting, and no decorative borders.
 
 Jack's Theme is generated from a TypeScript source palette. The generated theme sets colors only; it does not set token font styles.
+
+Source code is available at <https://github.com/jackrobertscott/vscode-jacks-theme>.
 
 ## Features
 

@@ -39,6 +39,21 @@ const JACK_BACKGROUND_PALETTE = {
 } as const satisfies Record<string, Oklch>;
 
 const JACK_FONT_PALETTE = {
+  bright: "oklch(98.00% 0.0100 95.00)",
+  text: "oklch(90.40% 0.0120 95.00)",
+  muted: "oklch(58.50% 0.0350 265.00)",
+  faint: "oklch(50.50% 0.0250 265.00)",
+
+  ember: "oklch(80.80% 0.1550 32.00)",
+  sand: "oklch(83.80% 0.1450 138.00)",
+  moss: "oklch(82.20% 0.1050 182.00)",
+  ash: "oklch(70.00% 0.0400 190.00)",
+  sky: "oklch(78.00% 0.1400 248.00)",
+  plum: "oklch(84.40% 0.1200 300.00)",
+  clay: "oklch(74.00% 0.1700 340.00)",
+} as const satisfies Record<string, Oklch>;
+
+const JACK_TOKEN_PALETTE = {
   bright: "oklch(96.80% 0.0300 82.00)",
   text: "oklch(88.00% 0.0350 72.00)",
   muted: "oklch(74.00% 0.0300 74.00)",
@@ -61,6 +76,7 @@ const JACK_ALPHA_PALETTE = {
 
 type AlphaPalette = typeof JACK_ALPHA_PALETTE;
 type ColorPalette = typeof JACK_BACKGROUND_PALETTE & typeof JACK_FONT_PALETTE;
+type TokenPalette = Record<keyof typeof JACK_TOKEN_PALETTE, Hex>;
 type Palette = Record<keyof ColorPalette, Hex> & {
   shadow: Hex;
   minimap: Hex;
@@ -122,10 +138,15 @@ const oklchToHex = (value: Oklch): Hex => {
   return `#${toByte(red)}${toByte(green)}${toByte(blue)}`;
 };
 
-const createPalette = (colors: ColorPalette, alphas: AlphaPalette): Palette => {
-  const converted = Object.fromEntries(
+const createColorMap = <T extends Record<string, Oklch>>(
+  colors: T,
+): Record<keyof T, Hex> =>
+  Object.fromEntries(
     Object.entries(colors).map(([id, value]) => [id, oklchToHex(value)]),
-  ) as Record<keyof ColorPalette, Hex>;
+  ) as Record<keyof T, Hex>;
+
+const createPalette = (colors: ColorPalette, alphas: AlphaPalette): Palette => {
+  const converted = createColorMap(colors);
   const transparent = withAlpha(converted.black, alphas.none);
 
   return {
@@ -583,7 +604,7 @@ const token = (
   settings: { foreground },
 });
 
-const createTokenColors = (C: Palette): TokenRule[] => [
+const createTokenColors = (C: TokenPalette): TokenRule[] => [
   token(
     "Source text",
     ["source", "meta.embedded", "text.html.markdown"],
@@ -809,7 +830,7 @@ const createTokenColors = (C: Palette): TokenRule[] => [
 ];
 
 const createSemanticTokenColors = (
-  C: Palette,
+  C: TokenPalette,
 ): Theme["semanticTokenColors"] => ({
   namespace: C.sky,
   type: C.plum,
@@ -981,7 +1002,7 @@ const assertSingleWordPaletteProperties = (
   }
 };
 
-const assertSyntaxColorSeparation = (palette: Palette) => {
+const assertSyntaxColorSeparation = (palette: TokenPalette) => {
   const syntaxRoles = {
     comment: palette.ash,
     declaration: palette.sand,
@@ -1006,8 +1027,12 @@ const assertSyntaxColorSeparation = (palette: Palette) => {
   }
 };
 
-const assertThemeIntegrity = (theme: Theme, palette: Palette) => {
-  assertSyntaxColorSeparation(palette);
+const assertThemeIntegrity = (
+  theme: Theme,
+  palette: Palette,
+  tokenPalette: TokenPalette,
+) => {
+  assertSyntaxColorSeparation(tokenPalette);
 
   for (const [id, value] of Object.entries(theme.colors)) {
     assertHex(value, `colors.${id}`);
@@ -1088,24 +1113,27 @@ const createTheme = (
   name: string,
   type: Theme["type"],
   palette: Palette,
+  tokenPalette: TokenPalette,
 ): Theme => ({
   $schema: "vscode://schemas/color-theme",
   name,
   type,
   semanticHighlighting: true,
   colors: createWorkbenchColors(palette),
-  tokenColors: createTokenColors(palette),
-  semanticTokenColors: createSemanticTokenColors(palette),
+  tokenColors: createTokenColors(tokenPalette),
+  semanticTokenColors: createSemanticTokenColors(tokenPalette),
 });
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 assertSingleWordPaletteProperties("background", JACK_BACKGROUND_PALETTE);
 assertSingleWordPaletteProperties("font", JACK_FONT_PALETTE);
+assertSingleWordPaletteProperties("token", JACK_TOKEN_PALETTE);
 assertSingleWordPaletteProperties("alpha", JACK_ALPHA_PALETTE);
 const JACK_PALETTE = createPalette(
   { ...JACK_BACKGROUND_PALETTE, ...JACK_FONT_PALETTE },
   JACK_ALPHA_PALETTE,
 );
+const JACK_TOKEN_COLORS = createColorMap(JACK_TOKEN_PALETTE);
 const themes = [
   {
     fileName: "jacks-theme-color-theme.json",
@@ -1116,8 +1144,8 @@ const themes = [
 ] as const satisfies readonly ThemeConfig[];
 
 for (const { fileName, name, type, palette } of themes) {
-  const theme = createTheme(name, type, palette);
-  assertThemeIntegrity(theme, palette);
+  const theme = createTheme(name, type, palette, JACK_TOKEN_COLORS);
+  assertThemeIntegrity(theme, palette, JACK_TOKEN_COLORS);
   const outputPath = join(__dirname, "..", "themes", fileName);
   mkdirSync(dirname(outputPath), { recursive: true });
   writeFileSync(outputPath, JSON.stringify(theme, null, 2) + "\n");

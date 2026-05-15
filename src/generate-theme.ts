@@ -191,6 +191,7 @@ const transparentEditorOverlayIds = [
   "editor.wordHighlightBorder",
   "editor.wordHighlightStrongBorder",
   "editor.wordHighlightTextBorder",
+  "scrollbar.background",
   "scrollbar.shadow",
 ] as const;
 
@@ -211,8 +212,6 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
 
     "editor.inactiveLineHighlightBackground": B.editor,
     "editor.lineHighlightBackground": B.panel,
-    "scrollbar.background": B.editor,
-
     focusBorder: B.transparent,
     foreground: F.text,
     disabledForeground: F.faint,
@@ -572,9 +571,9 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
     "minimapSlider.background": B.guide,
     "minimapSlider.hoverBackground": F.faint,
 
-    "scrollbarSlider.activeBackground": F.muted,
-    "scrollbarSlider.background": B.guide,
-    "scrollbarSlider.hoverBackground": F.faint,
+    "scrollbarSlider.activeBackground": withAlpha(F.muted, 0.84),
+    "scrollbarSlider.background": withAlpha(B.guide, 0.62),
+    "scrollbarSlider.hoverBackground": withAlpha(F.faint, 0.72),
 
     "charts.blue": F.sky,
     "charts.foreground": F.text,
@@ -959,6 +958,9 @@ const oklabDistance = (left: Hex, right: Hex) => {
 const colorSettingKeys = new Set(["foreground", "background"]);
 const visibleAlphaWorkbenchColors = new Set([
   "minimap.foregroundOpacity",
+  "scrollbarSlider.activeBackground",
+  "scrollbarSlider.background",
+  "scrollbarSlider.hoverBackground",
   "widget.shadow",
 ]);
 const transparentWorkbenchColors = new Set([

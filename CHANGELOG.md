@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.4.5 - 2026-05-15
+
+### Added
+
+- Added a blocky theme icon based on the palette colors.
+
 ## 0.4.4 - 2026-05-15
 
 ### Added
@@ -13,7 +19,6 @@ All notable changes to Jack's Theme are tracked here. Version headings match the
 ### Changed
 
 - Rewrote the README for Marketplace presentation, local installation, and development workflow.
-- Bumped the extension package from `0.4.3` to `0.4.4`.
 
 ## 0.4.3 - 2026-05-15
 

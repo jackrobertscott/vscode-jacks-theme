@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">Jack's Theme icon</title>
+  <desc id="desc">A blocky dark theme icon with a cream J and warm syntax color blocks.</desc>
+  <rect width="128" height="128" fill="#101010"/>
+  <rect x="16" y="16" width="96" height="16" fill="#d8b84d"/>
+  <rect x="96" y="32" width="16" height="64" fill="#67b9ff"/>
+  <rect x="64" y="80" width="32" height="16" fill="#67b9ff"/>
+  <rect x="48" y="64" width="16" height="32" fill="#e6d4bf"/>
+  <rect x="32" y="80" width="16" height="16" fill="#e6d4bf"/>
+  <rect x="32" y="96" width="48" height="16" fill="#e6d4bf"/>
+  <rect x="16" y="48" width="16" height="16" fill="#de77ab"/>
+  <rect x="32" y="48" width="16" height="16" fill="#d8b84d"/>
+  <rect x="48" y="48" width="16" height="16" fill="#76c26e"/>
+  <rect x="16" y="64" width="16" height="16" fill="#67b9ff"/>
+  <rect x="32" y="64" width="16" height="16" fill="#e6d4bf"/>
+  <rect x="80" y="96" width="16" height="16" fill="#203e59"/>
+  <rect x="96" y="96" width="16" height="16" fill="#4e3613"/>
+</svg>

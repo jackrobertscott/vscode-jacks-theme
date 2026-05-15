@@ -32,16 +32,16 @@ const JACK_BACKGROUND_PALETTE = {
   hover: "oklch(25.80% 0 0)",
   active: "oklch(29.40% 0 0)",
   guide: "oklch(35.40% 0 0)",
-  accent: "oklch(35.40% 0.0600 74.00)",
-  success: "oklch(28.80% 0.0480 145.00)",
-  danger: "oklch(28.50% 0.0560 30.00)",
-  info: "oklch(27.20% 0.0400 238.00)",
-  ember: "oklch(35.60% 0.0750 32.00)",
-  sand: "oklch(36.00% 0.0680 92.00)",
-  moss: "oklch(34.00% 0.0630 142.00)",
-  sky: "oklch(35.40% 0.0600 248.00)",
-  plum: "oklch(34.80% 0.0640 318.00)",
-  clay: "oklch(34.60% 0.0700 350.00)",
+  accent: "oklch(38.00% 0.0760 78.00)",
+  success: "oklch(41.00% 0.0850 148.00)",
+  danger: "oklch(39.00% 0.0920 28.00)",
+  info: "oklch(37.00% 0.0720 230.00)",
+  ember: "oklch(39.00% 0.0960 34.00)",
+  sand: "oklch(40.00% 0.0880 96.00)",
+  moss: "oklch(38.00% 0.0880 136.00)",
+  sky: "oklch(39.00% 0.0820 250.00)",
+  plum: "oklch(38.00% 0.0940 310.00)",
+  clay: "oklch(38.50% 0.0960 352.00)",
 } as const satisfies Record<string, Oklch>;
 
 const JACK_FONT_PALETTE = {
@@ -440,6 +440,9 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
     "terminalCursor.foreground": F.sky,
     "terminal.selectionBackground": B.accent,
 
+    "debugToolBar.background": B.plum,
+    "debugToolBar.border": B.transparent,
+
     "statusBar.background": B.editor,
     "statusBar.border": B.transparent,
     "statusBar.foreground": F.text,
@@ -483,7 +486,7 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
     "commandCenter.inactiveForeground": F.faint,
     "commandCenter.inactiveBorder": B.transparent,
     "commandCenter.activeBorder": B.transparent,
-    "commandCenter.debuggingBackground": withAlpha(B.editor, 0.96),
+    "commandCenter.debuggingBackground": withAlpha(B.plum, 0.88),
 
     "notificationCenter.border": B.transparent,
     "notificationCenterHeader.background": B.panel,

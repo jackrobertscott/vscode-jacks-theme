@@ -2,6 +2,13 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.4.6 - 2026-05-15
+
+### Changed
+
+- Brightened and separated semantic background palette colors for clearer git diff, gutter, and status treatments.
+- Set explicit debugging command bar colors to avoid the default grey toolbar.
+
 ## 0.4.5 - 2026-05-15
 
 ### Added

@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.4.8 - 2026-05-15
+
+### Changed
+
+- Added theme-matched debug control icon colors for the floating debug toolbar.
+
 ## 0.4.7 - 2026-05-15
 
 ### Changed

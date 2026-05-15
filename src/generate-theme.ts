@@ -442,6 +442,16 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
 
     "debugToolBar.background": B.popup,
     "debugToolBar.border": B.transparent,
+    "debugIcon.continueForeground": F.moss,
+    "debugIcon.disconnectForeground": F.clay,
+    "debugIcon.pauseForeground": F.sand,
+    "debugIcon.restartForeground": F.sky,
+    "debugIcon.startForeground": F.moss,
+    "debugIcon.stepBackForeground": F.sky,
+    "debugIcon.stepIntoForeground": F.sky,
+    "debugIcon.stepOutForeground": F.sky,
+    "debugIcon.stepOverForeground": F.sky,
+    "debugIcon.stopForeground": F.clay,
 
     "statusBar.background": B.editor,
     "statusBar.border": B.transparent,

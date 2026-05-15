@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.4.11 - 2026-05-15
+
+### Changed
+
+- Removed chroma from neutral foreground palette colors so default text, muted text, faint text, and comments render as true grayscale.
+
 ## 0.4.10 - 2026-05-15
 
 ### Changed

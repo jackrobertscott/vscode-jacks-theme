@@ -45,13 +45,12 @@ const JACK_BACKGROUND_PALETTE = {
 } as const satisfies Record<string, Oklch>;
 
 const JACK_FONT_PALETTE = {
-  text: "oklch(88.00% 0.0350 72.00)",
-  muted: "oklch(66.00% 0.0360 252.00)",
-  faint: "oklch(53.00% 0.0300 258.00)",
+  text: "oklch(88.00% 0 0)",
+  muted: "oklch(69.00% 0 0)",
+  faint: "oklch(59.00% 0 0)",
   ember: "oklch(76.50% 0.1500 34.00)",
   sand: "oklch(79.00% 0.1300 92.00)",
   moss: "oklch(74.50% 0.1400 142.00)",
-  ash: "oklch(61.50% 0.0460 72.00)",
   sky: "oklch(76.50% 0.1350 248.00)",
   plum: "oklch(78.00% 0.1250 318.00)",
   clay: "oklch(70.00% 0.1400 350.00)",
@@ -371,7 +370,7 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
     "editorGutter.addedBackground": B.moss,
     "editorGutter.deletedBackground": B.clay,
     "editorGutter.modifiedBackground": B.sky,
-    "editorGutter.commentRangeForeground": F.ash,
+    "editorGutter.commentRangeForeground": F.faint,
     "editorOverviewRuler.addedForeground": F.moss,
     "editorOverviewRuler.deletedForeground": F.clay,
     "editorOverviewRuler.modifiedForeground": F.sky,
@@ -620,7 +619,7 @@ const createTokenColors = (F: FontPalette): TokenRule[] => [
     ["source", "meta.embedded", "text.html.markdown"],
     F.text,
   ),
-  token("Comments", ["comment", "punctuation.definition.comment"], F.ash),
+  token("Comments", ["comment", "punctuation.definition.comment"], F.faint),
   token(
     "Documentation comments",
     [
@@ -628,7 +627,7 @@ const createTokenColors = (F: FontPalette): TokenRule[] => [
       "storage.type.class.jsdoc",
       "entity.name.type.instance.jsdoc",
     ],
-    F.ash,
+    F.faint,
   ),
   token(
     "Keywords and control flow",
@@ -859,7 +858,7 @@ const createSemanticTokenColors = (
   macro: F.sand,
   keyword: F.ember,
   modifier: F.ember,
-  comment: F.ash,
+  comment: F.faint,
   string: F.moss,
   number: F.sand,
   regexp: F.moss,
@@ -1017,7 +1016,7 @@ const assertSingleWordPaletteProperties = (
 
 const assertSyntaxColorSeparation = (palette: FontPalette) => {
   const syntaxRoles = {
-    comment: palette.ash,
+    comment: palette.faint,
     declaration: palette.sand,
     function: palette.sky,
     invalid: palette.clay,

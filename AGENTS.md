@@ -20,3 +20,4 @@
 - do bump `package.json` and `package-lock.json` versions for every new extension change or publish prep, and update `CHANGELOG.md` under that same version every time the version changes.
 - do keep palette property names to single words only.
 - do install the theme into the user's local VS Code after making or preparing changes to the extension.
+- do install the newly published theme locally after publishing whenever the user's local VS Code has the theme installed from a local VSIX rather than the Marketplace.

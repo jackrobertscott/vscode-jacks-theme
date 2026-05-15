@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.4.13 - 2026-05-15
+
+### Added
+
+- Added Jack's Theme Bordered, a second generated theme variant with subtle workbench UI borders.
+
 ## 0.4.12 - 2026-05-15
 
 ### Changed

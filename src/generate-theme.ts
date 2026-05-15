@@ -56,15 +56,26 @@ const JACK_FONT_PALETTE = {
   clay: "oklch(70.00% 0.1400 350.00)",
 } as const;
 
+const JACK_BORDER_PALETTE = {
+  subtle: "oklch(24.80% 0 0)",
+  quiet: "oklch(28.40% 0 0)",
+  focus: "oklch(36.00% 0.0300 78.00)",
+  warning: "oklch(38.00% 0.0760 78.00)",
+  danger: "oklch(39.00% 0.0920 28.00)",
+  info: "oklch(37.00% 0.0720 230.00)",
+} as const satisfies Record<string, Oklch>;
+
 type BackgroundPalette = Record<keyof typeof JACK_BACKGROUND_PALETTE, Hex> & {
   shadow: Hex;
   minimap: Hex;
   transparent: Hex;
 };
 type FontPalette = Record<keyof typeof JACK_FONT_PALETTE, Hex>;
+type BorderPalette = Record<keyof typeof JACK_BORDER_PALETTE, Hex>;
 type Palette = {
   background: BackgroundPalette;
   font: FontPalette;
+  border: BorderPalette;
 };
 
 const clamp01 = (value: number) => Math.max(0, Math.min(1, value));
@@ -132,12 +143,14 @@ const createColorMap = <T extends Record<string, Oklch>>(
 const createPalette = (
   backgroundColors: typeof JACK_BACKGROUND_PALETTE,
   fontColors: typeof JACK_FONT_PALETTE,
+  borderColors: typeof JACK_BORDER_PALETTE,
 ): Palette => {
   const background = createColorMap(backgroundColors) as Record<
     keyof typeof JACK_BACKGROUND_PALETTE,
     Hex
   >;
   const font = createColorMap(fontColors);
+  const border = createColorMap(borderColors);
   const transparent = withAlpha(background.black, 0);
 
   return {
@@ -148,6 +161,7 @@ const createPalette = (
       transparent,
     },
     font,
+    border,
   };
 };
 
@@ -596,11 +610,83 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
   };
 };
 
+const createBorderedWorkbenchColors = (C: Palette): Theme["colors"] => {
+  const R = C.border;
+
+  return {
+    ...createWorkbenchColors(C),
+
+    focusBorder: R.focus,
+    "sash.hoverBorder": R.focus,
+    "window.activeBorder": R.subtle,
+    "window.inactiveBorder": R.subtle,
+
+    "textBlockQuote.border": R.subtle,
+    "textSeparator.foreground": R.subtle,
+    "toolbar.hoverOutline": R.subtle,
+
+    "checkbox.border": R.quiet,
+    "dropdown.border": R.quiet,
+    "input.border": R.quiet,
+    "inputOption.activeBorder": R.focus,
+    "inputValidation.errorBorder": R.danger,
+    "inputValidation.infoBorder": R.info,
+    "inputValidation.warningBorder": R.warning,
+
+    "activityBar.border": R.subtle,
+    "activityBar.activeBorder": R.focus,
+    "activityBarTop.activeBorder": R.focus,
+    "sideBar.border": R.subtle,
+    "sideBarSectionHeader.border": R.subtle,
+
+    "editorGroup.border": R.subtle,
+    "editorGroupHeader.tabsBorder": R.subtle,
+    "editorGroupHeader.border": R.subtle,
+    "tab.activeBorder": R.focus,
+    "tab.activeBorderTop": R.subtle,
+    "tab.border": R.subtle,
+
+    "diffEditor.border": R.subtle,
+    "panel.border": R.subtle,
+    "panelTitle.activeBorder": R.focus,
+    "panelInput.border": R.quiet,
+    "terminal.border": R.subtle,
+    "debugToolBar.border": R.subtle,
+
+    "statusBar.border": R.subtle,
+    "titleBar.border": R.subtle,
+
+    "menu.border": R.subtle,
+    "menu.selectionBorder": R.focus,
+    "menu.separatorBackground": R.subtle,
+    "menubar.selectionBorder": R.focus,
+
+    "commandCenter.border": R.subtle,
+    "commandCenter.inactiveBorder": R.subtle,
+    "commandCenter.activeBorder": R.focus,
+
+    "notificationCenter.border": R.subtle,
+    "notificationToast.border": R.subtle,
+    "notifications.border": R.subtle,
+
+    "pickerGroup.border": R.subtle,
+    "settings.checkboxBorder": R.quiet,
+    "settings.dropdownBorder": R.quiet,
+    "settings.numberInputBorder": R.quiet,
+    "settings.sashBorder": R.subtle,
+    "settings.textInputBorder": R.quiet,
+
+    "peekView.border": R.focus,
+    "welcomePage.tileBorder": R.subtle,
+  };
+};
+
 type ThemeConfig = {
   fileName: string;
   name: string;
   type: Theme["type"];
   palette: Palette;
+  bordered?: boolean;
 };
 
 const token = (
@@ -993,6 +1079,59 @@ const transparentWorkbenchColors = new Set([
 const borderlessWorkbenchColorPattern = /(?:border|separator|^charts\.lines$)/i;
 const transparentWorkbenchColorPattern =
   /^#(?:[0-9a-fA-F]{3}[0-9a-eA-E]|[0-9a-fA-F]{6}(?![fF]{2})[0-9a-fA-F]{2})$/;
+const borderedWorkbenchColors = new Set([
+  "focusBorder",
+  "sash.hoverBorder",
+  "window.activeBorder",
+  "window.inactiveBorder",
+  "textBlockQuote.border",
+  "textSeparator.foreground",
+  "toolbar.hoverOutline",
+  "checkbox.border",
+  "dropdown.border",
+  "input.border",
+  "inputOption.activeBorder",
+  "inputValidation.errorBorder",
+  "inputValidation.infoBorder",
+  "inputValidation.warningBorder",
+  "activityBar.border",
+  "activityBar.activeBorder",
+  "activityBarTop.activeBorder",
+  "sideBar.border",
+  "sideBarSectionHeader.border",
+  "editorGroup.border",
+  "editorGroupHeader.tabsBorder",
+  "editorGroupHeader.border",
+  "tab.activeBorder",
+  "tab.activeBorderTop",
+  "tab.border",
+  "diffEditor.border",
+  "panel.border",
+  "panelTitle.activeBorder",
+  "panelInput.border",
+  "terminal.border",
+  "debugToolBar.border",
+  "statusBar.border",
+  "titleBar.border",
+  "menu.border",
+  "menu.selectionBorder",
+  "menu.separatorBackground",
+  "menubar.selectionBorder",
+  "commandCenter.border",
+  "commandCenter.inactiveBorder",
+  "commandCenter.activeBorder",
+  "notificationCenter.border",
+  "notificationToast.border",
+  "notifications.border",
+  "pickerGroup.border",
+  "settings.checkboxBorder",
+  "settings.dropdownBorder",
+  "settings.numberInputBorder",
+  "settings.sashBorder",
+  "settings.textInputBorder",
+  "peekView.border",
+  "welcomePage.tileBorder",
+]);
 const minimumEditorTextContrast = 4.5;
 const minimumSyntaxRoleDistance = 0.09;
 const decorativeSemanticTokens = new Set(["*.deprecated"]);
@@ -1043,6 +1182,7 @@ const assertThemeIntegrity = (
   theme: Theme,
   palette: Palette,
   fontPalette: FontPalette,
+  options: { allowBorders: boolean },
 ) => {
   const B = palette.background;
   assertSyntaxColorSeparation(fontPalette);
@@ -1051,10 +1191,21 @@ const assertThemeIntegrity = (
     assertHex(value, `colors.${id}`);
     if (
       borderlessWorkbenchColorPattern.test(id) &&
+      !options.allowBorders &&
       value !== B.transparent
     ) {
       throw new Error(
         `colors.${id} must be transparent because visible borders are disabled`,
+      );
+    }
+    if (
+      borderlessWorkbenchColorPattern.test(id) &&
+      options.allowBorders &&
+      value !== B.transparent &&
+      !borderedWorkbenchColors.has(id)
+    ) {
+      throw new Error(
+        `colors.${id} has a visible border color but is not in the bordered theme allow-list`,
       );
     }
     if (
@@ -1127,12 +1278,15 @@ const createTheme = (
   type: Theme["type"],
   palette: Palette,
   fontPalette: FontPalette,
+  bordered = false,
 ): Theme => ({
   $schema: "vscode://schemas/color-theme",
   name,
   type,
   semanticHighlighting: true,
-  colors: createWorkbenchColors(palette),
+  colors: bordered
+    ? createBorderedWorkbenchColors(palette)
+    : createWorkbenchColors(palette),
   tokenColors: createTokenColors(fontPalette),
   semanticTokenColors: createSemanticTokenColors(fontPalette),
 });
@@ -1140,7 +1294,12 @@ const createTheme = (
 const __dirname = dirname(fileURLToPath(import.meta.url));
 assertSingleWordPaletteProperties("background", JACK_BACKGROUND_PALETTE);
 assertSingleWordPaletteProperties("font", JACK_FONT_PALETTE);
-const JACK_PALETTE = createPalette(JACK_BACKGROUND_PALETTE, JACK_FONT_PALETTE);
+assertSingleWordPaletteProperties("border", JACK_BORDER_PALETTE);
+const JACK_PALETTE = createPalette(
+  JACK_BACKGROUND_PALETTE,
+  JACK_FONT_PALETTE,
+  JACK_BORDER_PALETTE,
+);
 const JACK_FONT_COLORS = createColorMap(JACK_FONT_PALETTE);
 const themes = [
   {
@@ -1148,12 +1307,22 @@ const themes = [
     name: "Jack's Theme",
     type: "dark",
     palette: JACK_PALETTE,
+    bordered: false,
+  },
+  {
+    fileName: "jacks-theme-bordered-color-theme.json",
+    name: "Jack's Theme Bordered",
+    type: "dark",
+    palette: JACK_PALETTE,
+    bordered: true,
   },
 ] as const satisfies readonly ThemeConfig[];
 
-for (const { fileName, name, type, palette } of themes) {
-  const theme = createTheme(name, type, palette, JACK_FONT_COLORS);
-  assertThemeIntegrity(theme, palette, JACK_FONT_COLORS);
+for (const { fileName, name, type, palette, bordered = false } of themes) {
+  const theme = createTheme(name, type, palette, JACK_FONT_COLORS, bordered);
+  assertThemeIntegrity(theme, palette, JACK_FONT_COLORS, {
+    allowBorders: bordered,
+  });
   const outputPath = join(__dirname, "..", "themes", fileName);
   mkdirSync(dirname(outputPath), { recursive: true });
   writeFileSync(outputPath, JSON.stringify(theme, null, 2) + "\n");

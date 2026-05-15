@@ -45,14 +45,13 @@ const JACK_BACKGROUND_PALETTE = {
 } as const satisfies Record<string, Oklch>;
 
 const JACK_FONT_PALETTE = {
-  text: "oklch(80.00% 0.0240 78.00)",
+  text: "oklch(88.00% 0.0350 72.00)",
   muted: "oklch(66.00% 0.0360 252.00)",
   faint: "oklch(53.00% 0.0300 258.00)",
   ember: "oklch(76.50% 0.1500 34.00)",
   sand: "oklch(79.00% 0.1300 92.00)",
   moss: "oklch(74.50% 0.1400 142.00)",
   ash: "oklch(61.50% 0.0460 72.00)",
-  teal: "oklch(73.00% 0.1000 185.00)",
   sky: "oklch(76.50% 0.1350 248.00)",
   plum: "oklch(78.00% 0.1250 318.00)",
   clay: "oklch(70.00% 0.1400 350.00)",
@@ -736,12 +735,12 @@ const createTokenColors = (F: FontPalette): TokenRule[] => [
       "meta.property.object",
       "support.variable.property",
     ],
-    F.teal,
+    F.text,
   ),
   token(
     "Parameters",
     ["variable.parameter", "entity.name.variable.parameter"],
-    F.teal,
+    F.text,
   ),
   token(
     "Variables",
@@ -752,7 +751,7 @@ const createTokenColors = (F: FontPalette): TokenRule[] => [
       "entity.name.variable",
       "variable.language.this",
     ],
-    F.teal,
+    F.text,
   ),
   token(
     "Decorators and annotations",
@@ -794,7 +793,7 @@ const createTokenColors = (F: FontPalette): TokenRule[] => [
       "support.type.property-name.css",
       "support.type.vendored.property-name.css",
     ],
-    F.teal,
+    F.text,
   ),
   token(
     "Markdown headings",
@@ -837,9 +836,9 @@ const createSemanticTokenColors = (
   interface: F.plum,
   struct: F.plum,
   typeParameter: F.sand,
-  parameter: F.teal,
-  variable: F.teal,
-  property: F.teal,
+  parameter: F.text,
+  variable: F.text,
+  property: F.text,
   enumMember: F.sand,
   event: F.moss,
   function: F.sky,
@@ -853,12 +852,12 @@ const createSemanticTokenColors = (
   regexp: F.moss,
   operator: F.muted,
   decorator: F.plum,
-  "variable.readonly": F.teal,
-  "variable.declaration": F.teal,
-  "variable.readonly.declaration": F.teal,
-  "property.readonly": F.teal,
-  "property.declaration": F.teal,
-  "parameter.declaration": F.teal,
+  "variable.readonly": F.text,
+  "variable.declaration": F.text,
+  "variable.readonly.declaration": F.text,
+  "property.readonly": F.text,
+  "property.declaration": F.text,
+  "parameter.declaration": F.text,
   "typeParameter.declaration": F.sand,
   "function.declaration": F.sky,
   "method.declaration": F.sky,
@@ -1010,7 +1009,6 @@ const assertSyntaxColorSeparation = (palette: FontPalette) => {
     operator: palette.muted,
     string: palette.moss,
     type: palette.plum,
-    variable: palette.teal,
   } as const satisfies Record<string, Hex>;
   const entries = Object.entries(syntaxRoles);
 

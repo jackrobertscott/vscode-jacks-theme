@@ -41,16 +41,16 @@ const JACK_BACKGROUND_PALETTE = {
 const JACK_FONT_PALETTE = {
   bright: "oklch(98.00% 0.0100 95.00)",
   text: "oklch(90.40% 0.0120 95.00)",
-  muted: "oklch(64.50% 0.0350 260.00)",
-  faint: "oklch(56.80% 0.0260 260.00)",
+  muted: "oklch(58.50% 0.0350 265.00)",
+  faint: "oklch(50.50% 0.0250 265.00)",
 
-  ember: "oklch(84.20% 0.1450 38.00)",
-  sand: "oklch(87.00% 0.1100 92.00)",
-  moss: "oklch(82.80% 0.1150 158.00)",
-  ash: "oklch(77.00% 0.0500 185.00)",
-  sky: "oklch(84.60% 0.1100 225.00)",
+  ember: "oklch(80.80% 0.1550 32.00)",
+  sand: "oklch(83.80% 0.1450 138.00)",
+  moss: "oklch(82.20% 0.1050 182.00)",
+  ash: "oklch(70.00% 0.0400 190.00)",
+  sky: "oklch(78.00% 0.1400 248.00)",
   plum: "oklch(84.40% 0.1200 300.00)",
-  clay: "oklch(76.00% 0.1700 8.00)",
+  clay: "oklch(74.00% 0.1700 340.00)",
 } as const satisfies Record<string, Oklch>;
 
 const JACK_ALPHA_PALETTE = {
@@ -888,6 +888,42 @@ const contrastRatio = (foreground: Hex, background: Hex) => {
   return (light + 0.05) / (dark + 0.05);
 };
 
+const hexToOklab = (value: Hex): { l: number; a: number; b: number } => {
+  const { red, green, blue } = hexToRgb(value);
+  const linearRed = srgbToRelativeLuminance(red);
+  const linearGreen = srgbToRelativeLuminance(green);
+  const linearBlue = srgbToRelativeLuminance(blue);
+
+  const long = Math.cbrt(
+    0.4122214708 * linearRed +
+      0.5363325363 * linearGreen +
+      0.0514459929 * linearBlue,
+  );
+  const medium = Math.cbrt(
+    0.2119034982 * linearRed +
+      0.6806995451 * linearGreen +
+      0.1073969566 * linearBlue,
+  );
+  const short = Math.cbrt(
+    0.0883024619 * linearRed +
+      0.2817188376 * linearGreen +
+      0.6299787005 * linearBlue,
+  );
+
+  return {
+    l: 0.2104542553 * long + 0.793617785 * medium - 0.0040720468 * short,
+    a: 1.9779984951 * long - 2.428592205 * medium + 0.4505937099 * short,
+    b: 0.0259040371 * long + 0.7827717662 * medium - 0.808675766 * short,
+  };
+};
+
+const oklabDistance = (left: Hex, right: Hex) => {
+  const a = hexToOklab(left);
+  const b = hexToOklab(right);
+
+  return Math.hypot(a.l - b.l, a.a - b.a, a.b - b.b);
+};
+
 const colorSettingKeys = new Set(["foreground", "background"]);
 const visibleAlphaWorkbenchColors = new Set([
   "minimap.foregroundOpacity",
@@ -925,6 +961,7 @@ const borderlessWorkbenchColorPattern = /(?:border|separator|^charts\.lines$)/i;
 const transparentWorkbenchColorPattern =
   /^#(?:[0-9a-fA-F]{3}[0-9a-eA-E]|[0-9a-fA-F]{6}(?![fF]{2})[0-9a-fA-F]{2})$/;
 const minimumEditorTextContrast = 4.5;
+const minimumSyntaxRoleDistance = 0.09;
 const decorativeSemanticTokens = new Set(["*.deprecated"]);
 const usesVisibleAlpha = (value: Hex) =>
   stripHash(value).length === 8 && !value.endsWith("00");
@@ -944,7 +981,34 @@ const assertSingleWordPaletteProperties = (
   }
 };
 
+const assertSyntaxColorSeparation = (palette: Palette) => {
+  const syntaxRoles = {
+    comment: palette.ash,
+    declaration: palette.sand,
+    function: palette.sky,
+    invalid: palette.clay,
+    keyword: palette.ember,
+    operator: palette.muted,
+    string: palette.moss,
+    type: palette.plum,
+  } as const satisfies Record<string, Hex>;
+  const entries = Object.entries(syntaxRoles);
+
+  for (const [leftIndex, [leftId, leftColor]] of entries.entries()) {
+    for (const [rightId, rightColor] of entries.slice(leftIndex + 1)) {
+      const distance = oklabDistance(leftColor, rightColor);
+      if (distance < minimumSyntaxRoleDistance) {
+        throw new Error(
+          `Syntax colors ${leftId} and ${rightId} are too similar: OKLab distance ${distance.toFixed(3)} is below ${minimumSyntaxRoleDistance}`,
+        );
+      }
+    }
+  }
+};
+
 const assertThemeIntegrity = (theme: Theme, palette: Palette) => {
+  assertSyntaxColorSeparation(palette);
+
   for (const [id, value] of Object.entries(theme.colors)) {
     assertHex(value, `colors.${id}`);
     if (

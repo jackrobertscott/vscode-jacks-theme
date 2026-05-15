@@ -6,6 +6,7 @@
 - do not overwrite user changes in this repository; inspect the worktree before making edits and work around unrelated changes.
 - do not hard-code versioned `.vsix` filenames in package scripts or install workflows.
 - do not introduce visible border colors; borders should be transparent unless the repository owner explicitly asks otherwise.
+- do not hand edit `package-lock.json`; regenerate it with npm commands such as `npm install`, `npm version --no-git-tag-version`, or another appropriate package-manager command.
 
 # Do's
 

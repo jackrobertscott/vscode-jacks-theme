@@ -184,8 +184,6 @@ const editorUnderlayIds = [
 ] as const;
 
 const transparentEditorOverlayIds = [
-  "editor.inactiveLineHighlightBackground",
-  "editor.lineHighlightBackground",
   "editor.lineHighlightBorder",
   "editor.rangeHighlightBorder",
   "editor.selectionHighlightBorder",
@@ -193,7 +191,6 @@ const transparentEditorOverlayIds = [
   "editor.wordHighlightBorder",
   "editor.wordHighlightStrongBorder",
   "editor.wordHighlightTextBorder",
-  "scrollbar.background",
   "scrollbar.shadow",
 ] as const;
 
@@ -211,6 +208,10 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
     ...keys(editorSurfaceIds, B.editor),
     ...keys(editorUnderlayIds, B.editor),
     ...keys(transparentEditorOverlayIds, B.transparent),
+
+    "editor.inactiveLineHighlightBackground": B.editor,
+    "editor.lineHighlightBackground": B.panel,
+    "scrollbar.background": B.editor,
 
     focusBorder: B.transparent,
     foreground: F.text,

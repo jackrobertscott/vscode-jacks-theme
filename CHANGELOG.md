@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.4.9 - 2026-05-15
+
+### Changed
+
+- Replaced non-constrained transparent background colors with opaque theme-matched surfaces.
+
 ## 0.4.8 - 2026-05-15
 
 ### Changed

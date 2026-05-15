@@ -15,5 +15,6 @@
 - do run `npx tsc --noEmit` or the repository typecheck path before handing off code changes.
 - do commit at meaningful milestones of code, such as after a coherent source change, after generated output has been refreshed, and after verification passes.
 - do add user instructions to this file when the user says to remember something.
+- do bump `package.json` and `package-lock.json` versions for every new extension change or publish prep, and update `CHANGELOG.md` under that same version every time the version changes.
 - do keep palette property names to single words only.
 - do install the theme into the user's local VS Code after making or preparing changes to the extension.

@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.4.16 - 2026-05-18
+
+### Changed
+
+- Softened the regular status bar text and icon foreground color.
+
 ## 0.4.15 - 2026-05-15
 
 ### Changed

@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.4.20 - 2026-05-18
+
+### Changed
+
+- Increased the bordered theme divider contrast while keeping it on the neutral surface ladder.
+
 ## 0.4.19 - 2026-05-18
 
 ### Changed

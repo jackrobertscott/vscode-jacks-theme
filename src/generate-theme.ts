@@ -57,7 +57,7 @@ const JACK_FONT_PALETTE = {
 } as const;
 
 const JACK_BORDER_PALETTE = {
-  divider: "oklch(15.60% 0 0)",
+  divider: "oklch(18.80% 0 0)",
 } as const satisfies Record<string, Oklch>;
 
 type BackgroundPalette = Record<keyof typeof JACK_BACKGROUND_PALETTE, Hex> & {
@@ -1181,9 +1181,14 @@ const assertThemeIntegrity = (
         `Bordered theme must use only the divider border color ${divider}`,
       );
     }
-    if (relativeLuminance(divider) >= relativeLuminance(B.editor)) {
+    if (relativeLuminance(divider) <= relativeLuminance(B.editor)) {
       throw new Error(
-        `Border divider ${divider} must be darker than editor background ${B.editor}`,
+        `Border divider ${divider} must be lighter than editor background ${B.editor}`,
+      );
+    }
+    if (relativeLuminance(divider) >= relativeLuminance(B.panel)) {
+      throw new Error(
+        `Border divider ${divider} must stay subtler than panel background ${B.panel}`,
       );
     }
   }

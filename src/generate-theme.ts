@@ -57,7 +57,7 @@ const JACK_FONT_PALETTE = {
 } as const;
 
 const JACK_BORDER_PALETTE = {
-  divider: "oklch(12.40% 0 0)",
+  divider: "oklch(15.60% 0 0)",
 } as const satisfies Record<string, Oklch>;
 
 type BackgroundPalette = Record<keyof typeof JACK_BACKGROUND_PALETTE, Hex> & {

@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.4.18 - 2026-05-18
+
+### Changed
+
+- Lightened the bordered theme divider color while keeping it darker than the editor background.
+
 ## 0.4.17 - 2026-05-18
 
 ### Changed

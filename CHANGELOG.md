@@ -2,6 +2,13 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.4.17 - 2026-05-18
+
+### Changed
+
+- Changed Jack's Theme Bordered to use one darker divider border color only for content separation.
+- Removed visible active, focus, and selected-control borders from the bordered theme.
+
 ## 0.4.16 - 2026-05-18
 
 ### Changed

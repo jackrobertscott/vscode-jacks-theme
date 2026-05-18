@@ -57,9 +57,7 @@ const JACK_FONT_PALETTE = {
 } as const;
 
 const JACK_BORDER_PALETTE = {
-  subtle: "oklch(24.80% 0 0)",
-  quiet: "oklch(28.40% 0 0)",
-  focus: "oklch(35.40% 0 0)",
+  divider: "oklch(12.40% 0 0)",
 } as const satisfies Record<string, Oklch>;
 
 type BackgroundPalette = Record<keyof typeof JACK_BACKGROUND_PALETTE, Hex> & {
@@ -607,73 +605,43 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
 };
 
 const createBorderedWorkbenchColors = (C: Palette): Theme["colors"] => {
-  const R = C.border;
+  const divider = C.border.divider;
 
   return {
     ...createWorkbenchColors(C),
 
-    focusBorder: R.focus,
-    "sash.hoverBorder": R.focus,
-    "window.activeBorder": R.subtle,
-    "window.inactiveBorder": R.subtle,
+    "textBlockQuote.border": divider,
+    "textSeparator.foreground": divider,
 
-    "textBlockQuote.border": R.subtle,
-    "textSeparator.foreground": R.subtle,
-    "toolbar.hoverOutline": R.subtle,
+    "activityBar.border": divider,
+    "sideBar.border": divider,
+    "sideBarSectionHeader.border": divider,
 
-    "checkbox.border": R.quiet,
-    "dropdown.border": R.quiet,
-    "input.border": R.quiet,
-    "inputOption.activeBorder": R.focus,
-    "inputValidation.errorBorder": R.focus,
-    "inputValidation.infoBorder": R.focus,
-    "inputValidation.warningBorder": R.focus,
+    "editorGroup.border": divider,
+    "editorGroupHeader.tabsBorder": divider,
+    "editorGroupHeader.border": divider,
+    "tab.border": divider,
 
-    "activityBar.border": R.subtle,
-    "activityBar.activeBorder": R.focus,
-    "activityBarTop.activeBorder": R.focus,
-    "sideBar.border": R.subtle,
-    "sideBarSectionHeader.border": R.subtle,
+    "diffEditor.border": divider,
+    "panel.border": divider,
+    "terminal.border": divider,
+    "debugToolBar.border": divider,
 
-    "editorGroup.border": R.subtle,
-    "editorGroupHeader.tabsBorder": R.subtle,
-    "editorGroupHeader.border": R.subtle,
-    "tab.activeBorder": R.focus,
-    "tab.activeBorderTop": R.subtle,
-    "tab.border": R.subtle,
+    "statusBar.border": divider,
+    "titleBar.border": divider,
 
-    "diffEditor.border": R.subtle,
-    "panel.border": R.subtle,
-    "panelTitle.activeBorder": R.focus,
-    "panelInput.border": R.quiet,
-    "terminal.border": R.subtle,
-    "debugToolBar.border": R.subtle,
+    "menu.border": divider,
+    "menu.separatorBackground": divider,
 
-    "statusBar.border": R.subtle,
-    "titleBar.border": R.subtle,
+    "notificationCenter.border": divider,
+    "notificationToast.border": divider,
+    "notifications.border": divider,
 
-    "menu.border": R.subtle,
-    "menu.selectionBorder": R.focus,
-    "menu.separatorBackground": R.subtle,
-    "menubar.selectionBorder": R.focus,
+    "pickerGroup.border": divider,
+    "settings.sashBorder": divider,
 
-    "commandCenter.border": R.subtle,
-    "commandCenter.inactiveBorder": R.subtle,
-    "commandCenter.activeBorder": R.focus,
-
-    "notificationCenter.border": R.subtle,
-    "notificationToast.border": R.subtle,
-    "notifications.border": R.subtle,
-
-    "pickerGroup.border": R.subtle,
-    "settings.checkboxBorder": R.quiet,
-    "settings.dropdownBorder": R.quiet,
-    "settings.numberInputBorder": R.quiet,
-    "settings.sashBorder": R.subtle,
-    "settings.textInputBorder": R.quiet,
-
-    "peekView.border": R.focus,
-    "welcomePage.tileBorder": R.subtle,
+    "peekView.border": divider,
+    "welcomePage.tileBorder": divider,
   };
 };
 
@@ -1077,55 +1045,28 @@ const borderlessWorkbenchColorPattern = /(?:border|separator|^charts\.lines$)/i;
 const transparentWorkbenchColorPattern =
   /^#(?:[0-9a-fA-F]{3}[0-9a-eA-E]|[0-9a-fA-F]{6}(?![fF]{2})[0-9a-fA-F]{2})$/;
 const borderedWorkbenchColors = new Set([
-  "focusBorder",
-  "sash.hoverBorder",
-  "window.activeBorder",
-  "window.inactiveBorder",
   "textBlockQuote.border",
   "textSeparator.foreground",
-  "toolbar.hoverOutline",
-  "checkbox.border",
-  "dropdown.border",
-  "input.border",
-  "inputOption.activeBorder",
-  "inputValidation.errorBorder",
-  "inputValidation.infoBorder",
-  "inputValidation.warningBorder",
   "activityBar.border",
-  "activityBar.activeBorder",
-  "activityBarTop.activeBorder",
   "sideBar.border",
   "sideBarSectionHeader.border",
   "editorGroup.border",
   "editorGroupHeader.tabsBorder",
   "editorGroupHeader.border",
-  "tab.activeBorder",
-  "tab.activeBorderTop",
   "tab.border",
   "diffEditor.border",
   "panel.border",
-  "panelTitle.activeBorder",
-  "panelInput.border",
   "terminal.border",
   "debugToolBar.border",
   "statusBar.border",
   "titleBar.border",
   "menu.border",
-  "menu.selectionBorder",
   "menu.separatorBackground",
-  "menubar.selectionBorder",
-  "commandCenter.border",
-  "commandCenter.inactiveBorder",
-  "commandCenter.activeBorder",
   "notificationCenter.border",
   "notificationToast.border",
   "notifications.border",
   "pickerGroup.border",
-  "settings.checkboxBorder",
-  "settings.dropdownBorder",
-  "settings.numberInputBorder",
   "settings.sashBorder",
-  "settings.textInputBorder",
   "peekView.border",
   "welcomePage.tileBorder",
 ]);
@@ -1221,6 +1162,28 @@ const assertThemeIntegrity = (
     ) {
       throw new Error(
         `colors.${id} uses visible alpha without being allow-listed`,
+      );
+    }
+  }
+  if (options.allowBorders) {
+    const divider = palette.border.divider;
+    const visibleBorderColors = new Set(
+      Object.entries(theme.colors)
+        .filter(
+          ([id, value]) =>
+            borderedWorkbenchColors.has(id) && value !== B.transparent,
+        )
+        .map(([, value]) => value),
+    );
+
+    if (visibleBorderColors.size !== 1 || !visibleBorderColors.has(divider)) {
+      throw new Error(
+        `Bordered theme must use only the divider border color ${divider}`,
+      );
+    }
+    if (relativeLuminance(divider) >= relativeLuminance(B.editor)) {
+      throw new Error(
+        `Border divider ${divider} must be darker than editor background ${B.editor}`,
       );
     }
   }

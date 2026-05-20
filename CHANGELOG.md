@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.4.21 - 2026-05-20
+
+### Changed
+
+- Softened diff editor red and green backgrounds so text selections remain visible on changed lines.
+
 ## 0.4.20 - 2026-05-18
 
 ### Changed

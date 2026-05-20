@@ -209,8 +209,10 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
   const subtle = withAlpha(B.hover, 0.72);
   const medium = withAlpha(B.active, 0.72);
   const highlight = withAlpha(B.sky, 0.76);
-  const success = withAlpha(B.success, 0.74);
-  const danger = withAlpha(B.danger, 0.74);
+  const diffLineSuccess = withAlpha(B.success, 0.44);
+  const diffLineDanger = withAlpha(B.danger, 0.44);
+  const diffTextSuccess = withAlpha(B.success, 0.58);
+  const diffTextDanger = withAlpha(B.danger, 0.58);
 
   return {
     ...keys(editorSurfaceIds, B.editor),
@@ -406,10 +408,10 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
     "problemsWarningIcon.foreground": F.sand,
     "problemsInfoIcon.foreground": F.sky,
 
-    "diffEditor.insertedTextBackground": success,
-    "diffEditor.insertedLineBackground": success,
-    "diffEditor.removedTextBackground": danger,
-    "diffEditor.removedLineBackground": danger,
+    "diffEditor.insertedTextBackground": diffTextSuccess,
+    "diffEditor.insertedLineBackground": diffLineSuccess,
+    "diffEditor.removedTextBackground": diffTextDanger,
+    "diffEditor.removedLineBackground": diffLineDanger,
     "diffEditorGutter.insertedLineBackground": B.success,
     "diffEditorGutter.removedLineBackground": B.danger,
     "diffEditor.border": B.transparent,

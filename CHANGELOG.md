@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.4.23 - 2026-05-25
+
+### Changed
+
+- Matched built-in SCM graph commit hover popups and labels to the theme popup palette.
+
 ## 0.4.22 - 2026-05-24
 
 ### Changed

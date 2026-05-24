@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.5.0 - 2026-05-25
+
+### Changed
+
+- Released the SCM graph hover popup and branch badge contrast fixes.
+
 ## 0.4.24 - 2026-05-25
 
 ### Changed

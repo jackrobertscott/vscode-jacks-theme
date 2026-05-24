@@ -378,7 +378,7 @@
     "scmGraph.historyItemHoverDefaultLabelBackground": "#2c2c2c",
     "scmGraph.historyItemHoverDefaultLabelForeground": "#d7d7d7",
     "scmGraph.historyItemHoverDeletionsForeground": "#de77ab",
-    "scmGraph.historyItemHoverLabelForeground": "#d7d7d7",
+    "scmGraph.historyItemHoverLabelForeground": "#101010",
     "scmGraph.historyItemRefColor": "#67b9ff",
     "scmGraph.historyItemRemoteRefColor": "#d99deb",
     "minimap.findMatchHighlight": "#1e476fc2",

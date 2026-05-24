@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.4.24 - 2026-05-25
+
+### Changed
+
+- Changed SCM graph branch badge text to dark foregrounds for readable contrast on colored badges.
+
 ## 0.4.23 - 2026-05-25
 
 ### Changed

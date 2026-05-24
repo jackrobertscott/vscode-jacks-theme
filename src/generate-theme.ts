@@ -587,7 +587,7 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
     "scmGraph.historyItemHoverDefaultLabelBackground": B.active,
     "scmGraph.historyItemHoverDefaultLabelForeground": F.text,
     "scmGraph.historyItemHoverDeletionsForeground": F.clay,
-    "scmGraph.historyItemHoverLabelForeground": F.text,
+    "scmGraph.historyItemHoverLabelForeground": B.editor,
     "scmGraph.historyItemRefColor": F.sky,
     "scmGraph.historyItemRemoteRefColor": F.plum,
 
@@ -1097,6 +1097,7 @@ const borderedWorkbenchColors = new Set([
   "welcomePage.tileBorder",
 ]);
 const minimumEditorTextContrast = 4.5;
+const minimumBadgeTextContrast = 4.5;
 const minimumSyntaxRoleDistance = 0.09;
 const decorativeSemanticTokens = new Set(["*.deprecated"]);
 const usesVisibleAlpha = (value: Hex) =>
@@ -1266,6 +1267,27 @@ const assertThemeIntegrity = (
     throw new Error(
       `Editor surface drift. Painted: ${editorSurfaceDrift.join(", ") || "none"}. Underlay: ${editorUnderlayDrift.join(", ") || "none"}.`,
     );
+  }
+
+  const scmGraphBadgeForeground =
+    theme.colors["scmGraph.historyItemHoverLabelForeground"];
+  const scmGraphBadgeBackgroundIds = [
+    "scmGraph.foreground1",
+    "scmGraph.foreground2",
+    "scmGraph.foreground3",
+    "scmGraph.foreground4",
+    "scmGraph.foreground5",
+    "scmGraph.historyItemBaseRefColor",
+    "scmGraph.historyItemRefColor",
+    "scmGraph.historyItemRemoteRefColor",
+  ] as const;
+  for (const id of scmGraphBadgeBackgroundIds) {
+    const ratio = contrastRatio(scmGraphBadgeForeground, theme.colors[id]);
+    if (ratio < minimumBadgeTextContrast) {
+      throw new Error(
+        `SCM graph badge foreground contrast against ${id} is ${ratio.toFixed(2)}, below ${minimumBadgeTextContrast}`,
+      );
+    }
   }
 };
 

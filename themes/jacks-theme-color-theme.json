@@ -398,7 +398,8 @@
       "scope": [
         "source",
         "meta.embedded",
-        "text.html.markdown"
+        "text.html.markdown",
+        "meta.jsx.children"
       ],
       "settings": {
         "foreground": "#d7d7d7"
@@ -656,8 +657,7 @@
     {
       "name": "HTML and XML tags",
       "scope": [
-        "entity.name.tag",
-        "meta.tag"
+        "entity.name.tag"
       ],
       "settings": {
         "foreground": "#67b9ff"

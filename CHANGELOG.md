@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.4.22 - 2026-05-24
+
+### Changed
+
+- Kept JSX child text neutral by limiting blue tag coloring to actual tag names.
+
 ## 0.4.21 - 2026-05-20
 
 ### Changed

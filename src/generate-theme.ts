@@ -668,7 +668,7 @@ const token = (
 const createTokenColors = (F: FontPalette): TokenRule[] => [
   token(
     "Source text",
-    ["source", "meta.embedded", "text.html.markdown"],
+    ["source", "meta.embedded", "text.html.markdown", "meta.jsx.children"],
     F.text,
   ),
   token("Comments", ["comment", "punctuation.definition.comment"], F.faint),
@@ -841,7 +841,7 @@ const createTokenColors = (F: FontPalette): TokenRule[] => [
     ],
     F.muted,
   ),
-  token("HTML and XML tags", ["entity.name.tag", "meta.tag"], F.sky),
+  token("HTML and XML tags", ["entity.name.tag"], F.sky),
   token(
     "CSS selectors",
     [

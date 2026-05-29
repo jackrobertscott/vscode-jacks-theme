@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.5.1 - 2026-05-29
+
+### Changed
+
+- Removed colored diff editor gutter backgrounds so merge result lines do not show a deletion strip beside insertion backgrounds.
+
 ## 0.5.0 - 2026-05-25
 
 ### Changed

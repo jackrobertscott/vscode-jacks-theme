@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.5.5 - 2026-05-31
+
+### Changed
+
+- Replaced the blue line highlight and yellow word-match marker with a neutral active line and soft plum word-match palette.
+
 ## 0.5.4 - 2026-05-31
 
 ### Changed

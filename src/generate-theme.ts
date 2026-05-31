@@ -40,6 +40,7 @@ const JACK_BACKGROUND_PALETTE = {
   sand: "oklch(40.00% 0.0880 96.00)",
   moss: "oklch(38.00% 0.0880 136.00)",
   sky: "oklch(39.00% 0.0820 250.00)",
+  mark: "oklch(43.00% 0.0480 238.00)",
   plum: "oklch(38.00% 0.0940 310.00)",
   clay: "oklch(38.50% 0.0960 352.00)",
 } as const satisfies Record<string, Oklch>;
@@ -209,9 +210,9 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
   const subtle = withAlpha(B.hover, 0.72);
   const medium = withAlpha(B.active, 0.72);
   const highlight = withAlpha(B.sky, 0.76);
-  const wordHighlight = withAlpha(F.sky, 0.36);
-  const wordHighlightStrong = withAlpha(F.sky, 0.44);
-  const wordHighlightText = withAlpha(F.sky, 0.34);
+  const wordHighlight = withAlpha(B.mark, 0.76);
+  const wordHighlightStrong = withAlpha(B.mark, 0.84);
+  const wordHighlightText = withAlpha(B.mark, 0.72);
   const diffLineSuccess = withAlpha(B.success, 0.44);
   const diffLineDanger = withAlpha(B.danger, 0.44);
   const diffTextSuccess = withAlpha(B.success, 0.58);
@@ -1122,7 +1123,8 @@ const borderedWorkbenchColors = new Set([
 const minimumEditorTextContrast = 4.5;
 const minimumBadgeTextContrast = 4.5;
 const minimumSyntaxRoleDistance = 0.09;
-const minimumWordHighlightContrast = 2;
+const minimumWordHighlightContrast = 1.75;
+const maximumWordHighlightContrast = 2.15;
 const decorativeSemanticTokens = new Set(["*.deprecated"]);
 const usesVisibleAlpha = (value: Hex) =>
   stripHash(value).length === 8 && !value.endsWith("00");
@@ -1292,6 +1294,11 @@ const assertThemeIntegrity = (
     if (ratio < minimumWordHighlightContrast) {
       throw new Error(
         `colors.${id} effective contrast ${ratio.toFixed(2)} is below ${minimumWordHighlightContrast}`,
+      );
+    }
+    if (ratio > maximumWordHighlightContrast) {
+      throw new Error(
+        `colors.${id} effective contrast ${ratio.toFixed(2)} is above ${maximumWordHighlightContrast}`,
       );
     }
   }

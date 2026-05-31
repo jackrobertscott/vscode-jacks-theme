@@ -40,7 +40,7 @@ const JACK_BACKGROUND_PALETTE = {
   sand: "oklch(40.00% 0.0880 96.00)",
   moss: "oklch(38.00% 0.0880 136.00)",
   sky: "oklch(39.00% 0.0820 250.00)",
-  mark: "oklch(45.00% 0.0520 318.00)",
+  mark: "oklch(44.00% 0.0480 318.00)",
   plum: "oklch(38.00% 0.0940 310.00)",
   clay: "oklch(38.50% 0.0960 352.00)",
 } as const satisfies Record<string, Oklch>;
@@ -210,11 +210,12 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
   const subtle = withAlpha(B.hover, 0.72);
   const medium = withAlpha(B.active, 0.72);
   const selectionHighlight = withAlpha(B.sky, 0.76);
-  const searchHighlight = withAlpha(B.mark, 0.76);
-  const lineHighlight = withAlpha(B.active, 0.64);
-  const wordHighlight = withAlpha(B.mark, 0.76);
-  const wordHighlightStrong = withAlpha(B.mark, 0.84);
-  const wordHighlightText = withAlpha(B.mark, 0.72);
+  const searchHighlight = withAlpha(B.mark, 0.72);
+  const searchMatch = withAlpha(B.mark, 0.82);
+  const lineHighlight = withAlpha(B.mark, 0.24);
+  const wordHighlight = withAlpha(B.mark, 0.72);
+  const wordHighlightStrong = withAlpha(B.mark, 0.78);
+  const wordHighlightText = withAlpha(B.mark, 0.7);
   const diffLineSuccess = withAlpha(B.success, 0.44);
   const diffLineDanger = withAlpha(B.danger, 0.44);
   const diffTextSuccess = withAlpha(B.success, 0.58);
@@ -361,7 +362,7 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
     "editor.wordHighlightBackground": wordHighlight,
     "editor.wordHighlightStrongBackground": wordHighlightStrong,
     "editor.wordHighlightTextBackground": wordHighlightText,
-    "editor.findMatchBackground": B.mark,
+    "editor.findMatchBackground": searchMatch,
     "editor.findMatchBorder": B.transparent,
     "editor.findMatchHighlightBackground": searchHighlight,
     "editor.findRangeHighlightBackground": medium,
@@ -562,10 +563,10 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
     "breadcrumbPicker.background": B.popup,
 
     "peekView.border": B.transparent,
-    "peekViewEditor.matchHighlightBackground": B.mark,
+    "peekViewEditor.matchHighlightBackground": searchMatch,
     "peekViewResult.fileForeground": F.text,
     "peekViewResult.lineForeground": F.muted,
-    "peekViewResult.matchHighlightBackground": B.mark,
+    "peekViewResult.matchHighlightBackground": searchMatch,
     "peekViewResult.selectionBackground": B.active,
     "peekViewResult.selectionForeground": F.text,
     "peekViewTitle.background": B.popup,
@@ -1058,6 +1059,9 @@ const oklabDistance = (left: Hex, right: Hex) => {
 
 const colorSettingKeys = new Set(["foreground", "background"]);
 const visibleAlphaWorkbenchColors = new Set([
+  "editor.findMatchBackground",
+  "peekViewEditor.matchHighlightBackground",
+  "peekViewResult.matchHighlightBackground",
   "minimap.foregroundOpacity",
   "scrollbarSlider.activeBackground",
   "scrollbarSlider.background",

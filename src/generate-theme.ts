@@ -40,7 +40,7 @@ const JACK_BACKGROUND_PALETTE = {
   sand: "oklch(40.00% 0.0880 96.00)",
   moss: "oklch(38.00% 0.0880 136.00)",
   sky: "oklch(39.00% 0.0820 250.00)",
-  mark: "oklch(43.00% 0.0480 238.00)",
+  mark: "oklch(44.00% 0.0550 96.00)",
   plum: "oklch(38.00% 0.0940 310.00)",
   clay: "oklch(38.50% 0.0960 352.00)",
 } as const satisfies Record<string, Oklch>;

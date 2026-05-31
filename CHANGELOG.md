@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.5.4 - 2026-05-31
+
+### Changed
+
+- Changed editor word-match highlights from muted blue to a restrained yellow-ochre marker hue.
+
 ## 0.5.3 - 2026-05-31
 
 ### Changed

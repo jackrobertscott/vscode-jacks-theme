@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.5.2 - 2026-05-31
+
+### Changed
+
+- Increased editor word-match highlight contrast while keeping VS Code-required transparent highlight colors.
+
 ## 0.5.1 - 2026-05-29
 
 ### Changed

@@ -209,6 +209,9 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
   const subtle = withAlpha(B.hover, 0.72);
   const medium = withAlpha(B.active, 0.72);
   const highlight = withAlpha(B.sky, 0.76);
+  const wordHighlight = withAlpha(F.sky, 0.36);
+  const wordHighlightStrong = withAlpha(F.sky, 0.44);
+  const wordHighlightText = withAlpha(F.sky, 0.34);
   const diffLineSuccess = withAlpha(B.success, 0.44);
   const diffLineDanger = withAlpha(B.danger, 0.44);
   const diffTextSuccess = withAlpha(B.success, 0.58);
@@ -352,9 +355,9 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
     "editor.selectionForeground": F.text,
     "editor.selectionHighlightBackground": subtle,
     "editor.inactiveSelectionBackground": subtle,
-    "editor.wordHighlightBackground": subtle,
-    "editor.wordHighlightStrongBackground": medium,
-    "editor.wordHighlightTextBackground": subtle,
+    "editor.wordHighlightBackground": wordHighlight,
+    "editor.wordHighlightStrongBackground": wordHighlightStrong,
+    "editor.wordHighlightTextBackground": wordHighlightText,
     "editor.findMatchBackground": B.sky,
     "editor.findMatchBorder": B.transparent,
     "editor.findMatchHighlightBackground": highlight,
@@ -401,8 +404,8 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
     "editorOverviewRuler.findMatchForeground": highlight,
     "editorOverviewRuler.rangeHighlightForeground": subtle,
     "editorOverviewRuler.selectionHighlightForeground": highlight,
-    "editorOverviewRuler.wordHighlightForeground": subtle,
-    "editorOverviewRuler.wordHighlightStrongForeground": medium,
+    "editorOverviewRuler.wordHighlightForeground": wordHighlight,
+    "editorOverviewRuler.wordHighlightStrongForeground": wordHighlightStrong,
     "editorError.foreground": F.clay,
     "editorError.border": B.transparent,
     "editorError.background": B.transparent,
@@ -985,6 +988,26 @@ const relativeLuminance = (value: Hex) => {
   );
 };
 
+const alphaOpacity = (value: Hex) => {
+  const alpha = stripHash(value).slice(6, 8);
+
+  return alpha ? Number.parseInt(alpha, 16) / 255 : 1;
+};
+
+const compositeOver = (foreground: Hex, background: Hex): Hex => {
+  const foregroundRgb = hexToRgb(foreground);
+  const backgroundRgb = hexToRgb(background);
+  const opacity = alphaOpacity(foreground);
+
+  return `#${toByte(
+    foregroundRgb.red * opacity + backgroundRgb.red * (1 - opacity),
+  )}${toByte(
+    foregroundRgb.green * opacity + backgroundRgb.green * (1 - opacity),
+  )}${toByte(
+    foregroundRgb.blue * opacity + backgroundRgb.blue * (1 - opacity),
+  )}`;
+};
+
 const contrastRatio = (foreground: Hex, background: Hex) => {
   const foregroundLuminance = relativeLuminance(foreground);
   const backgroundLuminance = relativeLuminance(background);
@@ -1099,6 +1122,7 @@ const borderedWorkbenchColors = new Set([
 const minimumEditorTextContrast = 4.5;
 const minimumBadgeTextContrast = 4.5;
 const minimumSyntaxRoleDistance = 0.09;
+const minimumWordHighlightContrast = 2;
 const decorativeSemanticTokens = new Set(["*.deprecated"]);
 const usesVisibleAlpha = (value: Hex) =>
   stripHash(value).length === 8 && !value.endsWith("00");
@@ -1253,6 +1277,21 @@ const assertThemeIntegrity = (
     if (ratio < minimumEditorTextContrast) {
       throw new Error(
         `semanticTokenColors.${id} contrast ${ratio.toFixed(2)} is below ${minimumEditorTextContrast}`,
+      );
+    }
+  }
+
+  const wordHighlightIds = [
+    "editor.wordHighlightBackground",
+    "editor.wordHighlightStrongBackground",
+    "editor.wordHighlightTextBackground",
+  ] as const;
+  for (const id of wordHighlightIds) {
+    const effectiveColor = compositeOver(theme.colors[id], B.editor);
+    const ratio = contrastRatio(effectiveColor, B.editor);
+    if (ratio < minimumWordHighlightContrast) {
+      throw new Error(
+        `colors.${id} effective contrast ${ratio.toFixed(2)} is below ${minimumWordHighlightContrast}`,
       );
     }
   }

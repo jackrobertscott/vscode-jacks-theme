@@ -209,7 +209,8 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
   const F = C.font;
   const subtle = withAlpha(B.hover, 0.72);
   const medium = withAlpha(B.active, 0.72);
-  const highlight = withAlpha(B.sky, 0.76);
+  const selectionHighlight = withAlpha(B.sky, 0.76);
+  const searchHighlight = withAlpha(B.mark, 0.76);
   const lineHighlight = withAlpha(B.active, 0.64);
   const wordHighlight = withAlpha(B.mark, 0.76);
   const wordHighlightStrong = withAlpha(B.mark, 0.84);
@@ -360,9 +361,9 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
     "editor.wordHighlightBackground": wordHighlight,
     "editor.wordHighlightStrongBackground": wordHighlightStrong,
     "editor.wordHighlightTextBackground": wordHighlightText,
-    "editor.findMatchBackground": B.sky,
+    "editor.findMatchBackground": B.mark,
     "editor.findMatchBorder": B.transparent,
-    "editor.findMatchHighlightBackground": highlight,
+    "editor.findMatchHighlightBackground": searchHighlight,
     "editor.findRangeHighlightBackground": medium,
     "editor.hoverHighlightBackground": subtle,
     "editor.linkedEditingBackground": B.active,
@@ -403,9 +404,9 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
     "editorOverviewRuler.errorForeground": F.clay,
     "editorOverviewRuler.warningForeground": F.sand,
     "editorOverviewRuler.infoForeground": F.sky,
-    "editorOverviewRuler.findMatchForeground": highlight,
+    "editorOverviewRuler.findMatchForeground": searchHighlight,
     "editorOverviewRuler.rangeHighlightForeground": subtle,
-    "editorOverviewRuler.selectionHighlightForeground": highlight,
+    "editorOverviewRuler.selectionHighlightForeground": selectionHighlight,
     "editorOverviewRuler.wordHighlightForeground": wordHighlight,
     "editorOverviewRuler.wordHighlightStrongForeground": wordHighlightStrong,
     "editorError.foreground": F.clay,
@@ -561,10 +562,10 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
     "breadcrumbPicker.background": B.popup,
 
     "peekView.border": B.transparent,
-    "peekViewEditor.matchHighlightBackground": B.sky,
+    "peekViewEditor.matchHighlightBackground": B.mark,
     "peekViewResult.fileForeground": F.text,
     "peekViewResult.lineForeground": F.muted,
-    "peekViewResult.matchHighlightBackground": B.sky,
+    "peekViewResult.matchHighlightBackground": B.mark,
     "peekViewResult.selectionBackground": B.active,
     "peekViewResult.selectionForeground": F.text,
     "peekViewTitle.background": B.popup,
@@ -596,8 +597,8 @@ const createWorkbenchColors = (C: Palette): Theme["colors"] => {
     "scmGraph.historyItemRefColor": F.sky,
     "scmGraph.historyItemRemoteRefColor": F.plum,
 
-    "minimap.findMatchHighlight": highlight,
-    "minimap.selectionHighlight": highlight,
+    "minimap.findMatchHighlight": searchHighlight,
+    "minimap.selectionHighlight": selectionHighlight,
     "minimap.errorHighlight": F.clay,
     "minimap.warningHighlight": F.sand,
     "minimap.infoHighlight": F.sky,

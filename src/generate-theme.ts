@@ -723,6 +723,8 @@ const createBorderedWorkbenchColors = (C: Palette): Theme["colors"] => {
 };
 
 const retroBorderIds = [
+  "contrastBorder",
+  "contrastActiveBorder",
   "focusBorder",
   "sash.hoverBorder",
   "widget.border",
@@ -733,7 +735,10 @@ const retroBorderIds = [
   "window.inactiveBorder",
   "textBlockQuote.border",
   "toolbar.hoverOutline",
+  "button.border",
+  "button.separator",
   "checkbox.border",
+  "checkbox.selectBorder",
   "dropdown.border",
   "input.border",
   "inputOption.activeBorder",
@@ -780,6 +785,9 @@ const retroBorderIds = [
   "welcomePage.tileBorder",
 ] as const;
 
+const retroEdgeLight = "#ffffff" as const satisfies Hex;
+const retroEdgeShadow = "#808080" as const satisfies Hex;
+const retroEdgeDark = "#404040" as const satisfies Hex;
 const retroInvertedForeground = "#ffffff" as const satisfies Hex;
 const retroWorkbenchTextPairs = [
   ["activityBar.foreground", "activityBar.background"],
@@ -830,8 +838,10 @@ const createRetroWorkbenchColors = (C: Palette): Theme["colors"] => {
 
   return {
     ...createWorkbenchColors(C),
-    ...keys(retroBorderIds, B.black),
+    ...keys(retroBorderIds, retroEdgeShadow),
 
+    contrastBorder: retroEdgeShadow,
+    contrastActiveBorder: B.black,
     focusBorder: B.black,
     foreground: F.text,
     disabledForeground: F.faint,
@@ -840,11 +850,21 @@ const createRetroWorkbenchColors = (C: Palette): Theme["colors"] => {
     "selection.background": B.sky,
 
     "button.background": B.panel,
+    "button.border": retroEdgeLight,
     "button.foreground": F.text,
     "button.hoverBackground": B.hover,
+    "button.separator": retroEdgeShadow,
     "button.secondaryBackground": B.panel,
     "button.secondaryForeground": F.text,
     "button.secondaryHoverBackground": B.hover,
+    "checkbox.border": retroEdgeDark,
+    "checkbox.selectBorder": B.black,
+    "dropdown.border": retroEdgeLight,
+    "input.border": retroEdgeDark,
+    "inputOption.activeBorder": B.black,
+    "inputValidation.errorBorder": B.black,
+    "inputValidation.infoBorder": retroEdgeDark,
+    "inputValidation.warningBorder": retroEdgeDark,
     "inputValidation.errorForeground": retroInvertedForeground,
     "inputValidation.infoForeground": F.text,
     "inputValidation.warningForeground": F.text,
@@ -858,27 +878,38 @@ const createRetroWorkbenchColors = (C: Palette): Theme["colors"] => {
     "list.inactiveSelectionForeground": F.text,
     "list.hoverBackground": B.hover,
 
+    "activityBar.border": retroEdgeLight,
     "activityBar.background": B.panel,
     "activityBar.foreground": F.text,
     "activityBar.inactiveForeground": F.faint,
     "activityBar.activeBackground": B.active,
+    "activityBar.activeBorder": B.black,
     "activityBarBadge.background": B.sky,
     "activityBarBadge.foreground": F.text,
+    "activityBarTop.activeBorder": B.black,
     "activityBarTop.background": B.panel,
     "activityBarTop.foreground": F.text,
     "activityBarTop.inactiveForeground": F.faint,
     "activityBarTop.activeBackground": B.active,
 
     "sideBar.background": B.panel,
+    "sideBar.border": retroEdgeShadow,
     "sideBar.foreground": F.text,
     "sideBarTitle.background": B.panel,
     "sideBarTitle.foreground": F.text,
     "sideBarSectionHeader.background": B.editor,
+    "sideBarSectionHeader.border": retroEdgeLight,
     "sideBarSectionHeader.foreground": F.text,
     "sideBarStickyScroll.background": B.panel,
 
+    "editorGroup.border": retroEdgeDark,
+    "editorGroupHeader.border": retroEdgeLight,
+    "editorGroupHeader.tabsBorder": retroEdgeShadow,
     "tab.activeBackground": B.panel,
+    "tab.activeBorder": retroEdgeShadow,
+    "tab.activeBorderTop": retroEdgeLight,
     "tab.activeForeground": F.text,
+    "tab.border": retroEdgeDark,
     "tab.hoverBackground": B.active,
     "tab.hoverForeground": F.text,
     "tab.inactiveBackground": B.hover,
@@ -890,6 +921,7 @@ const createRetroWorkbenchColors = (C: Palette): Theme["colors"] => {
     "editorCursor.foreground": F.text,
     "editor.selectionBackground": B.sky,
     "editor.selectionForeground": F.text,
+    "editor.findMatchBorder": B.black,
     "editorWhitespace.foreground": B.guide,
     "editorIndentGuide.background1": B.guide,
     "editorIndentGuide.activeBackground1": F.faint,
@@ -897,17 +929,23 @@ const createRetroWorkbenchColors = (C: Palette): Theme["colors"] => {
     "editorCodeLens.foreground": F.faint,
 
     "panel.background": B.panel,
+    "panel.border": retroEdgeLight,
+    "panelInput.border": retroEdgeDark,
+    "panelTitle.activeBorder": retroEdgeDark,
     "panelTitle.activeForeground": F.text,
     "panelTitle.inactiveForeground": F.faint,
 
+    "terminal.border": retroEdgeDark,
     "terminalCursor.background": B.editor,
     "terminalCursor.foreground": F.text,
     "terminal.selectionBackground": B.sky,
     "terminal.selectionForeground": F.text,
 
     "debugToolBar.background": B.popup,
+    "debugToolBar.border": retroEdgeShadow,
 
     "statusBar.background": B.panel,
+    "statusBar.border": retroEdgeLight,
     "statusBar.foreground": F.text,
     "statusBar.debuggingBackground": B.plum,
     "statusBar.debuggingForeground": retroInvertedForeground,
@@ -926,26 +964,36 @@ const createRetroWorkbenchColors = (C: Palette): Theme["colors"] => {
 
     "titleBar.activeBackground": B.sky,
     "titleBar.activeForeground": F.text,
+    "titleBar.border": retroEdgeDark,
     "titleBar.inactiveBackground": B.panel,
     "titleBar.inactiveForeground": F.faint,
 
     "menu.background": B.popup,
+    "menu.border": retroEdgeShadow,
     "menu.foreground": F.text,
     "menu.selectionBackground": B.sky,
+    "menu.selectionBorder": B.black,
     "menu.selectionForeground": F.text,
-    "menu.separatorBackground": B.black,
+    "menu.separatorBackground": retroEdgeShadow,
     "menubar.selectionBackground": B.sky,
+    "menubar.selectionBorder": B.black,
     "menubar.selectionForeground": F.text,
 
     "commandCenter.foreground": F.text,
     "commandCenter.activeForeground": F.text,
+    "commandCenter.border": retroEdgeLight,
     "commandCenter.background": B.panel,
     "commandCenter.activeBackground": B.sky,
+    "commandCenter.activeBorder": B.black,
     "commandCenter.inactiveForeground": F.faint,
+    "commandCenter.inactiveBorder": retroEdgeShadow,
 
+    "notificationCenter.border": retroEdgeShadow,
     "notificationCenterHeader.background": B.editor,
     "notificationCenterHeader.foreground": F.text,
+    "notificationToast.border": retroEdgeShadow,
     "notifications.background": B.popup,
+    "notifications.border": retroEdgeShadow,
     "notifications.foreground": F.text,
 
     "quickInput.background": B.popup,
@@ -953,14 +1001,20 @@ const createRetroWorkbenchColors = (C: Palette): Theme["colors"] => {
     "quickInputList.focusBackground": B.sky,
     "quickInputList.focusForeground": F.text,
     "quickInputTitle.background": B.editor,
+    "pickerGroup.border": retroEdgeShadow,
     "pickerGroup.foreground": F.text,
 
     "settings.checkboxBackground": B.popup,
+    "settings.checkboxBorder": retroEdgeDark,
     "settings.dropdownBackground": B.popup,
+    "settings.dropdownBorder": retroEdgeLight,
     "settings.headerForeground": F.text,
     "settings.numberInputBackground": B.popup,
+    "settings.numberInputBorder": retroEdgeDark,
     "settings.rowHoverBackground": B.hover,
+    "settings.sashBorder": retroEdgeShadow,
     "settings.textInputBackground": B.popup,
+    "settings.textInputBorder": retroEdgeDark,
 
     "breadcrumb.background": B.panel,
     "breadcrumb.focusForeground": F.text,
@@ -968,6 +1022,7 @@ const createRetroWorkbenchColors = (C: Palette): Theme["colors"] => {
     "breadcrumb.activeSelectionForeground": F.text,
     "breadcrumbPicker.background": B.popup,
 
+    "peekView.border": retroEdgeShadow,
     "peekViewResult.selectionBackground": B.sky,
     "peekViewResult.selectionForeground": F.text,
     "peekViewTitle.background": B.popup,
@@ -983,6 +1038,7 @@ const createRetroWorkbenchColors = (C: Palette): Theme["colors"] => {
     "scrollbarSlider.hoverBackground": withAlpha(F.faint, 0.72),
 
     "welcomePage.tileBackground": B.popup,
+    "welcomePage.tileBorder": retroEdgeLight,
     "welcomePage.tileHoverBackground": B.hover,
   };
 };
@@ -1584,6 +1640,12 @@ const assertThemeIntegrity = (
     }
   }
   if (options.borderStyle === "retro") {
+    const retroBorderColors = new Set<Hex>([
+      B.black,
+      retroEdgeLight,
+      retroEdgeShadow,
+      retroEdgeDark,
+    ]);
     const visibleBorderColors = new Set(
       Object.entries(theme.colors)
         .filter(
@@ -1593,10 +1655,22 @@ const assertThemeIntegrity = (
         .map(([, value]) => value),
     );
 
-    if (visibleBorderColors.size !== 1 || !visibleBorderColors.has(B.black)) {
+    const invalidBorderColors = [...visibleBorderColors].filter(
+      (value) => !retroBorderColors.has(value),
+    );
+    if (invalidBorderColors.length) {
       throw new Error(
-        `Retro theme must use only the hard black border color ${B.black}`,
+        `Retro theme uses non-beveled border colors: ${invalidBorderColors.join(", ")}`,
       );
+    }
+    if (relativeLuminance(retroEdgeLight) <= relativeLuminance(B.popup)) {
+      throw new Error("Retro bevel highlight must be lighter than popup chrome");
+    }
+    if (relativeLuminance(retroEdgeShadow) >= relativeLuminance(B.panel)) {
+      throw new Error("Retro bevel shadow must be darker than panel chrome");
+    }
+    if (relativeLuminance(retroEdgeDark) >= relativeLuminance(retroEdgeShadow)) {
+      throw new Error("Retro bevel dark shadow must be darker than shadow");
     }
     for (const [foregroundId, backgroundId] of retroWorkbenchTextPairs) {
       const foreground = theme.colors[foregroundId];

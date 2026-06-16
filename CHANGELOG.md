@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.5.15 - 2026-06-16
+
+### Changed
+
+- Added beveled light and shadow control edges to Jack's Theme Retro for a stronger classic PC chrome feel.
+
 ## 0.5.14 - 2026-06-16
 
 ### Changed

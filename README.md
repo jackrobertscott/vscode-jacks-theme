@@ -1,6 +1,6 @@
 # Jack's Theme
 
-[![Version](https://img.shields.io/badge/version-0.5.15-d8b84d?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=jackrobertscott.jacks-theme)
+[![Version](https://img.shields.io/badge/version-0.5.14-d8b84d?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=jackrobertscott.jacks-theme)
 [![VS Code](https://img.shields.io/badge/VS%20Code-%5E1.90.0-67b9ff?style=flat-square)](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#visual-studio-code-compatibility)
 [![License](https://img.shields.io/badge/license-MIT-76c26e?style=flat-square)](https://opensource.org/license/mit)
 
@@ -15,7 +15,7 @@ Source code is available at <https://github.com/jackrobertscott/vscode-jacks-the
 - Dark editor and workbench surfaces tuned to stay visually quiet.
 - Warm syntax colors for structure, strings, comments, and language symbols.
 - Borderless, subtly bordered, and light retro variants for different workbench chrome preferences.
-- Jack's Theme Retro uses softened Windows-era greys, beveled light/shadow control edges, dark text, and muted steel-blue selection/title states.
+- Jack's Theme Retro uses softened Windows-era greys, black pixel-like borders, dark text, and muted steel-blue selection/title states.
 - Semantic highlighting enabled for language-aware token colors.
 
 ## Installation

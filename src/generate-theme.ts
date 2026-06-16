@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 
 type Hex = `#${string}`;
 type Oklch = `oklch(${number}% ${number} ${number})`;
+type SourceColor = Hex | Oklch;
 
 type TokenRule = {
   name: string;
@@ -62,37 +63,37 @@ const JACK_BORDER_PALETTE = {
 } as const satisfies Record<string, Oklch>;
 
 const RETRO_BACKGROUND_PALETTE = {
-  black: "oklch(0% 0 0)",
-  editor: "oklch(37.00% 0.0080 105.00)",
-  panel: "oklch(39.50% 0.0080 105.00)",
-  popup: "oklch(42.50% 0.0100 95.00)",
-  hover: "oklch(45.50% 0.0110 95.00)",
-  active: "oklch(48.00% 0.0120 90.00)",
-  guide: "oklch(53.50% 0.0080 90.00)",
-  accent: "oklch(47.00% 0.0600 80.00)",
-  success: "oklch(46.00% 0.0550 140.00)",
-  danger: "oklch(46.00% 0.0600 30.00)",
-  info: "oklch(46.00% 0.0550 215.00)",
-  ember: "oklch(47.00% 0.0750 45.00)",
-  sand: "oklch(47.00% 0.0700 90.00)",
-  moss: "oklch(46.00% 0.0650 135.00)",
-  sky: "oklch(46.00% 0.0550 215.00)",
-  mark: "oklch(59.00% 0.0420 80.00)",
-  plum: "oklch(46.00% 0.0550 315.00)",
-  clay: "oklch(46.00% 0.0600 15.00)",
-} as const satisfies Record<keyof typeof JACK_BACKGROUND_PALETTE, Oklch>;
+  black: "#000000",
+  editor: "#b7b1a6",
+  panel: "#c8c1b6",
+  popup: "#d9d2c4",
+  hover: "#a79f93",
+  active: "#a9a194",
+  guide: "#746f66",
+  accent: "#9a8744",
+  success: "#587a5d",
+  danger: "#8f5048",
+  info: "#79999e",
+  ember: "#8f613d",
+  sand: "#9a8744",
+  moss: "#587a5d",
+  sky: "#8aa3bd",
+  mark: "#5f7480",
+  plum: "#7e6689",
+  clay: "#8f5048",
+} as const satisfies Record<keyof typeof JACK_BACKGROUND_PALETTE, SourceColor>;
 
 const RETRO_FONT_PALETTE = {
-  text: "oklch(88.00% 0.0250 90.00)",
-  muted: "oklch(84.00% 0.0200 70.00)",
-  faint: "oklch(74.00% 0.0180 90.00)",
-  ember: "oklch(82.00% 0.1200 52.00)",
-  sand: "oklch(85.00% 0.1100 97.00)",
-  moss: "oklch(81.00% 0.1200 145.00)",
-  sky: "oklch(82.00% 0.1000 220.00)",
-  plum: "oklch(82.00% 0.1000 310.00)",
-  clay: "oklch(80.00% 0.1300 5.00)",
-} as const satisfies Record<keyof typeof JACK_FONT_PALETTE, Oklch>;
+  text: "#1f1b16",
+  muted: "#1f1b16",
+  faint: "#343434",
+  ember: "#6b0050",
+  sand: "#4f4300",
+  moss: "#005000",
+  sky: "#003f7f",
+  plum: "#4d0080",
+  clay: "#800000",
+} as const satisfies Record<keyof typeof JACK_FONT_PALETTE, SourceColor>;
 
 type BackgroundPalette = Record<keyof typeof JACK_BACKGROUND_PALETTE, Hex> & {
   shadow: Hex;
@@ -162,17 +163,27 @@ const oklchToHex = (value: Oklch): Hex => {
   return `#${toByte(red)}${toByte(green)}${toByte(blue)}`;
 };
 
-const createColorMap = <T extends Record<string, Oklch>>(
+const isHexColor = (value: SourceColor): value is Hex =>
+  /^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$/.test(value);
+
+const sourceColorToHex = (value: SourceColor): Hex => {
+  if (isHexColor(value)) return value.toLowerCase() as Hex;
+  if (value.startsWith("#")) throw new Error(`Invalid hex color: ${value}`);
+
+  return oklchToHex(value);
+};
+
+const createColorMap = <T extends Record<string, SourceColor>>(
   colors: T,
 ): Record<keyof T, Hex> =>
   Object.fromEntries(
-    Object.entries(colors).map(([id, value]) => [id, oklchToHex(value)]),
+    Object.entries(colors).map(([id, value]) => [id, sourceColorToHex(value)]),
   ) as Record<keyof T, Hex>;
 
 const createPalette = (
-  backgroundColors: Record<keyof typeof JACK_BACKGROUND_PALETTE, Oklch>,
-  fontColors: Record<keyof typeof JACK_FONT_PALETTE, Oklch>,
-  borderColors: Record<keyof typeof JACK_BORDER_PALETTE, Oklch>,
+  backgroundColors: Record<keyof typeof JACK_BACKGROUND_PALETTE, SourceColor>,
+  fontColors: Record<keyof typeof JACK_FONT_PALETTE, SourceColor>,
+  borderColors: Record<keyof typeof JACK_BORDER_PALETTE, SourceColor>,
 ): Palette => {
   const background = createColorMap(backgroundColors) as Record<
     keyof typeof JACK_BACKGROUND_PALETTE,
@@ -711,14 +722,281 @@ const createBorderedWorkbenchColors = (C: Palette): Theme["colors"] => {
   };
 };
 
+const retroBorderIds = [
+  "focusBorder",
+  "sash.hoverBorder",
+  "widget.border",
+  "editorWidget.border",
+  "editorWidget.resizeBorder",
+  "editorHoverWidget.border",
+  "window.activeBorder",
+  "window.inactiveBorder",
+  "textBlockQuote.border",
+  "toolbar.hoverOutline",
+  "checkbox.border",
+  "dropdown.border",
+  "input.border",
+  "inputOption.activeBorder",
+  "inputValidation.errorBorder",
+  "inputValidation.infoBorder",
+  "inputValidation.warningBorder",
+  "activityBar.border",
+  "activityBar.activeBorder",
+  "activityBarTop.activeBorder",
+  "sideBar.border",
+  "sideBarSectionHeader.border",
+  "editorGroup.border",
+  "editorGroupHeader.tabsBorder",
+  "editorGroupHeader.border",
+  "tab.activeBorder",
+  "tab.activeBorderTop",
+  "tab.border",
+  "editor.findMatchBorder",
+  "editorBracketMatch.border",
+  "diffEditor.border",
+  "panel.border",
+  "panelTitle.activeBorder",
+  "panelInput.border",
+  "terminal.border",
+  "debugToolBar.border",
+  "statusBar.border",
+  "titleBar.border",
+  "menu.border",
+  "menu.selectionBorder",
+  "menubar.selectionBorder",
+  "commandCenter.border",
+  "commandCenter.inactiveBorder",
+  "commandCenter.activeBorder",
+  "notificationCenter.border",
+  "notificationToast.border",
+  "notifications.border",
+  "pickerGroup.border",
+  "settings.checkboxBorder",
+  "settings.dropdownBorder",
+  "settings.numberInputBorder",
+  "settings.sashBorder",
+  "settings.textInputBorder",
+  "peekView.border",
+  "welcomePage.tileBorder",
+] as const;
+
+const retroInvertedForeground = "#ffffff" as const satisfies Hex;
+const retroWorkbenchTextPairs = [
+  ["activityBar.foreground", "activityBar.background"],
+  ["activityBarBadge.foreground", "activityBarBadge.background"],
+  ["badge.foreground", "badge.background"],
+  ["button.foreground", "button.background"],
+  ["button.secondaryForeground", "button.secondaryBackground"],
+  ["commandCenter.activeForeground", "commandCenter.activeBackground"],
+  ["commandCenter.foreground", "commandCenter.background"],
+  ["dropdown.foreground", "dropdown.background"],
+  ["editor.foreground", "editor.background"],
+  ["editor.selectionForeground", "editor.selectionBackground"],
+  ["editorLineNumber.foreground", "editor.background"],
+  ["input.foreground", "input.background"],
+  ["input.placeholderForeground", "input.background"],
+  ["inputValidation.errorForeground", "inputValidation.errorBackground"],
+  ["inputValidation.infoForeground", "inputValidation.infoBackground"],
+  ["inputValidation.warningForeground", "inputValidation.warningBackground"],
+  ["list.activeSelectionForeground", "list.activeSelectionBackground"],
+  ["list.focusForeground", "list.focusBackground"],
+  ["list.inactiveSelectionForeground", "list.inactiveSelectionBackground"],
+  ["menu.foreground", "menu.background"],
+  ["menu.selectionForeground", "menu.selectionBackground"],
+  ["notifications.foreground", "notifications.background"],
+  ["panelTitle.activeForeground", "panel.background"],
+  ["panelTitle.inactiveForeground", "panel.background"],
+  ["peekViewResult.selectionForeground", "peekViewResult.selectionBackground"],
+  ["quickInput.foreground", "quickInput.background"],
+  ["quickInputList.focusForeground", "quickInputList.focusBackground"],
+  ["sideBar.foreground", "sideBar.background"],
+  ["sideBarSectionHeader.foreground", "sideBarSectionHeader.background"],
+  ["statusBar.foreground", "statusBar.background"],
+  ["statusBar.debuggingForeground", "statusBar.debuggingBackground"],
+  ["statusBarItem.errorForeground", "statusBarItem.errorBackground"],
+  ["statusBarItem.remoteForeground", "statusBarItem.remoteBackground"],
+  ["statusBarItem.warningForeground", "statusBarItem.warningBackground"],
+  ["tab.activeForeground", "tab.activeBackground"],
+  ["tab.inactiveForeground", "tab.inactiveBackground"],
+  ["terminal.foreground", "terminal.background"],
+  ["terminal.selectionForeground", "terminal.selectionBackground"],
+  ["titleBar.activeForeground", "titleBar.activeBackground"],
+  ["titleBar.inactiveForeground", "titleBar.inactiveBackground"],
+] as const;
+
+const createRetroWorkbenchColors = (C: Palette): Theme["colors"] => {
+  const B = C.background;
+  const F = C.font;
+
+  return {
+    ...createWorkbenchColors(C),
+    ...keys(retroBorderIds, B.black),
+
+    focusBorder: B.black,
+    foreground: F.text,
+    disabledForeground: F.faint,
+    descriptionForeground: F.muted,
+    "icon.foreground": F.text,
+    "selection.background": B.sky,
+
+    "button.background": B.panel,
+    "button.foreground": F.text,
+    "button.hoverBackground": B.hover,
+    "button.secondaryBackground": B.panel,
+    "button.secondaryForeground": F.text,
+    "button.secondaryHoverBackground": B.hover,
+    "inputValidation.errorForeground": retroInvertedForeground,
+    "inputValidation.infoForeground": F.text,
+    "inputValidation.warningForeground": F.text,
+
+    "list.activeSelectionBackground": B.sky,
+    "list.activeSelectionForeground": F.text,
+    "list.focusBackground": B.sky,
+    "list.focusForeground": F.text,
+    "list.inactiveFocusBackground": B.active,
+    "list.inactiveSelectionBackground": B.active,
+    "list.inactiveSelectionForeground": F.text,
+    "list.hoverBackground": B.hover,
+
+    "activityBar.background": B.panel,
+    "activityBar.foreground": F.text,
+    "activityBar.inactiveForeground": F.faint,
+    "activityBar.activeBackground": B.active,
+    "activityBarBadge.background": B.sky,
+    "activityBarBadge.foreground": F.text,
+    "activityBarTop.background": B.panel,
+    "activityBarTop.foreground": F.text,
+    "activityBarTop.inactiveForeground": F.faint,
+    "activityBarTop.activeBackground": B.active,
+
+    "sideBar.background": B.panel,
+    "sideBar.foreground": F.text,
+    "sideBarTitle.background": B.panel,
+    "sideBarTitle.foreground": F.text,
+    "sideBarSectionHeader.background": B.editor,
+    "sideBarSectionHeader.foreground": F.text,
+    "sideBarStickyScroll.background": B.panel,
+
+    "tab.activeBackground": B.panel,
+    "tab.activeForeground": F.text,
+    "tab.hoverBackground": B.active,
+    "tab.hoverForeground": F.text,
+    "tab.inactiveBackground": B.hover,
+    "tab.inactiveForeground": F.faint,
+    "tab.unfocusedActiveForeground": F.text,
+    "tab.unfocusedInactiveForeground": F.faint,
+
+    "editorCursor.background": B.editor,
+    "editorCursor.foreground": F.text,
+    "editor.selectionBackground": B.sky,
+    "editor.selectionForeground": F.text,
+    "editorWhitespace.foreground": B.guide,
+    "editorIndentGuide.background1": B.guide,
+    "editorIndentGuide.activeBackground1": F.faint,
+    "editorRuler.foreground": B.guide,
+    "editorCodeLens.foreground": F.faint,
+
+    "panel.background": B.panel,
+    "panelTitle.activeForeground": F.text,
+    "panelTitle.inactiveForeground": F.faint,
+
+    "terminalCursor.background": B.editor,
+    "terminalCursor.foreground": F.text,
+    "terminal.selectionBackground": B.sky,
+    "terminal.selectionForeground": F.text,
+
+    "debugToolBar.background": B.popup,
+
+    "statusBar.background": B.panel,
+    "statusBar.foreground": F.text,
+    "statusBar.debuggingBackground": B.plum,
+    "statusBar.debuggingForeground": retroInvertedForeground,
+    "statusBar.noFolderBackground": B.panel,
+    "statusBar.noFolderForeground": F.text,
+    "statusBarItem.activeBackground": B.active,
+    "statusBarItem.hoverBackground": B.hover,
+    "statusBarItem.prominentBackground": B.hover,
+    "statusBarItem.prominentForeground": F.text,
+    "statusBarItem.remoteBackground": B.sky,
+    "statusBarItem.remoteForeground": F.text,
+    "statusBarItem.errorBackground": B.clay,
+    "statusBarItem.errorForeground": retroInvertedForeground,
+    "statusBarItem.warningBackground": B.sand,
+    "statusBarItem.warningForeground": F.text,
+
+    "titleBar.activeBackground": B.sky,
+    "titleBar.activeForeground": F.text,
+    "titleBar.inactiveBackground": B.panel,
+    "titleBar.inactiveForeground": F.faint,
+
+    "menu.background": B.popup,
+    "menu.foreground": F.text,
+    "menu.selectionBackground": B.sky,
+    "menu.selectionForeground": F.text,
+    "menu.separatorBackground": B.black,
+    "menubar.selectionBackground": B.sky,
+    "menubar.selectionForeground": F.text,
+
+    "commandCenter.foreground": F.text,
+    "commandCenter.activeForeground": F.text,
+    "commandCenter.background": B.panel,
+    "commandCenter.activeBackground": B.sky,
+    "commandCenter.inactiveForeground": F.faint,
+
+    "notificationCenterHeader.background": B.editor,
+    "notificationCenterHeader.foreground": F.text,
+    "notifications.background": B.popup,
+    "notifications.foreground": F.text,
+
+    "quickInput.background": B.popup,
+    "quickInput.foreground": F.text,
+    "quickInputList.focusBackground": B.sky,
+    "quickInputList.focusForeground": F.text,
+    "quickInputTitle.background": B.editor,
+    "pickerGroup.foreground": F.text,
+
+    "settings.checkboxBackground": B.popup,
+    "settings.dropdownBackground": B.popup,
+    "settings.headerForeground": F.text,
+    "settings.numberInputBackground": B.popup,
+    "settings.rowHoverBackground": B.hover,
+    "settings.textInputBackground": B.popup,
+
+    "breadcrumb.background": B.panel,
+    "breadcrumb.focusForeground": F.text,
+    "breadcrumb.foreground": F.faint,
+    "breadcrumb.activeSelectionForeground": F.text,
+    "breadcrumbPicker.background": B.popup,
+
+    "peekViewResult.selectionBackground": B.sky,
+    "peekViewResult.selectionForeground": F.text,
+    "peekViewTitle.background": B.popup,
+    "peekViewTitleDescription.foreground": F.text,
+    "peekViewTitleLabel.foreground": F.text,
+
+    "minimapSlider.activeBackground": B.black,
+    "minimapSlider.background": B.guide,
+    "minimapSlider.hoverBackground": F.faint,
+
+    "scrollbarSlider.activeBackground": withAlpha(B.black, 0.84),
+    "scrollbarSlider.background": withAlpha(B.guide, 0.62),
+    "scrollbarSlider.hoverBackground": withAlpha(F.faint, 0.72),
+
+    "welcomePage.tileBackground": B.popup,
+    "welcomePage.tileHoverBackground": B.hover,
+  };
+};
+
 type ThemeConfig = {
   fileName: string;
   name: string;
   type: Theme["type"];
   palette: Palette;
   fontPalette: FontPalette;
-  bordered?: boolean;
+  style?: ThemeStyle;
 };
+
+type ThemeStyle = "plain" | "bordered" | "retro";
 
 const token = (
   name: string,
@@ -1160,8 +1438,13 @@ const borderedWorkbenchColors = new Set([
   "peekView.border",
   "welcomePage.tileBorder",
 ]);
+const retroBorderedWorkbenchColors = new Set([
+  ...borderedWorkbenchColors,
+  ...retroBorderIds,
+]);
 const minimumEditorTextContrast = 4.5;
 const minimumBadgeTextContrast = 4.5;
+const minimumWorkbenchTextContrast = 4.5;
 const minimumSyntaxRoleDistance = 0.09;
 const minimumWordHighlightContrast = 1.75;
 const maximumWordHighlightContrast = 2.15;
@@ -1213,7 +1496,7 @@ const assertThemeIntegrity = (
   theme: Theme,
   palette: Palette,
   fontPalette: FontPalette,
-  options: { allowBorders: boolean },
+  options: { borderStyle: ThemeStyle },
 ) => {
   const B = palette.background;
   assertSyntaxColorSeparation(fontPalette);
@@ -1222,7 +1505,7 @@ const assertThemeIntegrity = (
     assertHex(value, `colors.${id}`);
     if (
       borderlessWorkbenchColorPattern.test(id) &&
-      !options.allowBorders &&
+      options.borderStyle === "plain" &&
       value !== B.transparent
     ) {
       throw new Error(
@@ -1231,12 +1514,22 @@ const assertThemeIntegrity = (
     }
     if (
       borderlessWorkbenchColorPattern.test(id) &&
-      options.allowBorders &&
+      options.borderStyle === "bordered" &&
       value !== B.transparent &&
       !borderedWorkbenchColors.has(id)
     ) {
       throw new Error(
         `colors.${id} has a visible border color but is not in the bordered theme allow-list`,
+      );
+    }
+    if (
+      borderlessWorkbenchColorPattern.test(id) &&
+      options.borderStyle === "retro" &&
+      value !== B.transparent &&
+      !retroBorderedWorkbenchColors.has(id)
+    ) {
+      throw new Error(
+        `colors.${id} has a visible border color but is not in the retro border allow-list`,
       );
     }
     if (
@@ -1258,7 +1551,7 @@ const assertThemeIntegrity = (
       );
     }
   }
-  if (options.allowBorders) {
+  if (options.borderStyle === "bordered") {
     const divider = palette.border.divider;
     const visibleBorderColors = new Set(
       Object.entries(theme.colors)
@@ -1288,6 +1581,32 @@ const assertThemeIntegrity = (
       throw new Error(
         `Border divider ${divider} must stay subtler than hover background ${B.hover}`,
       );
+    }
+  }
+  if (options.borderStyle === "retro") {
+    const visibleBorderColors = new Set(
+      Object.entries(theme.colors)
+        .filter(
+          ([id, value]) =>
+            retroBorderedWorkbenchColors.has(id) && value !== B.transparent,
+        )
+        .map(([, value]) => value),
+    );
+
+    if (visibleBorderColors.size !== 1 || !visibleBorderColors.has(B.black)) {
+      throw new Error(
+        `Retro theme must use only the hard black border color ${B.black}`,
+      );
+    }
+    for (const [foregroundId, backgroundId] of retroWorkbenchTextPairs) {
+      const foreground = theme.colors[foregroundId];
+      const background = theme.colors[backgroundId];
+      const ratio = contrastRatio(foreground, background);
+      if (ratio < minimumWorkbenchTextContrast) {
+        throw new Error(
+          `Retro workbench pair ${foregroundId} on ${backgroundId} contrast ${ratio.toFixed(2)} is below ${minimumWorkbenchTextContrast}`,
+        );
+      }
     }
   }
   theme.tokenColors.forEach((rule, index) => {
@@ -1382,15 +1701,18 @@ const createTheme = (
   type: Theme["type"],
   palette: Palette,
   fontPalette: FontPalette,
-  bordered = false,
+  style: ThemeStyle = "plain",
 ): Theme => ({
   $schema: "vscode://schemas/color-theme",
   name,
   type,
   semanticHighlighting: true,
-  colors: bordered
-    ? createBorderedWorkbenchColors(palette)
-    : createWorkbenchColors(palette),
+  colors:
+    style === "bordered"
+      ? createBorderedWorkbenchColors(palette)
+      : style === "retro"
+        ? createRetroWorkbenchColors(palette)
+        : createWorkbenchColors(palette),
   tokenColors: createTokenColors(fontPalette),
   semanticTokenColors: createSemanticTokenColors(fontPalette),
 });
@@ -1420,7 +1742,7 @@ const themes = [
     type: "dark",
     palette: JACK_PALETTE,
     fontPalette: JACK_FONT_COLORS,
-    bordered: false,
+    style: "plain",
   },
   {
     fileName: "jacks-theme-bordered-color-theme.json",
@@ -1428,15 +1750,15 @@ const themes = [
     type: "dark",
     palette: JACK_PALETTE,
     fontPalette: JACK_FONT_COLORS,
-    bordered: true,
+    style: "bordered",
   },
   {
-    fileName: "jacks-retro-color-theme.json",
-    name: "Jacks Retro Theme",
-    type: "dark",
+    fileName: "jacks-theme-retro-color-theme.json",
+    name: "Jack's Theme Retro",
+    type: "light",
     palette: RETRO_PALETTE,
     fontPalette: RETRO_FONT_COLORS,
-    bordered: false,
+    style: "retro",
   },
 ] as const satisfies readonly ThemeConfig[];
 
@@ -1446,11 +1768,11 @@ for (const {
   type,
   palette,
   fontPalette,
-  bordered = false,
+  style = "plain",
 } of themes) {
-  const theme = createTheme(name, type, palette, fontPalette, bordered);
+  const theme = createTheme(name, type, palette, fontPalette, style);
   assertThemeIntegrity(theme, palette, fontPalette, {
-    allowBorders: bordered,
+    borderStyle: style === "bordered" ? "bordered" : style,
   });
   const outputPath = join(__dirname, "..", "themes", fileName);
   mkdirSync(dirname(outputPath), { recursive: true });

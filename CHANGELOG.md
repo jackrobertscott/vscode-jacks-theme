@@ -2,11 +2,47 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.5.14 - 2026-06-16
+
+### Changed
+
+- Renamed the retro variant to Jack's Theme Retro for consistent theme naming and contribution metadata.
+
+## 0.5.13 - 2026-06-16
+
+### Changed
+
+- Softened Jack's Theme Retro with slightly darker classic PC greys, muted steel-blue selected states, and cohesive blue-grey editor highlights.
+
+## 0.5.12 - 2026-06-16
+
+### Changed
+
+- Lightened Jack's Theme Retro top bar and command center active state so title-bar text and controls remain readable.
+
+## 0.5.11 - 2026-06-16
+
+### Changed
+
+- Refined Jack's Theme Retro with warmer classic PC greys, cohesive VGA-style accents, and enforced retro UI contrast pairs.
+
+## 0.5.10 - 2026-06-16
+
+### Changed
+
+- Reworked Jack's Theme Retro into a light classic PC theme with Windows-era greys, dark text, hard black borders, and navy selected states.
+
+## 0.5.9 - 2026-06-16
+
+### Changed
+
+- Redesigned Jack's Theme Retro around darker classic PC greys, blue selection surfaces, and brighter VGA-style syntax accents.
+
 ## 0.5.8 - 2026-06-16
 
 ### Added
 
-- Added Jacks Retro Theme, a medium grey old-PC inspired theme option with clean retro syntax accents.
+- Added Jack's Theme Retro, a medium grey old-PC inspired theme option with clean retro syntax accents.
 
 ## 0.5.7 - 2026-05-31
 

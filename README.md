@@ -1,10 +1,10 @@
 # Jack's Theme
 
-[![Version](https://img.shields.io/badge/version-0.4.22-d8b84d?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=jackrobertscott.jacks-theme)
+[![Version](https://img.shields.io/badge/version-0.5.8-d8b84d?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=jackrobertscott.jacks-theme)
 [![VS Code](https://img.shields.io/badge/VS%20Code-%5E1.90.0-67b9ff?style=flat-square)](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#visual-studio-code-compatibility)
 [![License](https://img.shields.io/badge/license-MIT-76c26e?style=flat-square)](https://opensource.org/license/mit)
 
-A quiet dark theme for Visual Studio Code with consistent editor surfaces, warm blackboard-inspired highlighting, and an optional subtle bordered variant.
+A quiet theme collection for Visual Studio Code with consistent editor surfaces, warm blackboard-inspired highlighting, an optional subtle bordered variant, and a clean grey retro option.
 
 Jack's Theme is generated from a TypeScript source palette. The generated theme sets colors only; it does not set token font styles.
 
@@ -14,7 +14,8 @@ Source code is available at <https://github.com/jackrobertscott/vscode-jacks-the
 
 - Dark editor and workbench surfaces tuned to stay visually quiet.
 - Warm syntax colors for structure, strings, comments, and language symbols.
-- Borderless and subtly bordered variants for different workbench chrome preferences.
+- Borderless, subtly bordered, and grey retro variants for different workbench chrome preferences.
+- Jacks Retro Theme uses a medium old-PC grey surface ladder with amber, green, cyan, and lavender syntax accents.
 - Semantic highlighting enabled for language-aware token colors.
 
 ## Installation

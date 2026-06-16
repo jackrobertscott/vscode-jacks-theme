@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.5.8 - 2026-06-16
+
+### Added
+
+- Added Jacks Retro Theme, a medium grey old-PC inspired theme option with clean retro syntax accents.
+
 ## 0.5.7 - 2026-05-31
 
 ### Changed

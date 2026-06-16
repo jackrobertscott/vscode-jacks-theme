@@ -61,6 +61,39 @@ const JACK_BORDER_PALETTE = {
   divider: "oklch(24.00% 0 0)",
 } as const satisfies Record<string, Oklch>;
 
+const RETRO_BACKGROUND_PALETTE = {
+  black: "oklch(0% 0 0)",
+  editor: "oklch(37.00% 0.0080 105.00)",
+  panel: "oklch(39.50% 0.0080 105.00)",
+  popup: "oklch(42.50% 0.0100 95.00)",
+  hover: "oklch(45.50% 0.0110 95.00)",
+  active: "oklch(48.00% 0.0120 90.00)",
+  guide: "oklch(53.50% 0.0080 90.00)",
+  accent: "oklch(47.00% 0.0600 80.00)",
+  success: "oklch(46.00% 0.0550 140.00)",
+  danger: "oklch(46.00% 0.0600 30.00)",
+  info: "oklch(46.00% 0.0550 215.00)",
+  ember: "oklch(47.00% 0.0750 45.00)",
+  sand: "oklch(47.00% 0.0700 90.00)",
+  moss: "oklch(46.00% 0.0650 135.00)",
+  sky: "oklch(46.00% 0.0550 215.00)",
+  mark: "oklch(59.00% 0.0420 80.00)",
+  plum: "oklch(46.00% 0.0550 315.00)",
+  clay: "oklch(46.00% 0.0600 15.00)",
+} as const satisfies Record<keyof typeof JACK_BACKGROUND_PALETTE, Oklch>;
+
+const RETRO_FONT_PALETTE = {
+  text: "oklch(88.00% 0.0250 90.00)",
+  muted: "oklch(84.00% 0.0200 70.00)",
+  faint: "oklch(74.00% 0.0180 90.00)",
+  ember: "oklch(82.00% 0.1200 52.00)",
+  sand: "oklch(85.00% 0.1100 97.00)",
+  moss: "oklch(81.00% 0.1200 145.00)",
+  sky: "oklch(82.00% 0.1000 220.00)",
+  plum: "oklch(82.00% 0.1000 310.00)",
+  clay: "oklch(80.00% 0.1300 5.00)",
+} as const satisfies Record<keyof typeof JACK_FONT_PALETTE, Oklch>;
+
 type BackgroundPalette = Record<keyof typeof JACK_BACKGROUND_PALETTE, Hex> & {
   shadow: Hex;
   minimap: Hex;
@@ -137,9 +170,9 @@ const createColorMap = <T extends Record<string, Oklch>>(
   ) as Record<keyof T, Hex>;
 
 const createPalette = (
-  backgroundColors: typeof JACK_BACKGROUND_PALETTE,
-  fontColors: typeof JACK_FONT_PALETTE,
-  borderColors: typeof JACK_BORDER_PALETTE,
+  backgroundColors: Record<keyof typeof JACK_BACKGROUND_PALETTE, Oklch>,
+  fontColors: Record<keyof typeof JACK_FONT_PALETTE, Oklch>,
+  borderColors: Record<keyof typeof JACK_BORDER_PALETTE, Oklch>,
 ): Palette => {
   const background = createColorMap(backgroundColors) as Record<
     keyof typeof JACK_BACKGROUND_PALETTE,
@@ -683,6 +716,7 @@ type ThemeConfig = {
   name: string;
   type: Theme["type"];
   palette: Palette;
+  fontPalette: FontPalette;
   bordered?: boolean;
 };
 
@@ -1365,18 +1399,27 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 assertSingleWordPaletteProperties("background", JACK_BACKGROUND_PALETTE);
 assertSingleWordPaletteProperties("font", JACK_FONT_PALETTE);
 assertSingleWordPaletteProperties("border", JACK_BORDER_PALETTE);
+assertSingleWordPaletteProperties("background", RETRO_BACKGROUND_PALETTE);
+assertSingleWordPaletteProperties("font", RETRO_FONT_PALETTE);
 const JACK_PALETTE = createPalette(
   JACK_BACKGROUND_PALETTE,
   JACK_FONT_PALETTE,
   JACK_BORDER_PALETTE,
 );
 const JACK_FONT_COLORS = createColorMap(JACK_FONT_PALETTE);
+const RETRO_PALETTE = createPalette(
+  RETRO_BACKGROUND_PALETTE,
+  RETRO_FONT_PALETTE,
+  JACK_BORDER_PALETTE,
+);
+const RETRO_FONT_COLORS = createColorMap(RETRO_FONT_PALETTE);
 const themes = [
   {
     fileName: "jacks-theme-color-theme.json",
     name: "Jack's Theme",
     type: "dark",
     palette: JACK_PALETTE,
+    fontPalette: JACK_FONT_COLORS,
     bordered: false,
   },
   {
@@ -1384,13 +1427,29 @@ const themes = [
     name: "Jack's Theme Bordered",
     type: "dark",
     palette: JACK_PALETTE,
+    fontPalette: JACK_FONT_COLORS,
     bordered: true,
+  },
+  {
+    fileName: "jacks-retro-color-theme.json",
+    name: "Jacks Retro Theme",
+    type: "dark",
+    palette: RETRO_PALETTE,
+    fontPalette: RETRO_FONT_COLORS,
+    bordered: false,
   },
 ] as const satisfies readonly ThemeConfig[];
 
-for (const { fileName, name, type, palette, bordered = false } of themes) {
-  const theme = createTheme(name, type, palette, JACK_FONT_COLORS, bordered);
-  assertThemeIntegrity(theme, palette, JACK_FONT_COLORS, {
+for (const {
+  fileName,
+  name,
+  type,
+  palette,
+  fontPalette,
+  bordered = false,
+} of themes) {
+  const theme = createTheme(name, type, palette, fontPalette, bordered);
+  assertThemeIntegrity(theme, palette, fontPalette, {
     allowBorders: bordered,
   });
   const outputPath = join(__dirname, "..", "themes", fileName);

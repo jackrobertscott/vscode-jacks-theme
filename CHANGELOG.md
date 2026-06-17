@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.5.15 - 2026-06-18
+
+### Changed
+
+- Restored visible commit/action button surfaces in Jack's Theme Retro with distinct filled button backgrounds and hard black button borders.
+
 ## 0.5.14 - 2026-06-16
 
 ### Changed

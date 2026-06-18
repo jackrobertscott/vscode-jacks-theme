@@ -304,7 +304,7 @@ const mockupVisibleBorderIds = getVisibleWorkbenchBorderColorIds(
 export const theme = defineTheme({
   order: 40,
   fileName: "jacks-theme-mockup-color-theme.json",
-  name: "Jack's mockup theme",
+  name: "Jack's Mockup Theme",
   type: "light",
   palette: MOCKUP_PALETTE,
   fontPalette: MOCKUP_FONT_COLORS,

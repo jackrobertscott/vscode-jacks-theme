@@ -302,7 +302,7 @@ export const JACK_WORKBENCH_STYLES = createJackWorkbenchStyles(JACK_PALETTE);
 export const theme = defineTheme({
   order: 30,
   fileName: "jacks-theme-color-theme.json",
-  name: "Jack's theme",
+  name: "Jack's Theme",
   type: "dark",
   palette: JACK_PALETTE,
   fontPalette: JACK_FONT_COLORS,

@@ -1,6 +1,6 @@
 {
   "$schema": "vscode://schemas/color-theme",
-  "name": "Jack's mockup theme",
+  "name": "Jack's Mockup Theme",
   "type": "light",
   "semanticHighlighting": true,
   "colors": {

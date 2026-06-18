@@ -1,6 +1,6 @@
 {
   "$schema": "vscode://schemas/color-theme",
-  "name": "Jack's grey theme",
+  "name": "Jack's Grey Theme",
   "type": "dark",
   "semanticHighlighting": true,
   "colors": {

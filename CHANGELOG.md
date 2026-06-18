@@ -2,21 +2,27 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.5.24 - 2026-06-18
+
+### Changed
+
+- Title-cased contributed theme labels and generated theme names.
+
 ## 0.5.23 - 2026-06-18
 
 ### Changed
 
-- Strengthened Jack's grey theme with visible neutral workbench borders and a darker editor/code surface for higher syntax contrast.
+- Strengthened Jack's Grey Theme with visible neutral workbench borders and a darker editor/code surface for higher syntax contrast.
 
 ## 0.5.22 - 2026-06-18
 
 ### Added
 
-- Added Jack's grey theme, a medium-grey dark theme with graphite surfaces, soft raised chrome, cool slate selections, and bright pastel syntax accents.
+- Added Jack's Grey Theme, a medium-grey dark theme with graphite surfaces, soft raised chrome, cool slate selections, and bright pastel syntax accents.
 
 ### Changed
 
-- Renamed contributed theme labels to Jack's grey theme, Jack's bordered theme, Jack's theme, and Jack's mockup theme.
+- Renamed contributed theme labels to Jack's Grey Theme, Jack's Bordered Theme, Jack's Theme, and Jack's Mockup Theme.
 
 ## 0.5.21 - 2026-06-18
 

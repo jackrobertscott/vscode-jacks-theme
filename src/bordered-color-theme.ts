@@ -21,7 +21,7 @@ const borderedVisibleBorderIds = getVisibleWorkbenchBorderColorIds(
 export const theme = defineTheme({
   order: 20,
   fileName: "jacks-theme-bordered-color-theme.json",
-  name: "Jack's Theme Bordered",
+  name: "Jack's bordered theme",
   type: "dark",
   palette: JACK_PALETTE,
   fontPalette: JACK_FONT_COLORS,

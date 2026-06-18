@@ -1,10 +1,10 @@
 # Jack's Theme
 
-[![Version](https://img.shields.io/badge/version-0.5.17-d8b84d?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=jackrobertscott.jacks-theme)
+[![Version](https://img.shields.io/badge/version-0.5.22-d8b84d?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=jackrobertscott.jacks-theme)
 [![VS Code](https://img.shields.io/badge/VS%20Code-%5E1.90.0-67b9ff?style=flat-square)](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#visual-studio-code-compatibility)
 [![License](https://img.shields.io/badge/license-MIT-76c26e?style=flat-square)](https://opensource.org/license/mit)
 
-A quiet theme collection for Visual Studio Code with consistent editor surfaces, warm blackboard-inspired highlighting, an optional subtle bordered variant, and a light mockup-inspired option.
+A quiet theme collection for Visual Studio Code with consistent editor surfaces, warm blackboard-inspired highlighting, a medium-grey dark variant, an optional subtle bordered variant, and a light mockup-inspired option.
 
 Jack's Theme is generated from a TypeScript source palette. The generated theme sets colors only; it does not set token font styles.
 
@@ -14,8 +14,9 @@ Source code is available at <https://github.com/jackrobertscott/vscode-jacks-the
 
 - Dark editor and workbench surfaces tuned to stay visually quiet.
 - Warm syntax colors for structure, strings, comments, and language symbols.
-- Borderless, subtly bordered, and light mockup variants for different workbench chrome preferences.
-- Jack's Theme Mockup uses warm paper surfaces, explicit wireframe borders, graphite text, blueprint focus lines, sticky-note highlights, redline diagnostics, and pencil-like guide colors to feel intentionally early-stage without harsh white glare.
+- Jack's grey theme uses medium graphite surfaces, soft raised chrome, cool slate selections, and bright pastel syntax so it stays dark without feeling black.
+- Jack's bordered theme, Jack's theme, and Jack's mockup theme cover subtle-divider, borderless, and light paper/mockup workbench chrome preferences.
+- Jack's mockup theme uses warm paper surfaces, explicit wireframe borders, graphite text, blueprint focus lines, sticky-note highlights, redline diagnostics, and pencil-like guide colors to feel intentionally early-stage without harsh white glare.
 - Semantic highlighting enabled for language-aware token colors.
 
 ## Installation

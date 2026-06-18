@@ -3,6 +3,7 @@ import { dirname, join, relative } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { createSemanticTokenColors, createTokenColors } from "./tokens.js";
 import { mergeFeatureGroups } from "./theme.js";
+import { createWorkbenchFeatureGroups } from "./workbench.js";
 import type { Theme, ThemeDefinition, ThemeModule } from "./theme.js";
 import { assertThemeIntegrity } from "./validation.js";
 
@@ -11,7 +12,7 @@ const createTheme = (definition: ThemeDefinition): Theme => ({
   name: definition.name,
   type: definition.type,
   semanticHighlighting: true,
-  colors: mergeFeatureGroups(definition.workbench),
+  colors: mergeFeatureGroups(createWorkbenchFeatureGroups(definition.workbench)),
   tokenColors: createTokenColors(definition.fontPalette),
   semanticTokenColors: createSemanticTokenColors(definition.fontPalette),
 });

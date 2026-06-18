@@ -1,42 +1,22 @@
-import { keys } from "./colors.js";
-import { JACK_FONT_COLORS, JACK_PALETTE } from "./jacks-color-theme.js";
-import { defineTheme, featureGroup } from "./theme.js";
-import { createWorkbenchFeatureGroups } from "./workbench.js";
+import {
+  createJackWorkbenchBorders,
+  createJackWorkbenchStyles,
+  JACK_FONT_COLORS,
+  JACK_PALETTE,
+} from "./jacks-color-theme.js";
+import { defineTheme } from "./theme.js";
+import {
+  getVisibleWorkbenchBorderColorIds,
+  workbenchTextPairs,
+} from "./workbench.js";
 
-const dividerBorderIds = [
-  "textBlockQuote.border",
-  "textSeparator.foreground",
-  "activityBar.border",
-  "sideBar.border",
-  "sideBarSectionHeader.border",
-  "editorGroup.border",
-  "editorGroupHeader.tabsBorder",
-  "editorGroupHeader.border",
-  "tab.border",
-  "diffEditor.border",
-  "panel.border",
-  "terminal.border",
-  "debugToolBar.border",
-  "statusBar.border",
-  "titleBar.border",
-  "menu.border",
-  "menu.separatorBackground",
-  "notificationCenter.border",
-  "notificationToast.border",
-  "notifications.border",
-  "pickerGroup.border",
-  "settings.sashBorder",
-  "peekView.border",
-  "welcomePage.tileBorder",
-] as const;
-
-const workbench = [
-  ...createWorkbenchFeatureGroups(JACK_PALETTE),
-  featureGroup(
-    "wireframe.dividers",
-    keys(dividerBorderIds, JACK_PALETTE.border.divider),
-  ),
-];
+const BORDERED_WORKBENCH_STYLES = createJackWorkbenchStyles(
+  JACK_PALETTE,
+  createJackWorkbenchBorders(JACK_PALETTE, JACK_PALETTE.border.divider),
+);
+const borderedVisibleBorderIds = getVisibleWorkbenchBorderColorIds(
+  BORDERED_WORKBENCH_STYLES,
+);
 
 export const theme = defineTheme({
   order: 20,
@@ -45,11 +25,11 @@ export const theme = defineTheme({
   type: "dark",
   palette: JACK_PALETTE,
   fontPalette: JACK_FONT_COLORS,
-  workbench,
+  workbench: BORDERED_WORKBENCH_STYLES,
   integrity: {
     borderPolicy: {
       kind: "uniform",
-      visibleIds: dividerBorderIds,
+      visibleIds: borderedVisibleBorderIds,
       color: JACK_PALETTE.border.divider,
       lighterThan: [
         ["editor background", JACK_PALETTE.background.editor],
@@ -57,5 +37,6 @@ export const theme = defineTheme({
       ],
       darkerThan: [["hover background", JACK_PALETTE.background.hover]],
     },
+    workbenchTextPairs,
   },
 });

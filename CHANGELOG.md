@@ -2,6 +2,13 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.5.21 - 2026-06-18
+
+### Changed
+
+- Refactored generated workbench colors behind a shared semantic style layer so all three themes provide the same grouped style values before VS Code color IDs are emitted.
+- Added explicit semantic no-border values and shared workbench contrast checks across the dark, bordered, and mockup themes.
+
 ## 0.5.20 - 2026-06-18
 
 ### Changed

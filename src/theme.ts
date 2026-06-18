@@ -1,3 +1,5 @@
+import type { WorkbenchStyles } from "./workbench-styles.js";
+
 export type Hex = `#${string}`;
 export type Oklch = `oklch(${number}% ${number} ${number})`;
 export type SourceColor = Hex | Oklch;
@@ -108,7 +110,7 @@ export type ThemeDefinition = {
   type: Theme["type"];
   palette: Palette;
   fontPalette: FontPalette;
-  workbench: readonly FeatureGroup[];
+  workbench: WorkbenchStyles;
   integrity: ThemeIntegrity;
 };
 

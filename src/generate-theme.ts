@@ -62,37 +62,37 @@ const JACK_BORDER_PALETTE = {
   divider: "oklch(24.00% 0 0)",
 } as const satisfies Record<string, Oklch>;
 
-const RETRO_BACKGROUND_PALETTE = {
-  black: "#000000",
-  editor: "#b7b1a6",
-  panel: "#c8c1b6",
-  popup: "#d9d2c4",
-  hover: "#a79f93",
-  active: "#a9a194",
-  guide: "#746f66",
-  accent: "#9a8744",
-  success: "#587a5d",
-  danger: "#8f5048",
-  info: "#79999e",
-  ember: "#8f613d",
-  sand: "#9a8744",
-  moss: "#587a5d",
-  sky: "#8aa3bd",
-  mark: "#5f7480",
-  plum: "#7e6689",
-  clay: "#8f5048",
+const MOCKUP_BACKGROUND_PALETTE = {
+  black: "#24211c",
+  editor: "#f0ebe1",
+  panel: "#e2ddd2",
+  popup: "#faf3e3",
+  hover: "#d2cbc0",
+  active: "#c3bcb0",
+  guide: "#a59b8f",
+  accent: "#e8c04f",
+  success: "#afd09b",
+  danger: "#efaaa5",
+  info: "#a6d2e5",
+  ember: "#efb27f",
+  sand: "#e2c56f",
+  moss: "#afd09b",
+  sky: "#a6d2e5",
+  mark: "#a985ca",
+  plum: "#c4a7db",
+  clay: "#efaaa5",
 } as const satisfies Record<keyof typeof JACK_BACKGROUND_PALETTE, SourceColor>;
 
-const RETRO_FONT_PALETTE = {
-  text: "#1f1b16",
-  muted: "#1f1b16",
-  faint: "#343434",
-  ember: "#6b0050",
-  sand: "#4f4300",
-  moss: "#005000",
-  sky: "#003f7f",
-  plum: "#4d0080",
-  clay: "#800000",
+const MOCKUP_FONT_PALETTE = {
+  text: "#24211c",
+  muted: "#45423d",
+  faint: "#655e55",
+  ember: "#9b3b18",
+  sand: "#656500",
+  moss: "#006b3f",
+  sky: "#005a9e",
+  plum: "#733b9e",
+  clay: "#a5305b",
 } as const satisfies Record<keyof typeof JACK_FONT_PALETTE, SourceColor>;
 
 type BackgroundPalette = Record<keyof typeof JACK_BACKGROUND_PALETTE, Hex> & {
@@ -725,73 +725,14 @@ const createBorderedWorkbenchColors = (C: Palette): Theme["colors"] => {
   };
 };
 
-const retroBorderIds = [
-  "focusBorder",
-  "sash.hoverBorder",
-  "widget.border",
-  "editorWidget.border",
-  "editorWidget.resizeBorder",
-  "editorHoverWidget.border",
-  "window.activeBorder",
-  "window.inactiveBorder",
-  "textBlockQuote.border",
-  "toolbar.hoverOutline",
-  "button.border",
-  "button.secondaryBorder",
-  "checkbox.border",
-  "dropdown.border",
-  "input.border",
-  "inputOption.activeBorder",
-  "inputValidation.errorBorder",
-  "inputValidation.infoBorder",
-  "inputValidation.warningBorder",
-  "activityBar.border",
-  "activityBar.activeBorder",
-  "activityBarTop.activeBorder",
-  "sideBar.border",
-  "sideBarSectionHeader.border",
-  "editorGroup.border",
-  "editorGroupHeader.tabsBorder",
-  "editorGroupHeader.border",
-  "tab.activeBorder",
-  "tab.activeBorderTop",
-  "tab.border",
-  "editor.findMatchBorder",
-  "editorBracketMatch.border",
-  "diffEditor.border",
-  "panel.border",
-  "panelTitle.activeBorder",
-  "panelInput.border",
-  "terminal.border",
-  "debugToolBar.border",
-  "statusBar.border",
-  "titleBar.border",
-  "menu.border",
-  "menu.selectionBorder",
-  "menubar.selectionBorder",
-  "commandCenter.border",
-  "commandCenter.inactiveBorder",
-  "commandCenter.activeBorder",
-  "notificationCenter.border",
-  "notificationToast.border",
-  "notifications.border",
-  "pickerGroup.border",
-  "settings.checkboxBorder",
-  "settings.dropdownBorder",
-  "settings.numberInputBorder",
-  "settings.sashBorder",
-  "settings.textInputBorder",
-  "peekView.border",
-  "welcomePage.tileBorder",
-] as const;
-
-const retroInvertedForeground = "#ffffff" as const satisfies Hex;
-const retroWorkbenchTextPairs = [
+const mockupWorkbenchTextPairs = [
   ["activityBar.foreground", "activityBar.background"],
+  ["activityBar.inactiveForeground", "activityBar.background"],
   ["activityBarBadge.foreground", "activityBarBadge.background"],
   ["badge.foreground", "badge.background"],
   ["button.foreground", "button.background"],
   ["button.secondaryForeground", "button.secondaryBackground"],
+  ["checkbox.foreground", "checkbox.background"],
   ["commandCenter.activeForeground", "commandCenter.activeBackground"],
   ["commandCenter.foreground", "commandCenter.background"],
   ["dropdown.foreground", "dropdown.background"],
@@ -829,46 +770,82 @@ const retroWorkbenchTextPairs = [
   ["titleBar.inactiveForeground", "titleBar.inactiveBackground"],
 ] as const;
 
-const createRetroWorkbenchColors = (C: Palette): Theme["colors"] => {
+const createMockupWorkbenchColors = (C: Palette): Theme["colors"] => {
   const B = C.background;
   const F = C.font;
 
   return {
     ...createWorkbenchColors(C),
-    ...keys(retroBorderIds, B.black),
 
-    focusBorder: B.black,
+    "editor.lineHighlightBackground": withAlpha(B.sand, 0.28),
     foreground: F.text,
     disabledForeground: F.faint,
-    descriptionForeground: F.muted,
-    "icon.foreground": F.text,
-    "selection.background": B.sky,
+    descriptionForeground: F.faint,
+    errorForeground: F.clay,
+    "icon.foreground": F.muted,
+    "selection.background": B.sand,
 
+    "editorWidget.background": B.popup,
+    "editorWidget.foreground": F.text,
+    "editorHoverWidget.background": B.popup,
+    "editorHoverWidget.foreground": F.text,
+    "editorHoverWidget.statusBarBackground": B.panel,
+
+    "textBlockQuote.background": B.panel,
+    "textCodeBlock.background": B.popup,
+    "textLink.activeForeground": F.sky,
+    "textLink.foreground": F.sky,
+    "textPreformat.background": B.popup,
+    "textPreformat.foreground": F.text,
+
+    "toolbar.hoverBackground": B.hover,
+    "toolbar.activeBackground": B.active,
     "actionBar.toggledBackground": B.sky,
-    "button.background": B.popup,
+
+    "button.background": B.sky,
     "button.foreground": F.text,
-    "button.hoverBackground": B.hover,
-    "button.secondaryBackground": B.editor,
+    "button.hoverBackground": B.info,
+    "button.secondaryBackground": B.sand,
     "button.secondaryForeground": F.text,
-    "button.secondaryHoverBackground": B.active,
-    "inputValidation.errorForeground": retroInvertedForeground,
+    "button.secondaryHoverBackground": B.hover,
+    "checkbox.background": B.popup,
+    "checkbox.foreground": F.sky,
+    "dropdown.background": B.popup,
+    "dropdown.foreground": F.text,
+    "dropdown.listBackground": B.popup,
+    "input.background": B.popup,
+    "input.foreground": F.text,
+    "input.placeholderForeground": F.faint,
+    "inputOption.activeBackground": B.sky,
+    "inputOption.activeForeground": F.text,
+    "inputOption.hoverBackground": B.hover,
+    "inputValidation.errorBackground": B.danger,
+    "inputValidation.errorForeground": F.text,
+    "inputValidation.infoBackground": B.info,
     "inputValidation.infoForeground": F.text,
+    "inputValidation.warningBackground": B.accent,
     "inputValidation.warningForeground": F.text,
+
+    "badge.background": B.sky,
+    "badge.foreground": F.text,
+    "progressBar.background": F.sky,
 
     "list.activeSelectionBackground": B.sky,
     "list.activeSelectionForeground": F.text,
+    "list.dropBackground": B.info,
     "list.focusBackground": B.sky,
     "list.focusForeground": F.text,
+    "list.highlightForeground": F.sky,
+    "list.hoverBackground": B.hover,
     "list.inactiveFocusBackground": B.active,
     "list.inactiveSelectionBackground": B.active,
     "list.inactiveSelectionForeground": F.text,
-    "list.hoverBackground": B.hover,
 
     "activityBar.background": B.panel,
     "activityBar.foreground": F.text,
     "activityBar.inactiveForeground": F.faint,
     "activityBar.activeBackground": B.active,
-    "activityBarBadge.background": B.sky,
+    "activityBarBadge.background": B.clay,
     "activityBarBadge.foreground": F.text,
     "activityBarTop.background": B.panel,
     "activityBarTop.foreground": F.text,
@@ -879,21 +856,25 @@ const createRetroWorkbenchColors = (C: Palette): Theme["colors"] => {
     "sideBar.foreground": F.text,
     "sideBarTitle.background": B.panel,
     "sideBarTitle.foreground": F.text,
-    "sideBarSectionHeader.background": B.editor,
+    "sideBarSectionHeader.background": B.active,
     "sideBarSectionHeader.foreground": F.text,
     "sideBarStickyScroll.background": B.panel,
 
-    "tab.activeBackground": B.panel,
+    "tab.activeBackground": B.editor,
     "tab.activeForeground": F.text,
-    "tab.hoverBackground": B.active,
+    "tab.hoverBackground": B.hover,
     "tab.hoverForeground": F.text,
-    "tab.inactiveBackground": B.hover,
+    "tab.inactiveBackground": B.panel,
     "tab.inactiveForeground": F.faint,
     "tab.unfocusedActiveForeground": F.text,
     "tab.unfocusedInactiveForeground": F.faint,
 
+    "editor.foreground": F.text,
+    "editorLineNumber.foreground": F.faint,
+    "editorLineNumber.activeForeground": F.muted,
+    "editorLineNumber.dimmedForeground": F.faint,
     "editorCursor.background": B.editor,
-    "editorCursor.foreground": F.text,
+    "editorCursor.foreground": F.clay,
     "editor.selectionBackground": B.sky,
     "editor.selectionForeground": F.text,
     "editorWhitespace.foreground": B.guide,
@@ -901,92 +882,176 @@ const createRetroWorkbenchColors = (C: Palette): Theme["colors"] => {
     "editorIndentGuide.activeBackground1": F.faint,
     "editorRuler.foreground": B.guide,
     "editorCodeLens.foreground": F.faint,
+    "editorLightBulb.foreground": F.ember,
+    "editorLightBulbAutoFix.foreground": F.moss,
+    "editorBracketMatch.background": B.sand,
+    "editorBracketHighlight.foreground1": F.muted,
+    "editorBracketHighlight.foreground2": F.muted,
+    "editorBracketHighlight.foreground3": F.muted,
+    "editorBracketHighlight.foreground4": F.muted,
+    "editorBracketHighlight.foreground5": F.muted,
+    "editorBracketHighlight.foreground6": F.muted,
+    "editorUnicodeHighlight.background": B.accent,
+    "editor.foldBackground": withAlpha(B.sand, 0.3),
+    "editor.inlineValuesBackground": B.panel,
+    "editor.inlineValuesForeground": F.muted,
+
+    "editorGutter.addedBackground": B.moss,
+    "editorGutter.deletedBackground": B.clay,
+    "editorGutter.modifiedBackground": B.sky,
+    "editorGutter.commentRangeForeground": F.faint,
+    "editorOverviewRuler.addedForeground": F.moss,
+    "editorOverviewRuler.deletedForeground": F.clay,
+    "editorOverviewRuler.modifiedForeground": F.sky,
+    "editorOverviewRuler.errorForeground": F.clay,
+    "editorOverviewRuler.warningForeground": F.sand,
+    "editorOverviewRuler.infoForeground": F.sky,
+    "editorError.foreground": F.clay,
+    "editorWarning.foreground": F.sand,
+    "editorInfo.foreground": F.sky,
+    "editorHint.foreground": F.moss,
+    "problemsErrorIcon.foreground": F.clay,
+    "problemsWarningIcon.foreground": F.sand,
+    "problemsInfoIcon.foreground": F.sky,
 
     "panel.background": B.panel,
     "panelTitle.activeForeground": F.text,
     "panelTitle.inactiveForeground": F.faint,
 
+    "terminal.foreground": F.text,
+    "terminal.ansiBlack": F.muted,
+    "terminal.ansiBlue": F.sky,
+    "terminal.ansiBrightBlack": F.faint,
+    "terminal.ansiBrightBlue": F.sky,
+    "terminal.ansiBrightCyan": F.sky,
+    "terminal.ansiBrightGreen": F.moss,
+    "terminal.ansiBrightMagenta": F.plum,
+    "terminal.ansiBrightRed": F.clay,
+    "terminal.ansiBrightWhite": F.text,
+    "terminal.ansiBrightYellow": F.sand,
+    "terminal.ansiCyan": F.sky,
+    "terminal.ansiGreen": F.moss,
+    "terminal.ansiMagenta": F.plum,
+    "terminal.ansiRed": F.clay,
+    "terminal.ansiWhite": F.text,
+    "terminal.ansiYellow": F.sand,
     "terminalCursor.background": B.editor,
-    "terminalCursor.foreground": F.text,
+    "terminalCursor.foreground": F.clay,
     "terminal.selectionBackground": B.sky,
     "terminal.selectionForeground": F.text,
 
     "debugToolBar.background": B.popup,
+    "debugIcon.continueForeground": F.moss,
+    "debugIcon.disconnectForeground": F.clay,
+    "debugIcon.pauseForeground": F.sand,
+    "debugIcon.restartForeground": F.sky,
+    "debugIcon.startForeground": F.moss,
+    "debugIcon.stepBackForeground": F.sky,
+    "debugIcon.stepIntoForeground": F.sky,
+    "debugIcon.stepOutForeground": F.sky,
+    "debugIcon.stepOverForeground": F.sky,
+    "debugIcon.stopForeground": F.clay,
 
     "statusBar.background": B.panel,
-    "statusBar.foreground": F.text,
+    "statusBar.foreground": F.muted,
     "statusBar.debuggingBackground": B.plum,
-    "statusBar.debuggingForeground": retroInvertedForeground,
+    "statusBar.debuggingForeground": F.text,
     "statusBar.noFolderBackground": B.panel,
-    "statusBar.noFolderForeground": F.text,
+    "statusBar.noFolderForeground": F.muted,
     "statusBarItem.activeBackground": B.active,
     "statusBarItem.hoverBackground": B.hover,
-    "statusBarItem.prominentBackground": B.hover,
+    "statusBarItem.prominentBackground": B.sky,
     "statusBarItem.prominentForeground": F.text,
     "statusBarItem.remoteBackground": B.sky,
     "statusBarItem.remoteForeground": F.text,
     "statusBarItem.errorBackground": B.clay,
-    "statusBarItem.errorForeground": retroInvertedForeground,
+    "statusBarItem.errorForeground": F.text,
     "statusBarItem.warningBackground": B.sand,
     "statusBarItem.warningForeground": F.text,
 
-    "titleBar.activeBackground": B.sky,
+    "titleBar.activeBackground": B.panel,
     "titleBar.activeForeground": F.text,
-    "titleBar.inactiveBackground": B.panel,
+    "titleBar.inactiveBackground": B.editor,
     "titleBar.inactiveForeground": F.faint,
 
     "menu.background": B.popup,
     "menu.foreground": F.text,
     "menu.selectionBackground": B.sky,
     "menu.selectionForeground": F.text,
-    "menu.separatorBackground": B.black,
     "menubar.selectionBackground": B.sky,
     "menubar.selectionForeground": F.text,
 
-    "commandCenter.foreground": F.text,
+    "commandCenter.foreground": F.muted,
     "commandCenter.activeForeground": F.text,
     "commandCenter.background": B.panel,
     "commandCenter.activeBackground": B.sky,
     "commandCenter.inactiveForeground": F.faint,
+    "commandCenter.debuggingBackground": withAlpha(B.plum, 0.88),
 
-    "notificationCenterHeader.background": B.editor,
+    "notificationCenterHeader.background": B.panel,
     "notificationCenterHeader.foreground": F.text,
     "notifications.background": B.popup,
     "notifications.foreground": F.text,
+    "notificationsErrorIcon.foreground": F.clay,
+    "notificationsInfoIcon.foreground": F.sky,
+    "notificationsWarningIcon.foreground": F.sand,
 
     "quickInput.background": B.popup,
     "quickInput.foreground": F.text,
     "quickInputList.focusBackground": B.sky,
     "quickInputList.focusForeground": F.text,
-    "quickInputTitle.background": B.editor,
-    "pickerGroup.foreground": F.text,
+    "quickInputTitle.background": B.panel,
+    "pickerGroup.foreground": F.muted,
 
     "settings.checkboxBackground": B.popup,
     "settings.dropdownBackground": B.popup,
     "settings.headerForeground": F.text,
+    "settings.modifiedItemIndicator": F.sand,
     "settings.numberInputBackground": B.popup,
     "settings.rowHoverBackground": B.hover,
     "settings.textInputBackground": B.popup,
 
-    "breadcrumb.background": B.panel,
+    "breadcrumb.background": B.editor,
     "breadcrumb.focusForeground": F.text,
     "breadcrumb.foreground": F.faint,
     "breadcrumb.activeSelectionForeground": F.text,
     "breadcrumbPicker.background": B.popup,
 
+    "peekViewResult.fileForeground": F.text,
+    "peekViewResult.lineForeground": F.muted,
     "peekViewResult.selectionBackground": B.sky,
     "peekViewResult.selectionForeground": F.text,
     "peekViewTitle.background": B.popup,
-    "peekViewTitleDescription.foreground": F.text,
+    "peekViewTitleDescription.foreground": F.muted,
     "peekViewTitleLabel.foreground": F.text,
 
-    "minimapSlider.activeBackground": B.black,
-    "minimapSlider.background": B.guide,
-    "minimapSlider.hoverBackground": F.faint,
+    "gitDecoration.addedResourceForeground": F.moss,
+    "gitDecoration.conflictingResourceForeground": F.sand,
+    "gitDecoration.deletedResourceForeground": F.clay,
+    "gitDecoration.ignoredResourceForeground": F.faint,
+    "gitDecoration.modifiedResourceForeground": F.sky,
+    "gitDecoration.renamedResourceForeground": F.moss,
+    "gitDecoration.stageDeletedResourceForeground": F.clay,
+    "gitDecoration.stageModifiedResourceForeground": F.sky,
+    "gitDecoration.submoduleResourceForeground": F.sky,
+    "gitDecoration.untrackedResourceForeground": F.moss,
 
-    "scrollbarSlider.activeBackground": withAlpha(B.black, 0.84),
-    "scrollbarSlider.background": withAlpha(B.guide, 0.62),
-    "scrollbarSlider.hoverBackground": withAlpha(F.faint, 0.72),
+    "scmGraph.historyItemHoverLabelForeground": B.editor,
+
+    "charts.blue": F.sky,
+    "charts.foreground": F.text,
+    "charts.green": F.moss,
+    "charts.orange": F.ember,
+    "charts.purple": F.plum,
+    "charts.red": F.clay,
+    "charts.yellow": F.sand,
+
+    "testing.iconErrored": F.clay,
+    "testing.iconFailed": F.clay,
+    "testing.iconPassed": F.moss,
+    "testing.iconQueued": F.muted,
+    "testing.iconSkipped": F.faint,
+    "testing.iconUnset": F.faint,
 
     "welcomePage.tileBackground": B.popup,
     "welcomePage.tileHoverBackground": B.hover,
@@ -1002,7 +1067,7 @@ type ThemeConfig = {
   style?: ThemeStyle;
 };
 
-type ThemeStyle = "plain" | "bordered" | "retro";
+type ThemeStyle = "plain" | "bordered" | "mockup";
 
 const token = (
   name: string,
@@ -1444,10 +1509,6 @@ const borderedWorkbenchColors = new Set([
   "peekView.border",
   "welcomePage.tileBorder",
 ]);
-const retroBorderedWorkbenchColors = new Set([
-  ...borderedWorkbenchColors,
-  ...retroBorderIds,
-]);
 const minimumEditorTextContrast = 4.5;
 const minimumBadgeTextContrast = 4.5;
 const minimumWorkbenchTextContrast = 4.5;
@@ -1502,7 +1563,10 @@ const assertThemeIntegrity = (
   theme: Theme,
   palette: Palette,
   fontPalette: FontPalette,
-  options: { borderStyle: ThemeStyle },
+  options: {
+    borderStyle: "plain" | "bordered";
+    workbenchTextPairs?: readonly (readonly [string, string])[];
+  },
 ) => {
   const B = palette.background;
   assertSyntaxColorSeparation(fontPalette);
@@ -1526,16 +1590,6 @@ const assertThemeIntegrity = (
     ) {
       throw new Error(
         `colors.${id} has a visible border color but is not in the bordered theme allow-list`,
-      );
-    }
-    if (
-      borderlessWorkbenchColorPattern.test(id) &&
-      options.borderStyle === "retro" &&
-      value !== B.transparent &&
-      !retroBorderedWorkbenchColors.has(id)
-    ) {
-      throw new Error(
-        `colors.${id} has a visible border color but is not in the retro border allow-list`,
       );
     }
     if (
@@ -1589,30 +1643,19 @@ const assertThemeIntegrity = (
       );
     }
   }
-  if (options.borderStyle === "retro") {
-    const visibleBorderColors = new Set(
-      Object.entries(theme.colors)
-        .filter(
-          ([id, value]) =>
-            retroBorderedWorkbenchColors.has(id) && value !== B.transparent,
-        )
-        .map(([, value]) => value),
-    );
-
-    if (visibleBorderColors.size !== 1 || !visibleBorderColors.has(B.black)) {
+  for (const [foregroundId, backgroundId] of options.workbenchTextPairs ?? []) {
+    const foreground = theme.colors[foregroundId];
+    const background = theme.colors[backgroundId];
+    if (!foreground || !background) {
       throw new Error(
-        `Retro theme must use only the hard black border color ${B.black}`,
+        `Workbench text contrast pair ${foregroundId} on ${backgroundId} references a missing color`,
       );
     }
-    for (const [foregroundId, backgroundId] of retroWorkbenchTextPairs) {
-      const foreground = theme.colors[foregroundId];
-      const background = theme.colors[backgroundId];
-      const ratio = contrastRatio(foreground, background);
-      if (ratio < minimumWorkbenchTextContrast) {
-        throw new Error(
-          `Retro workbench pair ${foregroundId} on ${backgroundId} contrast ${ratio.toFixed(2)} is below ${minimumWorkbenchTextContrast}`,
-        );
-      }
+    const ratio = contrastRatio(foreground, background);
+    if (ratio < minimumWorkbenchTextContrast) {
+      throw new Error(
+        `Workbench pair ${foregroundId} on ${backgroundId} contrast ${ratio.toFixed(2)} is below ${minimumWorkbenchTextContrast}`,
+      );
     }
   }
   theme.tokenColors.forEach((rule, index) => {
@@ -1716,8 +1759,8 @@ const createTheme = (
   colors:
     style === "bordered"
       ? createBorderedWorkbenchColors(palette)
-      : style === "retro"
-        ? createRetroWorkbenchColors(palette)
+      : style === "mockup"
+        ? createMockupWorkbenchColors(palette)
         : createWorkbenchColors(palette),
   tokenColors: createTokenColors(fontPalette),
   semanticTokenColors: createSemanticTokenColors(fontPalette),
@@ -1727,20 +1770,20 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 assertSingleWordPaletteProperties("background", JACK_BACKGROUND_PALETTE);
 assertSingleWordPaletteProperties("font", JACK_FONT_PALETTE);
 assertSingleWordPaletteProperties("border", JACK_BORDER_PALETTE);
-assertSingleWordPaletteProperties("background", RETRO_BACKGROUND_PALETTE);
-assertSingleWordPaletteProperties("font", RETRO_FONT_PALETTE);
+assertSingleWordPaletteProperties("background", MOCKUP_BACKGROUND_PALETTE);
+assertSingleWordPaletteProperties("font", MOCKUP_FONT_PALETTE);
 const JACK_PALETTE = createPalette(
   JACK_BACKGROUND_PALETTE,
   JACK_FONT_PALETTE,
   JACK_BORDER_PALETTE,
 );
 const JACK_FONT_COLORS = createColorMap(JACK_FONT_PALETTE);
-const RETRO_PALETTE = createPalette(
-  RETRO_BACKGROUND_PALETTE,
-  RETRO_FONT_PALETTE,
+const MOCKUP_PALETTE = createPalette(
+  MOCKUP_BACKGROUND_PALETTE,
+  MOCKUP_FONT_PALETTE,
   JACK_BORDER_PALETTE,
 );
-const RETRO_FONT_COLORS = createColorMap(RETRO_FONT_PALETTE);
+const MOCKUP_FONT_COLORS = createColorMap(MOCKUP_FONT_PALETTE);
 const themes = [
   {
     fileName: "jacks-theme-color-theme.json",
@@ -1759,12 +1802,12 @@ const themes = [
     style: "bordered",
   },
   {
-    fileName: "jacks-theme-retro-color-theme.json",
-    name: "Jack's Theme Retro",
+    fileName: "jacks-theme-mockup-color-theme.json",
+    name: "Jack's Theme Mockup",
     type: "light",
-    palette: RETRO_PALETTE,
-    fontPalette: RETRO_FONT_COLORS,
-    style: "retro",
+    palette: MOCKUP_PALETTE,
+    fontPalette: MOCKUP_FONT_COLORS,
+    style: "mockup",
   },
 ] as const satisfies readonly ThemeConfig[];
 
@@ -1778,7 +1821,9 @@ for (const {
 } of themes) {
   const theme = createTheme(name, type, palette, fontPalette, style);
   assertThemeIntegrity(theme, palette, fontPalette, {
-    borderStyle: style === "bordered" ? "bordered" : style,
+    borderStyle: style === "bordered" ? "bordered" : "plain",
+    workbenchTextPairs:
+      style === "mockup" ? mockupWorkbenchTextPairs : undefined,
   });
   const outputPath = join(__dirname, "..", "themes", fileName);
   mkdirSync(dirname(outputPath), { recursive: true });

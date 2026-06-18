@@ -1,8 +1,8 @@
 {
   "name": "jacks-theme",
   "displayName": "Jack's Theme",
-  "description": "A quiet VS Code theme collection with dark, bordered, and classic retro PC editor options.",
-  "version": "0.5.15",
+  "description": "A quiet VS Code theme collection with dark, bordered, and mockup-inspired light editor options.",
+  "version": "0.5.16",
   "publisher": "jackrobertscott",
   "type": "module",
   "license": "MIT",
@@ -13,13 +13,15 @@
     "color-theme",
     "vscode-theme",
     "blackboard",
-    "retro",
+    "mockup",
+    "light",
+    "paper",
     "gray",
     "grey"
   ],
   "badges": [
     {
-      "url": "https://img.shields.io/badge/version-0.5.15-d8b84d?style=flat-square",
+      "url": "https://img.shields.io/badge/version-0.5.16-d8b84d?style=flat-square",
       "href": "https://marketplace.visualstudio.com/items?itemName=jackrobertscott.jacks-theme",
       "description": "Jack's Theme extension version"
     },
@@ -53,9 +55,9 @@
         "path": "./themes/jacks-theme-bordered-color-theme.json"
       },
       {
-        "label": "Jack's Theme Retro",
+        "label": "Jack's Theme Mockup",
         "uiTheme": "vs",
-        "path": "./themes/jacks-theme-retro-color-theme.json"
+        "path": "./themes/jacks-theme-mockup-color-theme.json"
       }
     ]
   },

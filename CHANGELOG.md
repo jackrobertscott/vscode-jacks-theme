@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.5.16 - 2026-06-18
+
+### Changed
+
+- Removed Jack's Theme Retro and replaced it with Jack's Theme Mockup, a warm light theme with paper surfaces, graphite text, blueprint selections, sticky-note highlights, and redline diagnostics.
+
 ## 0.5.15 - 2026-06-18
 
 ### Changed

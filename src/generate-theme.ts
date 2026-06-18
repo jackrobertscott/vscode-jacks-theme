@@ -1,5 +1,5 @@
 import { mkdirSync, readdirSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { dirname, join, relative } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { createSemanticTokenColors, createTokenColors } from "./tokens.js";
 import { mergeFeatureGroups } from "./theme.js";
@@ -16,9 +16,40 @@ const createTheme = (definition: ThemeDefinition): Theme => ({
   semanticTokenColors: createSemanticTokenColors(definition.fontPalette),
 });
 
+const sourceFileNamePattern = /^[a-z]+(?:-[a-z]+)*\.[a-z]+$/;
+
+const assertSourceFileNameIntegrity = (directory: string) => {
+  const invalidFileNames: string[] = [];
+
+  const scan = (currentDirectory: string) => {
+    for (const entry of readdirSync(currentDirectory, { withFileTypes: true })) {
+      const entryPath = join(currentDirectory, entry.name);
+
+      if (entry.isDirectory()) {
+        scan(entryPath);
+        continue;
+      }
+
+      if (!entry.isFile()) continue;
+
+      if (!sourceFileNamePattern.test(entry.name)) {
+        invalidFileNames.push(relative(directory, entryPath));
+      }
+    }
+  };
+
+  scan(directory);
+
+  if (invalidFileNames.length) {
+    throw new Error(
+      `Source file names must be lowercase hyphen-separated and contain only one period before the extension: ${invalidFileNames.join(", ")}`,
+    );
+  }
+};
+
 const loadThemeDefinitions = async (directory: string) => {
   const themeModules = readdirSync(directory)
-    .filter((fileName) => fileName.endsWith(".theme.js"))
+    .filter((fileName) => fileName.endsWith("-color-theme.js"))
     .sort();
 
   const definitions = await Promise.all(
@@ -36,6 +67,7 @@ const loadThemeDefinitions = async (directory: string) => {
 };
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+assertSourceFileNameIntegrity(join(__dirname, "..", "src"));
 const themes = await loadThemeDefinitions(__dirname);
 
 for (const definition of themes) {

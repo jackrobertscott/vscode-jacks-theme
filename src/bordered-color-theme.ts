@@ -1,5 +1,5 @@
 import { keys } from "./colors.js";
-import { JACK_FONT_COLORS, JACK_PALETTE } from "./jacks.theme.js";
+import { JACK_FONT_COLORS, JACK_PALETTE } from "./jacks-color-theme.js";
 import { defineTheme, featureGroup } from "./theme.js";
 import { createWorkbenchFeatureGroups } from "./workbench.js";
 

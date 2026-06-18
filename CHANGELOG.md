@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.5.20 - 2026-06-18
+
+### Changed
+
+- Renamed source theme modules to lowercase hyphenated filenames and added generation-time source filename integrity checks.
+
 ## 0.5.19 - 2026-06-18
 
 ### Changed

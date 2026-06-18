@@ -5,7 +5,7 @@ import {
   keys,
   withAlpha,
 } from "./colors.js";
-import { JACK_BORDER_PALETTE } from "./jacks.theme.js";
+import { JACK_BORDER_PALETTE } from "./jacks-color-theme.js";
 import { defineTheme, featureGroup } from "./theme.js";
 import type {
   ColorPair,

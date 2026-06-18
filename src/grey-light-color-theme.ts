@@ -53,7 +53,7 @@ const GREY_LIGHT_FONT_PALETTE = {
 } as const satisfies SourceFontPalette;
 
 const GREY_LIGHT_BORDER_PALETTE = {
-  divider: "#777777",
+  divider: "#505050",
 } as const satisfies SourceBorderPalette;
 
 assertSingleWordPaletteProperties("background", GREY_LIGHT_BACKGROUND_PALETTE);
@@ -164,6 +164,14 @@ const GREY_LIGHT_WORKBENCH_STYLES =
 const greyLightVisibleBorderIds = getVisibleWorkbenchBorderColorIds(
   GREY_LIGHT_WORKBENCH_STYLES,
 );
+const greyLightBorderDarkerThan = [
+  ["editor background", GREY_LIGHT_PALETTE.background.editor],
+  ["panel background", GREY_LIGHT_PALETTE.background.panel],
+  ["popup background", GREY_LIGHT_PALETTE.background.popup],
+  ["hover background", GREY_LIGHT_PALETTE.background.hover],
+  ["active background", GREY_LIGHT_PALETTE.background.active],
+  ["guide background", GREY_LIGHT_PALETTE.background.guide],
+] as const;
 
 export const theme = defineTheme({
   order: 15,
@@ -179,11 +187,7 @@ export const theme = defineTheme({
       visibleIds: greyLightVisibleBorderIds,
       color: GREY_LIGHT_PALETTE.border.divider,
       lighterThan: [],
-      darkerThan: [
-        ["editor background", GREY_LIGHT_PALETTE.background.editor],
-        ["popup background", GREY_LIGHT_PALETTE.background.popup],
-        ["active background", GREY_LIGHT_PALETTE.background.active],
-      ],
+      darkerThan: greyLightBorderDarkerThan,
     },
     workbenchTextPairs,
   },

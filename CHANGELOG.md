@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.5.18 - 2026-06-18
+
+### Changed
+
+- Softened Jack's Theme Mockup with dimmer parchment surfaces and toned-down blueprint, sticky-note, and redline fills for easier viewing.
+
 ## 0.5.17 - 2026-06-18
 
 ### Changed

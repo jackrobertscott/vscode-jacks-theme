@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.5.25 - 2026-06-18
+
+### Added
+
+- Added Jack's Light Grey Theme, a light mode companion to Jack's Grey Theme with muted concrete surfaces, dark syntax accents, cool slate selections, and transparent borders.
+
 ## 0.5.24 - 2026-06-18
 
 ### Changed

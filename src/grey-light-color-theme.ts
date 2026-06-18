@@ -15,55 +15,55 @@ import { defineWorkbenchStyles } from "./workbench-styles.js";
 import type { WorkbenchStyles } from "./workbench-styles.js";
 import { workbenchTextPairs } from "./workbench.js";
 
-const LIGHT_GREY_BACKGROUND_PALETTE = {
-  black: "#1f2328",
-  editor: "#d7d7d7",
-  panel: "#cdcdcd",
-  popup: "#e0e0e0",
-  hover: "#bdbdbd",
-  active: "#aeaeae",
-  guide: "#7c7c7c",
-  accent: "#bda75d",
-  success: "#9fc191",
-  danger: "#d39aac",
-  info: "#93b8d4",
-  ember: "#d6a07d",
-  sand: "#c7b46b",
-  moss: "#9fc191",
-  sky: "#93b8d4",
-  mark: "#9a75a8",
-  plum: "#b493c3",
-  clay: "#d39aac",
+const GREY_LIGHT_BACKGROUND_PALETTE = {
+  black: "#111111",
+  editor: "#969696",
+  panel: "#8f8f8f",
+  popup: "#9f9f9f",
+  hover: "#898989",
+  active: "#808080",
+  guide: "#666666",
+  accent: "#9a854c",
+  success: "#78976e",
+  danger: "#a37083",
+  info: "#7490a6",
+  ember: "#a67658",
+  sand: "#9a854c",
+  moss: "#78976e",
+  sky: "#7490a6",
+  mark: "#604d66",
+  plum: "#81628d",
+  clay: "#a37083",
 } as const satisfies SourceBackgroundPalette;
 
-const LIGHT_GREY_FONT_PALETTE = {
-  text: "#242424",
-  muted: "#343434",
-  faint: "#555555",
-  ember: "#8a3b1e",
-  sand: "#5c5600",
-  moss: "#006b3f",
-  sky: "#005a9e",
-  plum: "#733b9e",
-  clay: "#a5305b",
+const GREY_LIGHT_FONT_PALETTE = {
+  text: "#111111",
+  muted: "#26008b",
+  faint: "#181818",
+  ember: "#460001",
+  sand: "#442900",
+  moss: "#002b00",
+  sky: "#000d5a",
+  plum: "#2d0036",
+  clay: "#5e0241",
 } as const satisfies SourceFontPalette;
 
-const LIGHT_GREY_BORDER_PALETTE = {
-  divider: "#9a9a9a",
+const GREY_LIGHT_BORDER_PALETTE = {
+  divider: "#777777",
 } as const satisfies SourceBorderPalette;
 
-assertSingleWordPaletteProperties("background", LIGHT_GREY_BACKGROUND_PALETTE);
-assertSingleWordPaletteProperties("font", LIGHT_GREY_FONT_PALETTE);
-assertSingleWordPaletteProperties("border", LIGHT_GREY_BORDER_PALETTE);
+assertSingleWordPaletteProperties("background", GREY_LIGHT_BACKGROUND_PALETTE);
+assertSingleWordPaletteProperties("font", GREY_LIGHT_FONT_PALETTE);
+assertSingleWordPaletteProperties("border", GREY_LIGHT_BORDER_PALETTE);
 
-const LIGHT_GREY_PALETTE = createPalette(
-  LIGHT_GREY_BACKGROUND_PALETTE,
-  LIGHT_GREY_FONT_PALETTE,
-  LIGHT_GREY_BORDER_PALETTE,
+const GREY_LIGHT_PALETTE = createPalette(
+  GREY_LIGHT_BACKGROUND_PALETTE,
+  GREY_LIGHT_FONT_PALETTE,
+  GREY_LIGHT_BORDER_PALETTE,
 );
-const LIGHT_GREY_FONT_COLORS = createColorMap(LIGHT_GREY_FONT_PALETTE);
+const GREY_LIGHT_FONT_COLORS = createColorMap(GREY_LIGHT_FONT_PALETTE);
 
-const createLightGreyWorkbenchStyles = (palette: Palette): WorkbenchStyles => {
+const createGreyLightWorkbenchStyles = (palette: Palette): WorkbenchStyles => {
   const styles = createJackWorkbenchStyles(palette);
   const B = palette.background;
   const F = palette.font;
@@ -87,6 +87,27 @@ const createLightGreyWorkbenchStyles = (palette: Palette): WorkbenchStyles => {
       settingsInput: B.editor,
       menuSelection: B.hover,
       welcomeTile: B.popup,
+    },
+    text: {
+      ...styles.text,
+      primary: F.text,
+      muted: "#202020",
+      faint: "#202020",
+      disabled: "#202020",
+      description: "#202020",
+      icon: "#202020",
+      link: F.sky,
+      onAccent: F.text,
+      error: F.clay,
+      warning: F.sand,
+      info: F.sky,
+      success: F.moss,
+      ember: F.ember,
+      plum: F.plum,
+    },
+    accents: {
+      ...styles.accents,
+      debug: B.info,
     },
     controls: {
       ...styles.controls,
@@ -131,17 +152,17 @@ const createLightGreyWorkbenchStyles = (palette: Palette): WorkbenchStyles => {
   });
 };
 
-const LIGHT_GREY_WORKBENCH_STYLES =
-  createLightGreyWorkbenchStyles(LIGHT_GREY_PALETTE);
+const GREY_LIGHT_WORKBENCH_STYLES =
+  createGreyLightWorkbenchStyles(GREY_LIGHT_PALETTE);
 
 export const theme = defineTheme({
   order: 15,
-  fileName: "jacks-light-grey-theme-color-theme.json",
-  name: "Jack's Light Grey Theme",
+  fileName: "jacks-grey-light-theme-color-theme.json",
+  name: "Jack's Grey Light Theme",
   type: "light",
-  palette: LIGHT_GREY_PALETTE,
-  fontPalette: LIGHT_GREY_FONT_COLORS,
-  workbench: LIGHT_GREY_WORKBENCH_STYLES,
+  palette: GREY_LIGHT_PALETTE,
+  fontPalette: GREY_LIGHT_FONT_COLORS,
+  workbench: GREY_LIGHT_WORKBENCH_STYLES,
   integrity: {
     borderPolicy: { kind: "transparent" },
     workbenchTextPairs,

@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.5.23 - 2026-06-18
+
+### Changed
+
+- Strengthened Jack's grey theme with visible neutral workbench borders and a darker editor/code surface for higher syntax contrast.
+
 ## 0.5.22 - 2026-06-18
 
 ### Added

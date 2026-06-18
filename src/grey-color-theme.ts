@@ -11,18 +11,28 @@ import type {
   SourceBorderPalette,
   SourceFontPalette,
 } from "./theme.js";
-import { defineWorkbenchStyles } from "./workbench-styles.js";
-import type { WorkbenchStyles } from "./workbench-styles.js";
-import { workbenchTextPairs } from "./workbench.js";
+import {
+  defineWorkbenchStyles,
+  noBorder,
+  visibleBorder,
+} from "./workbench-styles.js";
+import type {
+  WorkbenchBorderStyles,
+  WorkbenchStyles,
+} from "./workbench-styles.js";
+import {
+  getVisibleWorkbenchBorderColorIds,
+  workbenchTextPairs,
+} from "./workbench.js";
 
 const GREY_BACKGROUND_PALETTE = {
-  black: "#222222",
-  editor: "#505050",
-  panel: "#494949",
-  popup: "#5a5a5a",
-  hover: "#646464",
-  active: "#707070",
-  guide: "#858585",
+  black: "#202020",
+  editor: "#464646",
+  panel: "#404040",
+  popup: "#4e4e4e",
+  hover: "#5c5c5c",
+  active: "#686868",
+  guide: "#828282",
   accent: "#6f613d",
   success: "#536b50",
   danger: "#765463",
@@ -31,7 +41,7 @@ const GREY_BACKGROUND_PALETTE = {
   sand: "#6f653d",
   moss: "#536b50",
   sky: "#4e6579",
-  mark: "#99829d",
+  mark: "#927a96",
   plum: "#685a77",
   clay: "#765463",
 } as const satisfies SourceBackgroundPalette;
@@ -49,7 +59,7 @@ const GREY_FONT_PALETTE = {
 } as const satisfies SourceFontPalette;
 
 const GREY_BORDER_PALETTE = {
-  divider: "#5d5d5d",
+  divider: "#8a8a8a",
 } as const satisfies SourceBorderPalette;
 
 assertSingleWordPaletteProperties("background", GREY_BACKGROUND_PALETTE);
@@ -63,8 +73,76 @@ const GREY_PALETTE = createPalette(
 );
 const GREY_FONT_COLORS = createColorMap(GREY_FONT_PALETTE);
 
+const createGreyWorkbenchBorders = (
+  palette: Palette,
+): WorkbenchBorderStyles => {
+  const none = noBorder(palette.background.transparent);
+  const divider = visibleBorder(palette.border.divider);
+
+  return {
+    editorLineHighlight: none,
+    editorRangeHighlight: none,
+    editorSelectionHighlight: none,
+    editorSymbolHighlight: none,
+    editorWordHighlight: none,
+    editorWordHighlightStrong: none,
+    editorWordHighlightText: none,
+    focus: divider,
+    sash: divider,
+    widget: divider,
+    widgetResize: divider,
+    window: divider,
+    contentDivider: divider,
+    separator: divider,
+    toolbar: divider,
+    control: divider,
+    inputOption: divider,
+    validationError: divider,
+    validationWarning: divider,
+    validationInfo: divider,
+    activityDivider: divider,
+    activityActive: divider,
+    sidebarDivider: divider,
+    sidebarSection: divider,
+    editorGroup: divider,
+    editorGroupHeader: divider,
+    tabActive: divider,
+    tabActiveTop: divider,
+    tabDivider: divider,
+    findMatch: divider,
+    bracketMatch: divider,
+    unicodeHighlight: divider,
+    overviewRuler: divider,
+    diff: divider,
+    panel: divider,
+    panelTitleActive: divider,
+    panelInput: divider,
+    terminal: divider,
+    debugToolbar: divider,
+    statusBar: divider,
+    titleBar: divider,
+    menu: divider,
+    menuSelection: divider,
+    menubarSelection: divider,
+    commandCenter: divider,
+    commandCenterInactive: divider,
+    commandCenterActive: divider,
+    notification: divider,
+    picker: divider,
+    settingsControl: divider,
+    settingsSash: divider,
+    peek: divider,
+    welcomeTile: divider,
+    chartLine: divider,
+    listFocusOutline: divider,
+  };
+};
+
 const createGreyWorkbenchStyles = (palette: Palette): WorkbenchStyles => {
-  const styles = createJackWorkbenchStyles(palette);
+  const styles = createJackWorkbenchStyles(
+    palette,
+    createGreyWorkbenchBorders(palette),
+  );
   const B = palette.background;
   const F = palette.font;
 
@@ -132,6 +210,9 @@ const createGreyWorkbenchStyles = (palette: Palette): WorkbenchStyles => {
 };
 
 const GREY_WORKBENCH_STYLES = createGreyWorkbenchStyles(GREY_PALETTE);
+const greyVisibleBorderIds = getVisibleWorkbenchBorderColorIds(
+  GREY_WORKBENCH_STYLES,
+);
 
 export const theme = defineTheme({
   order: 10,
@@ -142,7 +223,17 @@ export const theme = defineTheme({
   fontPalette: GREY_FONT_COLORS,
   workbench: GREY_WORKBENCH_STYLES,
   integrity: {
-    borderPolicy: { kind: "transparent" },
+    borderPolicy: {
+      kind: "uniform",
+      visibleIds: greyVisibleBorderIds,
+      color: GREY_PALETTE.border.divider,
+      lighterThan: [
+        ["editor background", GREY_PALETTE.background.editor],
+        ["popup background", GREY_PALETTE.background.popup],
+        ["active background", GREY_PALETTE.background.active],
+      ],
+      darkerThan: [],
+    },
     workbenchTextPairs,
   },
 });

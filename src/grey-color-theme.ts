@@ -73,7 +73,7 @@ const GREY_PALETTE = createPalette(
 );
 const GREY_FONT_COLORS = createColorMap(GREY_FONT_PALETTE);
 
-const createGreyWorkbenchBorders = (
+export const createGreyWorkbenchBorders = (
   palette: Palette,
 ): WorkbenchBorderStyles => {
   const none = noBorder(palette.background.transparent);

@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.5.27 - 2026-06-18
+
+### Changed
+
+- Matched Jack's Grey Light Theme to Jack's Grey Theme's visible neutral border roles while keeping the light-mode borders darker than the mid-grey surfaces.
+
 ## 0.5.26 - 2026-06-18
 
 ### Changed

@@ -3,6 +3,7 @@ import {
   createColorMap,
   createPalette,
 } from "./colors.js";
+import { createGreyWorkbenchBorders } from "./grey-color-theme.js";
 import { createJackWorkbenchStyles } from "./jacks-color-theme.js";
 import { defineTheme } from "./theme.js";
 import type {
@@ -13,7 +14,10 @@ import type {
 } from "./theme.js";
 import { defineWorkbenchStyles } from "./workbench-styles.js";
 import type { WorkbenchStyles } from "./workbench-styles.js";
-import { workbenchTextPairs } from "./workbench.js";
+import {
+  getVisibleWorkbenchBorderColorIds,
+  workbenchTextPairs,
+} from "./workbench.js";
 
 const GREY_LIGHT_BACKGROUND_PALETTE = {
   black: "#111111",
@@ -64,7 +68,10 @@ const GREY_LIGHT_PALETTE = createPalette(
 const GREY_LIGHT_FONT_COLORS = createColorMap(GREY_LIGHT_FONT_PALETTE);
 
 const createGreyLightWorkbenchStyles = (palette: Palette): WorkbenchStyles => {
-  const styles = createJackWorkbenchStyles(palette);
+  const styles = createJackWorkbenchStyles(
+    palette,
+    createGreyWorkbenchBorders(palette),
+  );
   const B = palette.background;
   const F = palette.font;
 
@@ -154,6 +161,9 @@ const createGreyLightWorkbenchStyles = (palette: Palette): WorkbenchStyles => {
 
 const GREY_LIGHT_WORKBENCH_STYLES =
   createGreyLightWorkbenchStyles(GREY_LIGHT_PALETTE);
+const greyLightVisibleBorderIds = getVisibleWorkbenchBorderColorIds(
+  GREY_LIGHT_WORKBENCH_STYLES,
+);
 
 export const theme = defineTheme({
   order: 15,
@@ -164,7 +174,17 @@ export const theme = defineTheme({
   fontPalette: GREY_LIGHT_FONT_COLORS,
   workbench: GREY_LIGHT_WORKBENCH_STYLES,
   integrity: {
-    borderPolicy: { kind: "transparent" },
+    borderPolicy: {
+      kind: "uniform",
+      visibleIds: greyLightVisibleBorderIds,
+      color: GREY_LIGHT_PALETTE.border.divider,
+      lighterThan: [],
+      darkerThan: [
+        ["editor background", GREY_LIGHT_PALETTE.background.editor],
+        ["popup background", GREY_LIGHT_PALETTE.background.popup],
+        ["active background", GREY_LIGHT_PALETTE.background.active],
+      ],
+    },
     workbenchTextPairs,
   },
 });

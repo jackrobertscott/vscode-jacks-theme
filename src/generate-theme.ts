@@ -725,6 +725,130 @@ const createBorderedWorkbenchColors = (C: Palette): Theme["colors"] => {
   };
 };
 
+const mockupBorderIds = [
+  "focusBorder",
+  "sash.hoverBorder",
+  "widget.border",
+  "editorWidget.border",
+  "editorWidget.resizeBorder",
+  "editorHoverWidget.border",
+  "window.activeBorder",
+  "window.inactiveBorder",
+  "textBlockQuote.border",
+  "textSeparator.foreground",
+  "toolbar.hoverOutline",
+  "button.border",
+  "button.secondaryBorder",
+  "checkbox.border",
+  "dropdown.border",
+  "input.border",
+  "inputOption.activeBorder",
+  "inputValidation.errorBorder",
+  "inputValidation.infoBorder",
+  "inputValidation.warningBorder",
+  "activityBar.border",
+  "activityBar.activeBorder",
+  "activityBarTop.activeBorder",
+  "sideBar.border",
+  "sideBarSectionHeader.border",
+  "editorGroup.border",
+  "editorGroupHeader.tabsBorder",
+  "editorGroupHeader.border",
+  "tab.activeBorder",
+  "tab.activeBorderTop",
+  "tab.border",
+  "editor.findMatchBorder",
+  "editorBracketMatch.border",
+  "editorUnicodeHighlight.border",
+  "editorOverviewRuler.border",
+  "editorError.border",
+  "editorWarning.border",
+  "editorInfo.border",
+  "editorHint.border",
+  "diffEditor.border",
+  "panel.border",
+  "panelTitle.activeBorder",
+  "panelInput.border",
+  "terminal.border",
+  "debugToolBar.border",
+  "statusBar.border",
+  "titleBar.border",
+  "menu.border",
+  "menu.selectionBorder",
+  "menu.separatorBackground",
+  "menubar.selectionBorder",
+  "commandCenter.border",
+  "commandCenter.inactiveBorder",
+  "commandCenter.activeBorder",
+  "notificationCenter.border",
+  "notificationToast.border",
+  "notifications.border",
+  "pickerGroup.border",
+  "settings.checkboxBorder",
+  "settings.dropdownBorder",
+  "settings.numberInputBorder",
+  "settings.sashBorder",
+  "settings.textInputBorder",
+  "peekView.border",
+  "welcomePage.tileBorder",
+  "charts.lines",
+] as const;
+
+const mockupFocusBorderIds = [
+  "focusBorder",
+  "sash.hoverBorder",
+  "activityBar.activeBorder",
+  "activityBarTop.activeBorder",
+  "tab.activeBorder",
+  "tab.activeBorderTop",
+  "panelTitle.activeBorder",
+  "commandCenter.activeBorder",
+  "inputOption.activeBorder",
+  "editor.findMatchBorder",
+] as const;
+
+const mockupControlBorderIds = [
+  "button.border",
+  "button.secondaryBorder",
+  "checkbox.border",
+  "dropdown.border",
+  "input.border",
+  "settings.checkboxBorder",
+  "settings.dropdownBorder",
+  "settings.numberInputBorder",
+  "settings.textInputBorder",
+] as const;
+
+const mockupOuterBorderIds = [
+  "window.activeBorder",
+  "activityBar.border",
+  "sideBar.border",
+  "editorGroup.border",
+  "editorGroupHeader.tabsBorder",
+  "editorGroupHeader.border",
+  "panel.border",
+  "terminal.border",
+  "statusBar.border",
+  "titleBar.border",
+  "peekView.border",
+] as const;
+
+const mockupValidationBorderIds = [
+  "inputValidation.errorBorder",
+  "editorError.border",
+] as const;
+
+const mockupWarningBorderIds = [
+  "inputValidation.warningBorder",
+  "editorWarning.border",
+] as const;
+
+const mockupInfoBorderIds = [
+  "inputValidation.infoBorder",
+  "editorInfo.border",
+  "editorHint.border",
+] as const;
+
 const mockupWorkbenchTextPairs = [
   ["activityBar.foreground", "activityBar.background"],
   ["activityBar.inactiveForeground", "activityBar.background"],
@@ -773,9 +897,21 @@ const mockupWorkbenchTextPairs = [
 const createMockupWorkbenchColors = (C: Palette): Theme["colors"] => {
   const B = C.background;
   const F = C.font;
+  const pencil = B.guide;
+  const ink = F.muted;
+  const blueprint = F.sky;
+  const redline = F.clay;
+  const note = F.sand;
 
   return {
     ...createWorkbenchColors(C),
+    ...keys(mockupBorderIds, pencil),
+    ...keys(mockupFocusBorderIds, blueprint),
+    ...keys(mockupControlBorderIds, ink),
+    ...keys(mockupOuterBorderIds, ink),
+    ...keys(mockupValidationBorderIds, redline),
+    ...keys(mockupWarningBorderIds, note),
+    ...keys(mockupInfoBorderIds, blueprint),
 
     "editor.lineHighlightBackground": withAlpha(B.sand, 0.28),
     foreground: F.text,
@@ -792,6 +928,7 @@ const createMockupWorkbenchColors = (C: Palette): Theme["colors"] => {
     "editorHoverWidget.statusBarBackground": B.panel,
 
     "textBlockQuote.background": B.panel,
+    "textSeparator.foreground": pencil,
     "textCodeBlock.background": B.popup,
     "textLink.activeForeground": F.sky,
     "textLink.foreground": F.sky,
@@ -799,6 +936,7 @@ const createMockupWorkbenchColors = (C: Palette): Theme["colors"] => {
     "textPreformat.foreground": F.text,
 
     "toolbar.hoverBackground": B.hover,
+    "toolbar.hoverOutline": blueprint,
     "toolbar.activeBackground": B.active,
     "actionBar.toggledBackground": B.sky,
 
@@ -817,6 +955,7 @@ const createMockupWorkbenchColors = (C: Palette): Theme["colors"] => {
     "input.foreground": F.text,
     "input.placeholderForeground": F.faint,
     "inputOption.activeBackground": B.sky,
+    "inputOption.activeBorder": blueprint,
     "inputOption.activeForeground": F.text,
     "inputOption.hoverBackground": B.hover,
     "inputValidation.errorBackground": B.danger,
@@ -835,6 +974,7 @@ const createMockupWorkbenchColors = (C: Palette): Theme["colors"] => {
     "list.dropBackground": B.info,
     "list.focusBackground": B.sky,
     "list.focusForeground": F.text,
+    "list.focusOutline": blueprint,
     "list.highlightForeground": F.sky,
     "list.hoverBackground": B.hover,
     "list.inactiveFocusBackground": B.active,
@@ -845,12 +985,14 @@ const createMockupWorkbenchColors = (C: Palette): Theme["colors"] => {
     "activityBar.foreground": F.text,
     "activityBar.inactiveForeground": F.faint,
     "activityBar.activeBackground": B.active,
+    "activityBar.activeBorder": blueprint,
     "activityBarBadge.background": B.clay,
     "activityBarBadge.foreground": F.text,
     "activityBarTop.background": B.panel,
     "activityBarTop.foreground": F.text,
     "activityBarTop.inactiveForeground": F.faint,
     "activityBarTop.activeBackground": B.active,
+    "activityBarTop.activeBorder": blueprint,
 
     "sideBar.background": B.panel,
     "sideBar.foreground": F.text,
@@ -861,7 +1003,10 @@ const createMockupWorkbenchColors = (C: Palette): Theme["colors"] => {
     "sideBarStickyScroll.background": B.panel,
 
     "tab.activeBackground": B.editor,
+    "tab.activeBorder": blueprint,
+    "tab.activeBorderTop": ink,
     "tab.activeForeground": F.text,
+    "tab.border": pencil,
     "tab.hoverBackground": B.hover,
     "tab.hoverForeground": F.text,
     "tab.inactiveBackground": B.panel,
@@ -885,6 +1030,7 @@ const createMockupWorkbenchColors = (C: Palette): Theme["colors"] => {
     "editorLightBulb.foreground": F.ember,
     "editorLightBulbAutoFix.foreground": F.moss,
     "editorBracketMatch.background": B.sand,
+    "editorBracketMatch.border": ink,
     "editorBracketHighlight.foreground1": F.muted,
     "editorBracketHighlight.foreground2": F.muted,
     "editorBracketHighlight.foreground3": F.muted,
@@ -892,6 +1038,7 @@ const createMockupWorkbenchColors = (C: Palette): Theme["colors"] => {
     "editorBracketHighlight.foreground5": F.muted,
     "editorBracketHighlight.foreground6": F.muted,
     "editorUnicodeHighlight.background": B.accent,
+    "editorUnicodeHighlight.border": note,
     "editor.foldBackground": withAlpha(B.sand, 0.3),
     "editor.inlineValuesBackground": B.panel,
     "editor.inlineValuesForeground": F.muted,
@@ -906,15 +1053,22 @@ const createMockupWorkbenchColors = (C: Palette): Theme["colors"] => {
     "editorOverviewRuler.errorForeground": F.clay,
     "editorOverviewRuler.warningForeground": F.sand,
     "editorOverviewRuler.infoForeground": F.sky,
+    "editorOverviewRuler.border": ink,
     "editorError.foreground": F.clay,
+    "editorError.border": redline,
     "editorWarning.foreground": F.sand,
+    "editorWarning.border": note,
     "editorInfo.foreground": F.sky,
+    "editorInfo.border": blueprint,
     "editorHint.foreground": F.moss,
+    "editorHint.border": blueprint,
     "problemsErrorIcon.foreground": F.clay,
     "problemsWarningIcon.foreground": F.sand,
     "problemsInfoIcon.foreground": F.sky,
 
     "panel.background": B.panel,
+    "panel.border": ink,
+    "panelTitle.activeBorder": blueprint,
     "panelTitle.activeForeground": F.text,
     "panelTitle.inactiveForeground": F.faint,
 
@@ -939,8 +1093,10 @@ const createMockupWorkbenchColors = (C: Palette): Theme["colors"] => {
     "terminalCursor.foreground": F.clay,
     "terminal.selectionBackground": B.sky,
     "terminal.selectionForeground": F.text,
+    "terminal.border": ink,
 
     "debugToolBar.background": B.popup,
+    "debugToolBar.border": ink,
     "debugIcon.continueForeground": F.moss,
     "debugIcon.disconnectForeground": F.clay,
     "debugIcon.pauseForeground": F.sand,
@@ -953,6 +1109,7 @@ const createMockupWorkbenchColors = (C: Palette): Theme["colors"] => {
     "debugIcon.stopForeground": F.clay,
 
     "statusBar.background": B.panel,
+    "statusBar.border": ink,
     "statusBar.foreground": F.muted,
     "statusBar.debuggingBackground": B.plum,
     "statusBar.debuggingForeground": F.text,
@@ -971,26 +1128,37 @@ const createMockupWorkbenchColors = (C: Palette): Theme["colors"] => {
 
     "titleBar.activeBackground": B.panel,
     "titleBar.activeForeground": F.text,
+    "titleBar.border": ink,
     "titleBar.inactiveBackground": B.editor,
     "titleBar.inactiveForeground": F.faint,
 
     "menu.background": B.popup,
+    "menu.border": ink,
     "menu.foreground": F.text,
     "menu.selectionBackground": B.sky,
+    "menu.selectionBorder": blueprint,
     "menu.selectionForeground": F.text,
+    "menu.separatorBackground": pencil,
     "menubar.selectionBackground": B.sky,
+    "menubar.selectionBorder": blueprint,
     "menubar.selectionForeground": F.text,
 
     "commandCenter.foreground": F.muted,
     "commandCenter.activeForeground": F.text,
     "commandCenter.background": B.panel,
     "commandCenter.activeBackground": B.sky,
+    "commandCenter.border": ink,
     "commandCenter.inactiveForeground": F.faint,
+    "commandCenter.inactiveBorder": pencil,
+    "commandCenter.activeBorder": blueprint,
     "commandCenter.debuggingBackground": withAlpha(B.plum, 0.88),
 
+    "notificationCenter.border": ink,
     "notificationCenterHeader.background": B.panel,
     "notificationCenterHeader.foreground": F.text,
+    "notificationToast.border": ink,
     "notifications.background": B.popup,
+    "notifications.border": ink,
     "notifications.foreground": F.text,
     "notificationsErrorIcon.foreground": F.clay,
     "notificationsInfoIcon.foreground": F.sky,
@@ -1001,6 +1169,7 @@ const createMockupWorkbenchColors = (C: Palette): Theme["colors"] => {
     "quickInputList.focusBackground": B.sky,
     "quickInputList.focusForeground": F.text,
     "quickInputTitle.background": B.panel,
+    "pickerGroup.border": pencil,
     "pickerGroup.foreground": F.muted,
 
     "settings.checkboxBackground": B.popup,
@@ -1009,6 +1178,7 @@ const createMockupWorkbenchColors = (C: Palette): Theme["colors"] => {
     "settings.modifiedItemIndicator": F.sand,
     "settings.numberInputBackground": B.popup,
     "settings.rowHoverBackground": B.hover,
+    "settings.sashBorder": ink,
     "settings.textInputBackground": B.popup,
 
     "breadcrumb.background": B.editor,
@@ -1021,6 +1191,7 @@ const createMockupWorkbenchColors = (C: Palette): Theme["colors"] => {
     "peekViewResult.lineForeground": F.muted,
     "peekViewResult.selectionBackground": B.sky,
     "peekViewResult.selectionForeground": F.text,
+    "peekView.border": ink,
     "peekViewTitle.background": B.popup,
     "peekViewTitleDescription.foreground": F.muted,
     "peekViewTitleLabel.foreground": F.text,
@@ -1045,6 +1216,7 @@ const createMockupWorkbenchColors = (C: Palette): Theme["colors"] => {
     "charts.purple": F.plum,
     "charts.red": F.clay,
     "charts.yellow": F.sand,
+    "charts.lines": pencil,
 
     "testing.iconErrored": F.clay,
     "testing.iconFailed": F.clay,
@@ -1054,6 +1226,7 @@ const createMockupWorkbenchColors = (C: Palette): Theme["colors"] => {
     "testing.iconUnset": F.faint,
 
     "welcomePage.tileBackground": B.popup,
+    "welcomePage.tileBorder": ink,
     "welcomePage.tileHoverBackground": B.hover,
   };
 };
@@ -1509,6 +1682,9 @@ const borderedWorkbenchColors = new Set([
   "peekView.border",
   "welcomePage.tileBorder",
 ]);
+const mockupBorderedWorkbenchColors: ReadonlySet<string> = new Set(
+  mockupBorderIds,
+);
 const minimumEditorTextContrast = 4.5;
 const minimumBadgeTextContrast = 4.5;
 const minimumWorkbenchTextContrast = 4.5;
@@ -1564,7 +1740,7 @@ const assertThemeIntegrity = (
   palette: Palette,
   fontPalette: FontPalette,
   options: {
-    borderStyle: "plain" | "bordered";
+    borderStyle: "plain" | "bordered" | "mockup";
     workbenchTextPairs?: readonly (readonly [string, string])[];
   },
 ) => {
@@ -1590,6 +1766,16 @@ const assertThemeIntegrity = (
     ) {
       throw new Error(
         `colors.${id} has a visible border color but is not in the bordered theme allow-list`,
+      );
+    }
+    if (
+      borderlessWorkbenchColorPattern.test(id) &&
+      options.borderStyle === "mockup" &&
+      value !== B.transparent &&
+      !mockupBorderedWorkbenchColors.has(id)
+    ) {
+      throw new Error(
+        `colors.${id} has a visible border color but is not in the mockup theme allow-list`,
       );
     }
     if (
@@ -1640,6 +1826,17 @@ const assertThemeIntegrity = (
     if (relativeLuminance(divider) >= relativeLuminance(B.hover)) {
       throw new Error(
         `Border divider ${divider} must stay subtler than hover background ${B.hover}`,
+      );
+    }
+  }
+  if (options.borderStyle === "mockup") {
+    const missingMockupBorders = mockupBorderIds.filter(
+      (id) =>
+        theme.colors[id] !== undefined && theme.colors[id] === B.transparent,
+    );
+    if (missingMockupBorders.length) {
+      throw new Error(
+        `Mockup theme must keep visible wireframe borders for: ${missingMockupBorders.join(", ")}`,
       );
     }
   }
@@ -1821,7 +2018,12 @@ for (const {
 } of themes) {
   const theme = createTheme(name, type, palette, fontPalette, style);
   assertThemeIntegrity(theme, palette, fontPalette, {
-    borderStyle: style === "bordered" ? "bordered" : "plain",
+    borderStyle:
+      style === "bordered"
+        ? "bordered"
+        : style === "mockup"
+          ? "mockup"
+          : "plain",
     workbenchTextPairs:
       style === "mockup" ? mockupWorkbenchTextPairs : undefined,
   });

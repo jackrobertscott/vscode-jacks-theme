@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.5.17 - 2026-06-18
+
+### Changed
+
+- Reworked Jack's Theme Mockup with visible wireframe-style borders across workbench frames, panels, tabs, controls, menus, notifications, and validation states.
+
 ## 0.5.16 - 2026-06-18
 
 ### Changed

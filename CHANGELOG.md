@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.5.19 - 2026-06-18
+
+### Changed
+
+- Split the theme generator into flat TypeScript modules with per-theme definition files and feature-grouped workbench styling.
+
 ## 0.5.18 - 2026-06-18
 
 ### Changed

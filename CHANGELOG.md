@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.6.0 - 2026-06-19
+
+### Changed
+
+- Published the Carbon, Graphite, Silver, and Draft theme lineup as the 0.6.0 Marketplace release.
+
 ## 0.5.29 - 2026-06-19
 
 ### Changed

@@ -4,7 +4,6 @@ import {
   createPalette,
   withAlpha,
 } from "./colors.js";
-import { defineTheme } from "./theme.js";
 import type {
   Hex,
   Palette,
@@ -21,7 +20,6 @@ import type {
   WorkbenchBorderStyles,
   WorkbenchStyles,
 } from "./workbench-styles.js";
-import { workbenchTextPairs } from "./workbench.js";
 
 export const JACK_BACKGROUND_PALETTE = {
   black: "oklch(0% 0 0)",
@@ -298,17 +296,3 @@ export const createJackWorkbenchStyles = (
 };
 
 export const JACK_WORKBENCH_STYLES = createJackWorkbenchStyles(JACK_PALETTE);
-
-export const theme = defineTheme({
-  order: 30,
-  fileName: "jacks-theme-color-theme.json",
-  name: "Jack's Theme",
-  type: "dark",
-  palette: JACK_PALETTE,
-  fontPalette: JACK_FONT_COLORS,
-  workbench: JACK_WORKBENCH_STYLES,
-  integrity: {
-    borderPolicy: { kind: "transparent" },
-    workbenchTextPairs,
-  },
-});

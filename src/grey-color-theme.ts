@@ -215,9 +215,9 @@ const greyVisibleBorderIds = getVisibleWorkbenchBorderColorIds(
 );
 
 export const theme = defineTheme({
-  order: 10,
-  fileName: "jacks-grey-theme-color-theme.json",
-  name: "Jack's Grey Theme",
+  order: 20,
+  fileName: "jacks-graphite-theme-color-theme.json",
+  name: "Jack's Graphite Theme",
   type: "dark",
   palette: GREY_PALETTE,
   fontPalette: GREY_FONT_COLORS,

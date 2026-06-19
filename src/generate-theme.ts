@@ -54,17 +54,22 @@ const loadThemeDefinitions = async (directory: string) => {
     .sort();
 
   const definitions = await Promise.all(
-    themeModules.map(async (fileName): Promise<ThemeDefinition> => {
+    themeModules.map(async (fileName): Promise<ThemeDefinition | undefined> => {
       const modulePath = pathToFileURL(join(directory, fileName)).href;
       const module = (await import(modulePath)) as Partial<ThemeModule>;
       if (!module.theme) {
+        if (fileName === "jacks-color-theme.js") {
+          return undefined;
+        }
         throw new Error(`${fileName} must export a theme definition`);
       }
       return module.theme;
     }),
   );
 
-  return definitions.sort((left, right) => left.order - right.order);
+  return definitions
+    .filter((definition): definition is ThemeDefinition => Boolean(definition))
+    .sort((left, right) => left.order - right.order);
 };
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

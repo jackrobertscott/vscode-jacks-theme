@@ -10,26 +10,26 @@ import {
   workbenchTextPairs,
 } from "./workbench.js";
 
-const BORDERED_WORKBENCH_STYLES = createJackWorkbenchStyles(
+const CARBON_WORKBENCH_STYLES = createJackWorkbenchStyles(
   JACK_PALETTE,
   createJackWorkbenchBorders(JACK_PALETTE, JACK_PALETTE.border.divider),
 );
-const borderedVisibleBorderIds = getVisibleWorkbenchBorderColorIds(
-  BORDERED_WORKBENCH_STYLES,
+const carbonVisibleBorderIds = getVisibleWorkbenchBorderColorIds(
+  CARBON_WORKBENCH_STYLES,
 );
 
 export const theme = defineTheme({
-  order: 20,
-  fileName: "jacks-theme-bordered-color-theme.json",
-  name: "Jack's Bordered Theme",
+  order: 10,
+  fileName: "jacks-carbon-theme-color-theme.json",
+  name: "Jack's Carbon Theme",
   type: "dark",
   palette: JACK_PALETTE,
   fontPalette: JACK_FONT_COLORS,
-  workbench: BORDERED_WORKBENCH_STYLES,
+  workbench: CARBON_WORKBENCH_STYLES,
   integrity: {
     borderPolicy: {
       kind: "uniform",
-      visibleIds: borderedVisibleBorderIds,
+      visibleIds: carbonVisibleBorderIds,
       color: JACK_PALETTE.border.divider,
       lighterThan: [
         ["editor background", JACK_PALETTE.background.editor],

@@ -1,8 +1,8 @@
 {
   "name": "jacks-theme",
   "displayName": "Jack's Theme",
-  "description": "A quiet VS Code theme collection with dark, grey, light grey, bordered, and mockup-inspired editor options.",
-  "version": "0.5.28",
+  "description": "A quiet VS Code theme collection with carbon, graphite, silver, and draft-inspired editor options.",
+  "version": "0.5.29",
   "publisher": "jackrobertscott",
   "type": "module",
   "license": "MIT",
@@ -12,16 +12,18 @@
     "dark",
     "color-theme",
     "vscode-theme",
-    "blackboard",
-    "mockup",
+    "carbon",
+    "graphite",
+    "draft",
     "light",
     "paper",
+    "silver",
     "gray",
     "grey"
   ],
   "badges": [
     {
-      "url": "https://img.shields.io/badge/version-0.5.28-d8b84d?style=flat-square",
+      "url": "https://img.shields.io/badge/version-0.5.29-d8b84d?style=flat-square",
       "href": "https://marketplace.visualstudio.com/items?itemName=jackrobertscott.jacks-theme",
       "description": "Jack's Theme extension version"
     },
@@ -45,29 +47,24 @@
   "contributes": {
     "themes": [
       {
-        "label": "Jack's Grey Theme",
+        "label": "Jack's Carbon Theme",
         "uiTheme": "vs-dark",
-        "path": "./themes/jacks-grey-theme-color-theme.json"
+        "path": "./themes/jacks-carbon-theme-color-theme.json"
       },
       {
-        "label": "Jack's Grey Light Theme",
+        "label": "Jack's Graphite Theme",
+        "uiTheme": "vs-dark",
+        "path": "./themes/jacks-graphite-theme-color-theme.json"
+      },
+      {
+        "label": "Jack's Silver Theme",
         "uiTheme": "vs",
-        "path": "./themes/jacks-grey-light-theme-color-theme.json"
+        "path": "./themes/jacks-silver-theme-color-theme.json"
       },
       {
-        "label": "Jack's Bordered Theme",
-        "uiTheme": "vs-dark",
-        "path": "./themes/jacks-theme-bordered-color-theme.json"
-      },
-      {
-        "label": "Jack's Theme",
-        "uiTheme": "vs-dark",
-        "path": "./themes/jacks-theme-color-theme.json"
-      },
-      {
-        "label": "Jack's Mockup Theme",
+        "label": "Jack's Draft Theme",
         "uiTheme": "vs",
-        "path": "./themes/jacks-theme-mockup-color-theme.json"
+        "path": "./themes/jacks-draft-theme-color-theme.json"
       }
     ]
   },

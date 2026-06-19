@@ -174,9 +174,9 @@ const greyLightBorderDarkerThan = [
 ] as const;
 
 export const theme = defineTheme({
-  order: 15,
-  fileName: "jacks-grey-light-theme-color-theme.json",
-  name: "Jack's Grey Light Theme",
+  order: 30,
+  fileName: "jacks-silver-theme-color-theme.json",
+  name: "Jack's Silver Theme",
   type: "light",
   palette: GREY_LIGHT_PALETTE,
   fontPalette: GREY_LIGHT_FONT_COLORS,

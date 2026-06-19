@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.5.29 - 2026-06-19
+
+### Changed
+
+- Removed the borderless dark theme variant and renamed the remaining variants to Jack's Carbon Theme, Jack's Graphite Theme, Jack's Silver Theme, and Jack's Draft Theme.
+
 ## 0.5.28 - 2026-06-18
 
 ### Changed

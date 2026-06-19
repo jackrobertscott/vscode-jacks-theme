@@ -8,6 +8,7 @@
 - do not introduce visible border colors; borders should be transparent unless the repository owner explicitly asks otherwise.
 - do not leave TypeScript errors behind after changing `src/generate-theme.ts` or package metadata.
 - do not add changelog entries that only mention package version bumps.
+- do not run repeatable end-of-change checks as ad hoc manual command sequences when they can live in a package script or `scripts/` workflow; add or update the script and run that instead.
 
 # Do's
 
@@ -17,10 +18,11 @@
 - do keep palette property names to single words only.
 - do keep `scrollbar.background` fully transparent and keep scrollbar thumb colors partially transparent.
 - do use `npm run generate` when changing theme generation logic so the generated theme JSON files in `themes/` stay in sync with the TypeScript source.
-- do validate generated theme warnings with the actual `vscode://schemas/color-theme` behavior, preferably using `vscode-json-languageservice` plus the installed VS Code color registry from `/Applications/Visual Studio Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js`; do not rely only on the public theme color reference or a color ID list. Include transparent-color pattern checks for colors registered by VS Code with the transparent-color schema constraint.
+- do validate generated theme warnings through `npm run validate:themes` or `npm run finish`; the script checks generated theme JSON against the installed VS Code color registry from `/Applications/Visual Studio Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js` and includes transparent-color pattern checks for colors registered by VS Code with the transparent-color schema constraint. Do not rely only on the public theme color reference or a color ID list, and put any additional repeatable schema checks into the script instead of running them manually.
 - do run `npx tsc --noEmit` or the repository typecheck path before handing off code changes.
 - do install the theme into the user's local VS Code after making or preparing changes to the extension.
 - do install the newly published theme locally after publishing whenever the user's local VS Code has the theme installed from a local VSIX rather than the Marketplace.
-- do run `npm run finish` after a completed change set; it regenerates themes, runs `npx tsc --noEmit`, verifies version metadata, packages a temporary VSIX without hard-coded version filenames, and installs it into local VS Code unless `-- --no-install` is passed.
+- do run `npm run finish` after a completed change set; it regenerates themes, runs `npx tsc --noEmit`, validates generated theme JSON against the installed VS Code color registry, verifies version metadata, packages a temporary VSIX without hard-coded version filenames, and installs it into local VS Code unless `-- --no-install` is passed.
 - do run `npm run publish:marketplace` for Marketplace releases; it requires a clean worktree by default, reuses the finish workflow, publishes with `vsce publish --allow-missing-repository`, and reinstalls the just-published VSIX locally when the current VS Code install looks like a local VSIX install.
 - do commit at meaningful milestones of code, such as after a coherent source change, after generated output has been refreshed, and after verification passes.
+- do turn any standard or repeated end-of-work checklist into a reusable script, usually by updating `scripts/finish-work.sh` or adding an npm script, then run that script and document the workflow here so future agents do not repeat the same commands manually.

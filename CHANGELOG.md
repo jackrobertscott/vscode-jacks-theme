@@ -2,6 +2,16 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.6.5 - 2026-06-19
+
+### Added
+
+- Added a reusable generated-theme schema validation script and wired it into the finish workflow so VS Code color registry and transparent-color checks run through `npm run finish`.
+
+### Changed
+
+- Documented that standard end-of-work checklists should be encoded in reusable scripts before future agents run them.
+
 ## 0.6.4 - 2026-06-19
 
 ### Changed

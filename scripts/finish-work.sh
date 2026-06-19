@@ -8,9 +8,10 @@ Usage: scripts/finish-work.sh [--no-install] [--vsix PATH]
 Runs the standard end-of-change workflow:
   1. regenerate the extension output from TypeScript sources
   2. run the required TypeScript no-emit check
-  3. verify package, lockfile, changelog, and version badges agree
-  4. package a VSIX without hard-coding the versioned filename
-  5. install the packaged VSIX into local VS Code unless --no-install is set
+  3. validate generated theme JSON against the installed VS Code color registry
+  4. verify package, lockfile, changelog, and version badges agree
+  5. package a VSIX without hard-coding the versioned filename
+  6. install the packaged VSIX into local VS Code unless --no-install is set
 USAGE
 }
 
@@ -79,6 +80,7 @@ trap cleanup EXIT
 
 run npm run generate
 run npx tsc --noEmit
+run npm run validate:themes
 
 printf '\n==> verifying version metadata\n'
 node --input-type=module <<'NODE'

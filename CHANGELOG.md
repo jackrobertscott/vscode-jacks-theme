@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.6.4 - 2026-06-19
+
+### Changed
+
+- Softened Jack's Graphite Theme border color so dividers and control outlines read less strongly against the medium graphite surfaces.
+
 ## 0.6.3 - 2026-06-19
 
 ### Added

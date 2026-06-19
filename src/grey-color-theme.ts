@@ -59,7 +59,7 @@ const GREY_FONT_PALETTE = {
 } as const satisfies SourceFontPalette;
 
 const GREY_BORDER_PALETTE = {
-  divider: "#8a8a8a",
+  divider: "#747474",
 } as const satisfies SourceBorderPalette;
 
 assertSingleWordPaletteProperties("background", GREY_BACKGROUND_PALETTE);

@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.6.1 - 2026-06-19
+
+### Changed
+
+- Forced focus, hover-outline, and active/selection border indicators transparent across all themes so structural dividers remain the only settable UI borders.
+
 ## 0.6.0 - 2026-06-19
 
 ### Changed

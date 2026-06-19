@@ -14,7 +14,11 @@ import type {
   Theme,
   ThemeIntegrity,
 } from "./theme.js";
-import { editorSurfaceIds, editorUnderlayIds } from "./workbench.js";
+import {
+  alwaysTransparentStateBorderIds,
+  editorSurfaceIds,
+  editorUnderlayIds,
+} from "./workbench.js";
 
 const colorSettingKeys = new Set(["foreground", "background"]);
 
@@ -214,6 +218,14 @@ export const assertThemeIntegrity = (
 
   assertUniformBorders(theme, palette, options.borderPolicy);
   assertRequiredMappedBorders(theme, palette, options.borderPolicy);
+
+  for (const id of alwaysTransparentStateBorderIds) {
+    if (theme.colors[id] !== B.transparent) {
+      throw new Error(
+        `colors.${id} must stay transparent because state/focus border indicators are disabled`,
+      );
+    }
+  }
 
   for (const [foregroundId, backgroundId] of options.workbenchTextPairs ?? []) {
     const foreground = theme.colors[foregroundId];

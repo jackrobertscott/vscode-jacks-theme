@@ -117,27 +117,20 @@ export type WorkbenchBorderStyles = {
   editorWordHighlight: BorderStyle;
   editorWordHighlightStrong: BorderStyle;
   editorWordHighlightText: BorderStyle;
-  focus: BorderStyle;
-  sash: BorderStyle;
   widget: BorderStyle;
   widgetResize: BorderStyle;
   window: BorderStyle;
   contentDivider: BorderStyle;
   separator: BorderStyle;
-  toolbar: BorderStyle;
   control: BorderStyle;
-  inputOption: BorderStyle;
   validationError: BorderStyle;
   validationWarning: BorderStyle;
   validationInfo: BorderStyle;
   activityDivider: BorderStyle;
-  activityActive: BorderStyle;
   sidebarDivider: BorderStyle;
   sidebarSection: BorderStyle;
   editorGroup: BorderStyle;
   editorGroupHeader: BorderStyle;
-  tabActive: BorderStyle;
-  tabActiveTop: BorderStyle;
   tabDivider: BorderStyle;
   findMatch: BorderStyle;
   bracketMatch: BorderStyle;
@@ -145,18 +138,13 @@ export type WorkbenchBorderStyles = {
   overviewRuler: BorderStyle;
   diff: BorderStyle;
   panel: BorderStyle;
-  panelTitleActive: BorderStyle;
   panelInput: BorderStyle;
   terminal: BorderStyle;
   debugToolbar: BorderStyle;
   statusBar: BorderStyle;
   titleBar: BorderStyle;
   menu: BorderStyle;
-  menuSelection: BorderStyle;
-  menubarSelection: BorderStyle;
   commandCenter: BorderStyle;
-  commandCenterInactive: BorderStyle;
-  commandCenterActive: BorderStyle;
   notification: BorderStyle;
   picker: BorderStyle;
   settingsControl: BorderStyle;
@@ -164,7 +152,6 @@ export type WorkbenchBorderStyles = {
   peek: BorderStyle;
   welcomeTile: BorderStyle;
   chartLine: BorderStyle;
-  listFocusOutline: BorderStyle;
 };
 
 export type WorkbenchColorPair = {

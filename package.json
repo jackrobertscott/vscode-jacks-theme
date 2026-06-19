@@ -2,7 +2,7 @@
   "name": "jacks-theme",
   "displayName": "Jack's Theme",
   "description": "A quiet VS Code theme collection with carbon, graphite, silver, and draft-inspired editor options.",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "publisher": "jackrobertscott",
   "type": "module",
   "license": "MIT",
@@ -23,7 +23,7 @@
   ],
   "badges": [
     {
-      "url": "https://img.shields.io/badge/version-0.6.0-d8b84d?style=flat-square",
+      "url": "https://img.shields.io/badge/version-0.6.1-d8b84d?style=flat-square",
       "href": "https://marketplace.visualstudio.com/items?itemName=jackrobertscott.jacks-theme",
       "description": "Jack's Theme extension version"
     },

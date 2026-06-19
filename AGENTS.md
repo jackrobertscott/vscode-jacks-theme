@@ -21,4 +21,6 @@
 - do run `npx tsc --noEmit` or the repository typecheck path before handing off code changes.
 - do install the theme into the user's local VS Code after making or preparing changes to the extension.
 - do install the newly published theme locally after publishing whenever the user's local VS Code has the theme installed from a local VSIX rather than the Marketplace.
+- do run `npm run finish` after a completed change set; it regenerates themes, runs `npx tsc --noEmit`, verifies version metadata, packages a temporary VSIX without hard-coded version filenames, and installs it into local VS Code unless `-- --no-install` is passed.
+- do run `npm run publish:marketplace` for Marketplace releases; it requires a clean worktree by default, reuses the finish workflow, publishes with `vsce publish --allow-missing-repository`, and reinstalls the just-published VSIX locally when the current VS Code install looks like a local VSIX install.
 - do commit at meaningful milestones of code, such as after a coherent source change, after generated output has been refreshed, and after verification passes.

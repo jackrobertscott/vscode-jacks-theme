@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.6.3 - 2026-06-19
+
+### Added
+
+- Added reusable finish-work and Marketplace publish scripts so generation, typechecking, version metadata checks, packaging, local installation, and release publishing can run from npm commands.
+
 ## 0.6.2 - 2026-06-19
 
 ### Changed

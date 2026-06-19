@@ -1,6 +1,6 @@
 # Jack's Theme
 
-[![Version](https://img.shields.io/badge/version-0.5.29-d8b84d?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=jackrobertscott.jacks-theme)
+[![Version](https://img.shields.io/badge/version-0.6.3-d8b84d?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=jackrobertscott.jacks-theme)
 [![VS Code](https://img.shields.io/badge/VS%20Code-%5E1.90.0-67b9ff?style=flat-square)](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#visual-studio-code-compatibility)
 [![License](https://img.shields.io/badge/license-MIT-76c26e?style=flat-square)](https://opensource.org/license/mit)
 
@@ -21,24 +21,21 @@ Source code is available at <https://github.com/jackrobertscott/vscode-jacks-the
 
 ## Installation
 
-Install the extension from the Visual Studio Code Marketplace when published, or package and install it locally:
+Install the extension from the Visual Studio Code Marketplace when published, or package and install it locally with the finish workflow:
 
 ```sh
 npm install
-npm run generate
-npm run package
-code --install-extension "$(find . -maxdepth 1 -name '*.vsix' -print | sort | tail -n 1)" --force
+npm run finish
 ```
 
 ## Development
 
-Edit `src/generate-theme.ts`, then run:
+Edit the TypeScript sources, then run the finish workflow:
 
 ```sh
-npm run generate
-npx tsc --noEmit
+npm run finish
 ```
 
-Do not edit generated files in `themes/` directly. They are generated from `src/generate-theme.ts`.
+Do not edit generated files in `themes/` directly. They are generated from the TypeScript sources.
 
-When changing the extension, bump `package.json` and `package-lock.json`, add a matching `CHANGELOG.md` entry under the same version number, then package and install the newest VSIX locally.
+When changing the extension, bump `package.json` and `package-lock.json`, add a matching `CHANGELOG.md` entry under the same version number, then run `npm run finish` to regenerate, typecheck, package, and install the newest VSIX locally. For Marketplace releases, publish with `npm run publish:marketplace -- --pat "$VSCE_PAT"` after the release commit is clean.

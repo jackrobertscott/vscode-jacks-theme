@@ -81,7 +81,6 @@ const borderColorIdsByRole = {
   findMatch: ["editor.findMatchBorder"],
   bracketMatch: ["editorBracketMatch.border"],
   unicodeHighlight: ["editorUnicodeHighlight.border"],
-  overviewRuler: ["editorOverviewRuler.border"],
   diff: ["diffEditor.border"],
   panel: ["panel.border"],
   panelInput: ["panelInput.border"],
@@ -109,11 +108,12 @@ const borderColorIdsByRole = {
   chartLine: ["charts.lines"],
 } as const satisfies Record<keyof WorkbenchBorderStyles, readonly string[]>;
 
-// These color IDs draw state/focus/selection outlines on top of the existing
-// UI structure. They are intentionally not represented by WorkbenchBorderStyles:
-// themes choose the structural border, if any, and these state indicators always
-// stay transparent to avoid adjacent double-border artifacts.
-export const alwaysTransparentStateBorderIds = [
+// These color IDs draw focus/selection outlines or scrollbar-adjacent chrome on
+// top of the existing UI structure. They are intentionally not represented by
+// WorkbenchBorderStyles: themes choose the structural border, if any, and these
+// ignored border indicators always stay transparent to avoid adjacent
+// double-border artifacts.
+export const alwaysTransparentIgnoredBorderIds = [
   "focusBorder",
   "sash.hoverBorder",
   "toolbar.hoverOutline",
@@ -128,6 +128,7 @@ export const alwaysTransparentStateBorderIds = [
   "menubar.selectionBorder",
   "commandCenter.inactiveBorder",
   "commandCenter.activeBorder",
+  "editorOverviewRuler.border",
 ] as const;
 
 export const getVisibleWorkbenchBorderColorIds = (
@@ -407,7 +408,7 @@ export const createWorkbenchFeatureGroups = (
       "editorOverviewRuler.addedForeground": T.success,
       "editorOverviewRuler.deletedForeground": T.error,
       "editorOverviewRuler.modifiedForeground": T.info,
-      "editorOverviewRuler.border": border(R.overviewRuler),
+      "editorOverviewRuler.border": transparent,
       "editorOverviewRuler.errorForeground": T.error,
       "editorOverviewRuler.warningForeground": T.warning,
       "editorOverviewRuler.infoForeground": T.info,

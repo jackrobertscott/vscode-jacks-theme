@@ -135,7 +135,6 @@ export type WorkbenchBorderStyles = {
   findMatch: BorderStyle;
   bracketMatch: BorderStyle;
   unicodeHighlight: BorderStyle;
-  overviewRuler: BorderStyle;
   diff: BorderStyle;
   panel: BorderStyle;
   panelInput: BorderStyle;

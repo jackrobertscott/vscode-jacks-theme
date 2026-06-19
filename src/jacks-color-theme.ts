@@ -102,7 +102,6 @@ export const createJackWorkbenchBorders = (
     findMatch: none,
     bracketMatch: none,
     unicodeHighlight: none,
-    overviewRuler: none,
     diff: divider,
     panel: divider,
     panelInput: none,

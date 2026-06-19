@@ -106,7 +106,6 @@ const createMockupWorkbenchBorders = (
     findMatch: blueprint,
     bracketMatch: ink,
     unicodeHighlight: note,
-    overviewRuler: ink,
     diff: pencil,
     panel: ink,
     panelInput: pencil,

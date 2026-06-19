@@ -15,7 +15,7 @@ import type {
   ThemeIntegrity,
 } from "./theme.js";
 import {
-  alwaysTransparentStateBorderIds,
+  alwaysTransparentIgnoredBorderIds,
   editorSurfaceIds,
   editorUnderlayIds,
 } from "./workbench.js";
@@ -219,10 +219,10 @@ export const assertThemeIntegrity = (
   assertUniformBorders(theme, palette, options.borderPolicy);
   assertRequiredMappedBorders(theme, palette, options.borderPolicy);
 
-  for (const id of alwaysTransparentStateBorderIds) {
+  for (const id of alwaysTransparentIgnoredBorderIds) {
     if (theme.colors[id] !== B.transparent) {
       throw new Error(
-        `colors.${id} must stay transparent because state/focus border indicators are disabled`,
+        `colors.${id} must stay transparent because this border indicator is ignored by the theme abstraction`,
       );
     }
   }

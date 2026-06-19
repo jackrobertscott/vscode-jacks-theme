@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.6.2 - 2026-06-19
+
+### Changed
+
+- Made the editor overview ruler border transparent across all themes so the vertical scrollbar edge no longer doubles up with the header border while horizontal scrollbars remain borderless.
+
 ## 0.6.1 - 2026-06-19
 
 ### Changed

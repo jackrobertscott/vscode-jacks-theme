@@ -105,7 +105,6 @@ export const createGreyWorkbenchBorders = (
     findMatch: divider,
     bracketMatch: divider,
     unicodeHighlight: divider,
-    overviewRuler: divider,
     diff: divider,
     panel: divider,
     panelInput: divider,

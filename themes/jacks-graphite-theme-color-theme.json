@@ -208,7 +208,7 @@
     "editorOverviewRuler.addedForeground": "#aee9af",
     "editorOverviewRuler.deletedForeground": "#ffabba",
     "editorOverviewRuler.modifiedForeground": "#7be7ff",
-    "editorOverviewRuler.border": "#8a8a8a",
+    "editorOverviewRuler.border": "#20202000",
     "editorOverviewRuler.errorForeground": "#ffabba",
     "editorOverviewRuler.warningForeground": "#e3e437",
     "editorOverviewRuler.infoForeground": "#7be7ff",

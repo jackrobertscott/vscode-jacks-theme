@@ -140,7 +140,11 @@ trap cleanup EXIT
 run scripts/finish-work.sh --no-install --vsix "$vsix_path"
 assert_clean_worktree
 
-run vsce publish --allow-missing-repository "${publish_args[@]}"
+if [[ ${#publish_args[@]} -gt 0 ]]; then
+  run vsce publish --allow-missing-repository "${publish_args[@]}"
+else
+  run vsce publish --allow-missing-repository
+fi
 
 if [[ "$local_install" -eq 1 ]]; then
   if is_local_vsix_install; then

@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.6.7 - 2026-06-22
+
+### Changed
+
+- Darkened Jack's Graphite Theme editor and code surfaces below the surrounding chrome, then retuned the graphite ramp, guide colour, and highlight wash so focused tabs, sidebars, panels, and editor overlays keep premium low-contrast separation.
+
 ## 0.6.6 - 2026-06-22
 
 ### Changed

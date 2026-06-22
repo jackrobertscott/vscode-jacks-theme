@@ -27,12 +27,12 @@ import {
 
 const GREY_BACKGROUND_PALETTE = {
   black: "#202020",
-  editor: "#464646",
-  panel: "#404040",
-  popup: "#4e4e4e",
-  hover: "#5c5c5c",
-  active: "#686868",
-  guide: "#828282",
+  editor: "#3b3c3e",
+  panel: "#414244",
+  popup: "#4c4d4f",
+  hover: "#57595b",
+  active: "#63666a",
+  guide: "#777a7e",
   accent: "#6f613d",
   success: "#536b50",
   danger: "#765463",
@@ -41,7 +41,7 @@ const GREY_BACKGROUND_PALETTE = {
   sand: "#6f653d",
   moss: "#536b50",
   sky: "#4e6579",
-  mark: "#927a96",
+  mark: "#846f88",
   plum: "#685a77",
   clay: "#765463",
 } as const satisfies SourceBackgroundPalette;

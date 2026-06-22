@@ -59,7 +59,7 @@ const GREY_FONT_PALETTE = {
 } as const satisfies SourceFontPalette;
 
 const GREY_BORDER_PALETTE = {
-  divider: "#747474",
+  divider: "#34383a",
 } as const satisfies SourceBorderPalette;
 
 assertSingleWordPaletteProperties("background", GREY_BACKGROUND_PALETTE);
@@ -213,12 +213,14 @@ export const theme = defineTheme({
       kind: "uniform",
       visibleIds: greyVisibleBorderIds,
       color: GREY_PALETTE.border.divider,
-      lighterThan: [
+      lighterThan: [],
+      darkerThan: [
         ["editor background", GREY_PALETTE.background.editor],
+        ["panel background", GREY_PALETTE.background.panel],
         ["popup background", GREY_PALETTE.background.popup],
+        ["hover background", GREY_PALETTE.background.hover],
         ["active background", GREY_PALETTE.background.active],
       ],
-      darkerThan: [],
     },
     workbenchTextPairs,
   },

@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.6.6 - 2026-06-22
+
+### Changed
+
+- Recut Jack's Graphite Theme borders as a darker graphite shadow line so dividers and control outlines feel quieter against the medium-grey surfaces.
+
 ## 0.6.5 - 2026-06-19
 
 ### Added

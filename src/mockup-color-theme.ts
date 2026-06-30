@@ -59,7 +59,7 @@ const MOCKUP_FONT_PALETTE = {
 } as const satisfies SourceFontPalette;
 
 const MOCKUP_BORDER_PALETTE = {
-  divider: "#8f806f",
+  divider: "#b5a793",
 } as const satisfies SourceBorderPalette;
 
 assertSingleWordPaletteProperties("background", MOCKUP_BACKGROUND_PALETTE);
@@ -78,8 +78,7 @@ const createMockupWorkbenchBorders = (
 ): WorkbenchBorderStyles => {
   const transparent = palette.background.transparent;
   const F = palette.font;
-  const pencil = visibleBorder(palette.background.guide);
-  const rule = visibleBorder(palette.border.divider);
+  const paper = visibleBorder(palette.border.divider);
   const blueprint = visibleBorder(F.sky);
   const redline = visibleBorder(F.clay);
   const note = visibleBorder(F.sand);
@@ -93,40 +92,40 @@ const createMockupWorkbenchBorders = (
     editorWordHighlight: none,
     editorWordHighlightStrong: none,
     editorWordHighlightText: none,
-    widget: pencil,
-    widgetResize: pencil,
-    window: rule,
-    contentDivider: pencil,
-    separator: pencil,
-    control: rule,
+    widget: paper,
+    widgetResize: paper,
+    window: paper,
+    contentDivider: paper,
+    separator: paper,
+    control: paper,
     validationError: redline,
     validationWarning: note,
     validationInfo: blueprint,
-    activityDivider: rule,
-    sidebarDivider: rule,
-    sidebarSection: pencil,
-    editorGroup: rule,
-    editorGroupHeader: rule,
-    tabDivider: pencil,
+    activityDivider: paper,
+    sidebarDivider: paper,
+    sidebarSection: paper,
+    editorGroup: paper,
+    editorGroupHeader: paper,
+    tabDivider: paper,
     findMatch: blueprint,
-    bracketMatch: rule,
+    bracketMatch: paper,
     unicodeHighlight: note,
-    diff: pencil,
-    panel: rule,
-    panelInput: pencil,
-    terminal: rule,
-    debugToolbar: rule,
-    statusBar: rule,
-    titleBar: rule,
-    menu: rule,
-    commandCenter: rule,
-    notification: rule,
-    picker: pencil,
-    settingsControl: rule,
-    settingsSash: rule,
-    peek: rule,
-    welcomeTile: rule,
-    chartLine: pencil,
+    diff: paper,
+    panel: paper,
+    panelInput: paper,
+    terminal: paper,
+    debugToolbar: paper,
+    statusBar: paper,
+    titleBar: paper,
+    menu: paper,
+    commandCenter: paper,
+    notification: paper,
+    picker: paper,
+    settingsControl: paper,
+    settingsSash: paper,
+    peek: paper,
+    welcomeTile: paper,
+    chartLine: paper,
   };
 };
 

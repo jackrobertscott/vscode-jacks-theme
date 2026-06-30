@@ -4,11 +4,11 @@ import {
   createPalette,
   withAlpha,
 } from "./colors.js";
-import { JACK_BORDER_PALETTE } from "./jacks-color-theme.js";
 import { defineTheme } from "./theme.js";
 import type {
   Palette,
   SourceBackgroundPalette,
+  SourceBorderPalette,
   SourceFontPalette,
 } from "./theme.js";
 import {
@@ -58,13 +58,18 @@ const MOCKUP_FONT_PALETTE = {
   clay: "#a5305b",
 } as const satisfies SourceFontPalette;
 
+const MOCKUP_BORDER_PALETTE = {
+  divider: "#8f806f",
+} as const satisfies SourceBorderPalette;
+
 assertSingleWordPaletteProperties("background", MOCKUP_BACKGROUND_PALETTE);
 assertSingleWordPaletteProperties("font", MOCKUP_FONT_PALETTE);
+assertSingleWordPaletteProperties("border", MOCKUP_BORDER_PALETTE);
 
 const MOCKUP_PALETTE = createPalette(
   MOCKUP_BACKGROUND_PALETTE,
   MOCKUP_FONT_PALETTE,
-  JACK_BORDER_PALETTE,
+  MOCKUP_BORDER_PALETTE,
 );
 const MOCKUP_FONT_COLORS = createColorMap(MOCKUP_FONT_PALETTE);
 
@@ -74,7 +79,7 @@ const createMockupWorkbenchBorders = (
   const transparent = palette.background.transparent;
   const F = palette.font;
   const pencil = visibleBorder(palette.background.guide);
-  const ink = visibleBorder(F.muted);
+  const rule = visibleBorder(palette.border.divider);
   const blueprint = visibleBorder(F.sky);
   const redline = visibleBorder(F.clay);
   const note = visibleBorder(F.sand);
@@ -90,37 +95,37 @@ const createMockupWorkbenchBorders = (
     editorWordHighlightText: none,
     widget: pencil,
     widgetResize: pencil,
-    window: ink,
+    window: rule,
     contentDivider: pencil,
     separator: pencil,
-    control: ink,
+    control: rule,
     validationError: redline,
     validationWarning: note,
     validationInfo: blueprint,
-    activityDivider: ink,
-    sidebarDivider: ink,
+    activityDivider: rule,
+    sidebarDivider: rule,
     sidebarSection: pencil,
-    editorGroup: ink,
-    editorGroupHeader: ink,
+    editorGroup: rule,
+    editorGroupHeader: rule,
     tabDivider: pencil,
     findMatch: blueprint,
-    bracketMatch: ink,
+    bracketMatch: rule,
     unicodeHighlight: note,
     diff: pencil,
-    panel: ink,
+    panel: rule,
     panelInput: pencil,
-    terminal: ink,
-    debugToolbar: ink,
-    statusBar: ink,
-    titleBar: ink,
-    menu: ink,
-    commandCenter: ink,
-    notification: ink,
+    terminal: rule,
+    debugToolbar: rule,
+    statusBar: rule,
+    titleBar: rule,
+    menu: rule,
+    commandCenter: rule,
+    notification: rule,
     picker: pencil,
-    settingsControl: ink,
-    settingsSash: ink,
-    peek: ink,
-    welcomeTile: ink,
+    settingsControl: rule,
+    settingsSash: rule,
+    peek: rule,
+    welcomeTile: rule,
     chartLine: pencil,
   };
 };

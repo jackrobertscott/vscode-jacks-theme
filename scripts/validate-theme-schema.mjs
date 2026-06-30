@@ -99,45 +99,59 @@ const registerColor = (registry, id, options = {}) => {
   });
 };
 
+const findRegisterColorHelperNames = (workbenchSource) => {
+  const helpers = new Set();
+  const helperPattern =
+    /function\s+([A-Za-z_$][\w$]*)\s*\([^)]*\)\s*\{\s*return\s+[A-Za-z_$][\w$]*\.registerColor\(/g;
+
+  for (const match of workbenchSource.matchAll(helperPattern)) {
+    helpers.add(match[1]);
+  }
+
+  return helpers;
+};
+
 const addWorkbenchRegistryColors = (registry, workbenchSource) => {
-  for (
-    let index = 0;
-    (index = workbenchSource.indexOf("oe(", index)) !== -1;
-    index += 3
-  ) {
-    const previous = workbenchSource[index - 1];
-    if (previous && /[\w$]/.test(previous)) continue;
+  for (const helperName of findRegisterColorHelperNames(workbenchSource)) {
+    const callPrefix = `${helperName}(`;
 
-    const end = findCallEnd(workbenchSource, index + 2);
-    if (end < 0) continue;
+    for (
+      let index = 0;
+      (index = workbenchSource.indexOf(callPrefix, index)) !== -1;
+      index += callPrefix.length
+    ) {
+      const previous = workbenchSource[index - 1];
+      if (previous && /[\w$]/.test(previous)) continue;
 
-    const args = splitTopLevelArguments(workbenchSource.slice(index + 3, end));
-    if (!args[0]?.startsWith('"')) continue;
+      const openParenIndex = index + helperName.length;
+      const end = findCallEnd(workbenchSource, openParenIndex);
+      if (end < 0) continue;
 
-    let id;
-    try {
-      id = JSON.parse(args[0]);
-    } catch {
-      continue;
+      const args = splitTopLevelArguments(
+        workbenchSource.slice(openParenIndex + 1, end),
+      );
+      if (!args[0]?.startsWith('"')) continue;
+
+      let id;
+      try {
+        id = JSON.parse(args[0]);
+      } catch {
+        continue;
+      }
+
+      if (!/^[\w.-]+$/.test(id)) continue;
+
+      registerColor(registry, id, {
+        needsTransparency: args[3] === "!0" || args[3] === "true",
+        source: "VS Code workbench registry",
+      });
     }
-
-    if (!/^[\w.-]+$/.test(id)) continue;
-
-    registerColor(registry, id, {
-      needsTransparency: args[3] === "!0" || args[3] === "true",
-      source: "VS Code workbench registry",
-    });
   }
 };
 
 const addTerminalAnsiColors = (registry, workbenchSource) => {
-  const terminalAnsiMatch = /I0t=\{([\s\S]*?)\};function Fgo/.exec(
-    workbenchSource,
-  );
-  if (!terminalAnsiMatch) return;
-
-  for (const match of terminalAnsiMatch[1].matchAll(
-    /"(terminal\.ansi[^"]+)":/g,
+  for (const match of workbenchSource.matchAll(
+    /"(terminal\.ansi(?:Bright)?(?:Black|Red|Green|Yellow|Blue|Magenta|Cyan|White))"(?=[:,])/g,
   )) {
     registerColor(registry, match[1], {
       source: "VS Code terminal ANSI registry",

@@ -2,6 +2,13 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.6.8 - 2026-06-30
+
+### Changed
+
+- Softened Jack's Draft Theme structural borders with a warmer taupe rule so the light paper UI feels drafted rather than heavily inked.
+- Kept generated theme validation compatible with the current VS Code workbench color registry bundle.
+
 ## 0.6.7 - 2026-06-22
 
 ### Changed

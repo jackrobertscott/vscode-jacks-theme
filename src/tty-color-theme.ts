@@ -16,55 +16,55 @@ import { defineWorkbenchStyles } from "./workbench-styles.js";
 import type { WorkbenchStyles } from "./workbench-styles.js";
 import { workbenchTextPairs } from "./workbench.js";
 
-const PHOSPHOR_BACKGROUND_PALETTE = {
-  black: "#000400",
-  editor: "#020602",
-  panel: "#041004",
-  popup: "#061806",
-  hover: "#0b240b",
-  active: "#123612",
-  guide: "#315a31",
-  accent: "#403006",
-  success: "#164c18",
-  danger: "#4a1711",
-  info: "#073944",
-  ember: "#3a2605",
-  sand: "#314206",
-  moss: "#155114",
-  sky: "#07404a",
-  mark: "#2c622b",
-  plum: "#351a44",
-  clay: "#4a1711",
+const TTY_BACKGROUND_PALETTE = {
+  black: "#020302",
+  editor: "#050805",
+  panel: "#071007",
+  popup: "#0a160a",
+  hover: "#102110",
+  active: "#193119",
+  guide: "#345234",
+  accent: "#3a2c0a",
+  success: "#1d4522",
+  danger: "#4b2019",
+  info: "#173b43",
+  ember: "#3b2b0a",
+  sand: "#34370e",
+  moss: "#1f4d24",
+  sky: "#173b43",
+  mark: "#2c5d31",
+  plum: "#2e263d",
+  clay: "#4b2019",
 } as const satisfies SourceBackgroundPalette;
 
-const PHOSPHOR_FONT_PALETTE = {
-  text: "#b6ff9c",
-  muted: "#8fcf86",
-  faint: "#4f8a4f",
-  ember: "#ffb84d",
-  sand: "#d6ff7a",
-  moss: "#7cff63",
-  sky: "#35d7ff",
-  plum: "#d58cff",
-  clay: "#ff5f3a",
+const TTY_FONT_PALETTE = {
+  text: "#c8f7b5",
+  muted: "#8fbd8b",
+  faint: "#668a64",
+  ember: "#d4a65f",
+  sand: "#dfd071",
+  moss: "#8ee972",
+  sky: "#7dc8d8",
+  plum: "#b6a1df",
+  clay: "#d77a63",
 } as const satisfies SourceFontPalette;
 
-const PHOSPHOR_BORDER_PALETTE = {
-  divider: "#0b240b",
+const TTY_BORDER_PALETTE = {
+  divider: "#102110",
 } as const satisfies SourceBorderPalette;
 
-assertSingleWordPaletteProperties("background", PHOSPHOR_BACKGROUND_PALETTE);
-assertSingleWordPaletteProperties("font", PHOSPHOR_FONT_PALETTE);
-assertSingleWordPaletteProperties("border", PHOSPHOR_BORDER_PALETTE);
+assertSingleWordPaletteProperties("background", TTY_BACKGROUND_PALETTE);
+assertSingleWordPaletteProperties("font", TTY_FONT_PALETTE);
+assertSingleWordPaletteProperties("border", TTY_BORDER_PALETTE);
 
-const PHOSPHOR_PALETTE = createPalette(
-  PHOSPHOR_BACKGROUND_PALETTE,
-  PHOSPHOR_FONT_PALETTE,
-  PHOSPHOR_BORDER_PALETTE,
+const TTY_PALETTE = createPalette(
+  TTY_BACKGROUND_PALETTE,
+  TTY_FONT_PALETTE,
+  TTY_BORDER_PALETTE,
 );
-const PHOSPHOR_FONT_COLORS = createColorMap(PHOSPHOR_FONT_PALETTE);
+const TTY_FONT_COLORS = createColorMap(TTY_FONT_PALETTE);
 
-const createPhosphorWorkbenchStyles = (palette: Palette): WorkbenchStyles => {
+const createTtyWorkbenchStyles = (palette: Palette): WorkbenchStyles => {
   const styles = createJackWorkbenchStyles(palette);
   const B = palette.background;
   const F = palette.font;
@@ -204,17 +204,16 @@ const createPhosphorWorkbenchStyles = (palette: Palette): WorkbenchStyles => {
   });
 };
 
-const PHOSPHOR_WORKBENCH_STYLES =
-  createPhosphorWorkbenchStyles(PHOSPHOR_PALETTE);
+const TTY_WORKBENCH_STYLES = createTtyWorkbenchStyles(TTY_PALETTE);
 
 export const theme = defineTheme({
   order: 15,
-  fileName: "jacks-phosphor-theme-color-theme.json",
-  name: "Jack's Phosphor Theme",
+  fileName: "jacks-tty-theme-color-theme.json",
+  name: "Jack's TTY Theme",
   type: "dark",
-  palette: PHOSPHOR_PALETTE,
-  fontPalette: PHOSPHOR_FONT_COLORS,
-  workbench: PHOSPHOR_WORKBENCH_STYLES,
+  palette: TTY_PALETTE,
+  fontPalette: TTY_FONT_COLORS,
+  workbench: TTY_WORKBENCH_STYLES,
   integrity: {
     borderPolicy: {
       kind: "transparent",

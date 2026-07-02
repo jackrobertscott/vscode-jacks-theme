@@ -1,8 +1,8 @@
 {
   "name": "jacks-theme",
   "displayName": "Jack's Theme",
-  "description": "A VS Code theme collection with carbon, phosphor, graphite, silver, and draft-inspired editor options.",
-  "version": "0.6.10",
+  "description": "A VS Code theme collection with carbon, TTY, graphite, silver, and draft-inspired editor options.",
+  "version": "0.6.11",
   "publisher": "jackrobertscott",
   "type": "module",
   "license": "MIT",
@@ -13,11 +13,13 @@
     "color-theme",
     "vscode-theme",
     "carbon",
+    "tty",
+    "unix",
+    "terminal",
     "phosphor",
+    "crt",
     "retro",
     "hacker",
-    "crt",
-    "terminal",
     "graphite",
     "draft",
     "light",
@@ -28,7 +30,7 @@
   ],
   "badges": [
     {
-      "url": "https://img.shields.io/badge/version-0.6.10-d8b84d?style=flat-square",
+      "url": "https://img.shields.io/badge/version-0.6.11-d8b84d?style=flat-square",
       "href": "https://marketplace.visualstudio.com/items?itemName=jackrobertscott.jacks-theme",
       "description": "Jack's Theme extension version"
     },
@@ -57,9 +59,9 @@
         "path": "./themes/jacks-carbon-theme-color-theme.json"
       },
       {
-        "label": "Jack's Phosphor Theme",
+        "label": "Jack's TTY Theme",
         "uiTheme": "vs-dark",
-        "path": "./themes/jacks-phosphor-theme-color-theme.json"
+        "path": "./themes/jacks-tty-theme-color-theme.json"
       },
       {
         "label": "Jack's Graphite Theme",
@@ -79,7 +81,7 @@
     ]
   },
   "scripts": {
-    "generate": "tsc && node out/generate-theme.js",
+    "generate": "node -e \"require('fs').rmSync('out', { recursive: true, force: true })\" && tsc && node out/generate-theme.js",
     "validate:themes": "node scripts/validate-theme-schema.mjs",
     "vscode:prepublish": "npm run generate",
     "package": "vsce package --allow-missing-repository",

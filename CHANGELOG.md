@@ -2,6 +2,13 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.6.11 - 2026-07-02
+
+### Changed
+
+- Reworked Jack's Phosphor Theme into Jack's TTY Theme with a darker UNIX-console palette, quieter green-black chrome, reduced saturated neon, and restrained ANSI-style syntax accents for a more credible hacker terminal feel.
+- Cleaned the generated output directory before theme generation so removed theme modules cannot be regenerated from stale compiled files.
+
 ## 0.6.10 - 2026-07-02
 
 ### Added

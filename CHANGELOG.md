@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.6.10 - 2026-07-02
+
+### Added
+
+- Added Jack's Phosphor Theme, a near-black retro hacker theme with phosphor-green text, dim CRT surfaces, amber/cyan syntax accents, and transparent borders for blocky or pixelated font setups.
+
 ## 0.6.9 - 2026-06-30
 
 ### Changed

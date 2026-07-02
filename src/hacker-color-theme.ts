@@ -16,55 +16,55 @@ import { defineWorkbenchStyles } from "./workbench-styles.js";
 import type { WorkbenchStyles } from "./workbench-styles.js";
 import { workbenchTextPairs } from "./workbench.js";
 
-const TTY_BACKGROUND_PALETTE = {
-  black: "#020302",
-  editor: "#050805",
-  panel: "#071007",
-  popup: "#0a160a",
-  hover: "#102110",
-  active: "#193119",
-  guide: "#345234",
-  accent: "#3a2c0a",
-  success: "#1d4522",
-  danger: "#4b2019",
-  info: "#173b43",
-  ember: "#3b2b0a",
-  sand: "#34370e",
-  moss: "#1f4d24",
-  sky: "#173b43",
-  mark: "#2c5d31",
-  plum: "#2e263d",
-  clay: "#4b2019",
+const HACKER_BACKGROUND_PALETTE = {
+  black: "#010201",
+  editor: "#040904",
+  panel: "#071207",
+  popup: "#0b190b",
+  hover: "#102610",
+  active: "#183418",
+  guide: "#335133",
+  accent: "#32290f",
+  success: "#1b3f20",
+  danger: "#371817",
+  info: "#183736",
+  ember: "#36260e",
+  sand: "#2c3212",
+  moss: "#1f4a24",
+  sky: "#183736",
+  mark: "#2b5c31",
+  plum: "#202840",
+  clay: "#371817",
 } as const satisfies SourceBackgroundPalette;
 
-const TTY_FONT_PALETTE = {
-  text: "#c8f7b5",
-  muted: "#8fbd8b",
-  faint: "#668a64",
-  ember: "#d4a65f",
-  sand: "#dfd071",
-  moss: "#8ee972",
-  sky: "#7dc8d8",
-  plum: "#b6a1df",
-  clay: "#d77a63",
+const HACKER_FONT_PALETTE = {
+  text: "oklch(84.00% 0.0750 136.00)",
+  muted: "oklch(67.50% 0.0550 136.00)",
+  faint: "oklch(58.00% 0.0450 136.00)",
+  ember: "oklch(78.00% 0.1000 70.00)",
+  sand: "oklch(86.00% 0.0750 110.00)",
+  moss: "oklch(79.00% 0.1150 142.00)",
+  sky: "oklch(74.00% 0.0800 190.00)",
+  plum: "oklch(70.00% 0.0750 270.00)",
+  clay: "oklch(63.00% 0.1200 24.00)",
 } as const satisfies SourceFontPalette;
 
-const TTY_BORDER_PALETTE = {
-  divider: "#102110",
+const HACKER_BORDER_PALETTE = {
+  divider: "#102610",
 } as const satisfies SourceBorderPalette;
 
-assertSingleWordPaletteProperties("background", TTY_BACKGROUND_PALETTE);
-assertSingleWordPaletteProperties("font", TTY_FONT_PALETTE);
-assertSingleWordPaletteProperties("border", TTY_BORDER_PALETTE);
+assertSingleWordPaletteProperties("background", HACKER_BACKGROUND_PALETTE);
+assertSingleWordPaletteProperties("font", HACKER_FONT_PALETTE);
+assertSingleWordPaletteProperties("border", HACKER_BORDER_PALETTE);
 
-const TTY_PALETTE = createPalette(
-  TTY_BACKGROUND_PALETTE,
-  TTY_FONT_PALETTE,
-  TTY_BORDER_PALETTE,
+const HACKER_PALETTE = createPalette(
+  HACKER_BACKGROUND_PALETTE,
+  HACKER_FONT_PALETTE,
+  HACKER_BORDER_PALETTE,
 );
-const TTY_FONT_COLORS = createColorMap(TTY_FONT_PALETTE);
+const HACKER_FONT_COLORS = createColorMap(HACKER_FONT_PALETTE);
 
-const createTtyWorkbenchStyles = (palette: Palette): WorkbenchStyles => {
+const createHackerWorkbenchStyles = (palette: Palette): WorkbenchStyles => {
   const styles = createJackWorkbenchStyles(palette);
   const B = palette.background;
   const F = palette.font;
@@ -109,7 +109,7 @@ const createTtyWorkbenchStyles = (palette: Palette): WorkbenchStyles => {
     },
     accents: {
       ...styles.accents,
-      primary: B.sky,
+      primary: B.moss,
       selection: B.sky,
       success: B.success,
       danger: B.danger,
@@ -186,7 +186,7 @@ const createTtyWorkbenchStyles = (palette: Palette): WorkbenchStyles => {
     editor: {
       ...styles.editor,
       cursorBackground: B.editor,
-      cursorForeground: F.text,
+      cursorForeground: F.moss,
       selection: { background: B.sky, foreground: F.text },
       whitespaceForeground: B.guide,
       indentGuide: B.guide,
@@ -204,16 +204,16 @@ const createTtyWorkbenchStyles = (palette: Palette): WorkbenchStyles => {
   });
 };
 
-const TTY_WORKBENCH_STYLES = createTtyWorkbenchStyles(TTY_PALETTE);
+const HACKER_WORKBENCH_STYLES = createHackerWorkbenchStyles(HACKER_PALETTE);
 
 export const theme = defineTheme({
   order: 15,
-  fileName: "jacks-tty-theme-color-theme.json",
-  name: "Jack's TTY Theme",
+  fileName: "jacks-hacker-theme-color-theme.json",
+  name: "Jack's Hacker Theme",
   type: "dark",
-  palette: TTY_PALETTE,
-  fontPalette: TTY_FONT_COLORS,
-  workbench: TTY_WORKBENCH_STYLES,
+  palette: HACKER_PALETTE,
+  fontPalette: HACKER_FONT_COLORS,
+  workbench: HACKER_WORKBENCH_STYLES,
   integrity: {
     borderPolicy: {
       kind: "transparent",

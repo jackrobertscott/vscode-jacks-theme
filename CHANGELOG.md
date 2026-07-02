@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.6.12 - 2026-07-03
+
+### Changed
+
+- Replaced Jack's TTY Theme with Jack's Hacker Theme, a more retro green-screen palette with near-black phosphor surfaces, mostly green syntax separated by lightness/saturation, transparent borders, and restrained amber/cyan/red utility accents so it feels hacker without becoming too colorful.
+
 ## 0.6.11 - 2026-07-02
 
 ### Changed

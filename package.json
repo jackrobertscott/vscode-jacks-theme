@@ -1,8 +1,8 @@
 {
   "name": "jacks-theme",
   "displayName": "Jack's Theme",
-  "description": "A VS Code theme collection with carbon, TTY, graphite, silver, and draft-inspired editor options.",
-  "version": "0.6.11",
+  "description": "A VS Code theme collection with carbon, hacker, graphite, silver, and draft-inspired editor options.",
+  "version": "0.6.12",
   "publisher": "jackrobertscott",
   "type": "module",
   "license": "MIT",
@@ -13,13 +13,13 @@
     "color-theme",
     "vscode-theme",
     "carbon",
-    "tty",
     "unix",
     "terminal",
     "phosphor",
     "crt",
     "retro",
     "hacker",
+    "monochrome",
     "graphite",
     "draft",
     "light",
@@ -30,7 +30,7 @@
   ],
   "badges": [
     {
-      "url": "https://img.shields.io/badge/version-0.6.11-d8b84d?style=flat-square",
+      "url": "https://img.shields.io/badge/version-0.6.12-d8b84d?style=flat-square",
       "href": "https://marketplace.visualstudio.com/items?itemName=jackrobertscott.jacks-theme",
       "description": "Jack's Theme extension version"
     },
@@ -59,9 +59,9 @@
         "path": "./themes/jacks-carbon-theme-color-theme.json"
       },
       {
-        "label": "Jack's TTY Theme",
+        "label": "Jack's Hacker Theme",
         "uiTheme": "vs-dark",
-        "path": "./themes/jacks-tty-theme-color-theme.json"
+        "path": "./themes/jacks-hacker-theme-color-theme.json"
       },
       {
         "label": "Jack's Graphite Theme",

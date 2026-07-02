@@ -2,6 +2,12 @@
 
 All notable changes to Jack's Theme are tracked here. Version headings match the extension version in `package.json`.
 
+## 0.6.13 - 2026-07-03
+
+### Changed
+
+- Cranked Jack's Hacker Theme into a louder matrix-green look with black terminal surfaces, saturated phosphor UI states, radioactive syntax greens, and sharper amber/cyan/red accents so it reads unmistakably hacker.
+
 ## 0.6.12 - 2026-07-03
 
 ### Changed

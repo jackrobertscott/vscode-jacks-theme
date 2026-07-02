@@ -1,6 +1,6 @@
 # Jack's Theme
 
-[![Version](https://img.shields.io/badge/version-0.6.12-d8b84d?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=jackrobertscott.jacks-theme)
+[![Version](https://img.shields.io/badge/version-0.6.13-d8b84d?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=jackrobertscott.jacks-theme)
 [![VS Code](https://img.shields.io/badge/VS%20Code-%5E1.90.0-67b9ff?style=flat-square)](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#visual-studio-code-compatibility)
 [![License](https://img.shields.io/badge/license-MIT-76c26e?style=flat-square)](https://opensource.org/license/mit)
 
@@ -13,7 +13,7 @@ Source code is available at <https://github.com/jackrobertscott/vscode-jacks-the
 ## Features
 
 - Jack's Carbon Theme uses near-black editor and workbench surfaces with subtle graphite dividers.
-- Jack's Hacker Theme is a super-retro green-screen dark theme: near-black phosphor surfaces, mostly green syntax separated by lightness and saturation, restrained amber/cyan/red utility accents, and no decorative borders, built to pair with blocky or pixelated terminal fonts.
+- Jack's Hacker Theme is a loud green-screen dark theme: black-matrix phosphor surfaces, radioactive neon-green chrome and syntax, electric amber/cyan/red utility accents, and no decorative borders, built to pair with blocky or pixelated terminal fonts.
 - Warm syntax colors for structure, strings, comments, and language symbols.
 - Jack's Graphite Theme uses medium graphite surfaces, softer neutral borders, cool slate selections, and bright pastel syntax so it stays dark without feeling black.
 - Jack's Silver Theme carries the graphite variant into light mode with mid-level silver-grey surfaces, visible neutral borders, dark syntax accents, and cool slate selections.

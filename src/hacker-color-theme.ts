@@ -17,40 +17,40 @@ import type { WorkbenchStyles } from "./workbench-styles.js";
 import { workbenchTextPairs } from "./workbench.js";
 
 const HACKER_BACKGROUND_PALETTE = {
-  black: "#010201",
-  editor: "#040904",
-  panel: "#071207",
-  popup: "#0b190b",
-  hover: "#102610",
-  active: "#183418",
-  guide: "#335133",
-  accent: "#32290f",
-  success: "#1b3f20",
-  danger: "#371817",
-  info: "#183736",
-  ember: "#36260e",
-  sand: "#2c3212",
-  moss: "#1f4a24",
-  sky: "#183736",
-  mark: "#2b5c31",
-  plum: "#202840",
-  clay: "#371817",
+  black: "#000300",
+  editor: "#001000",
+  panel: "#001800",
+  popup: "#002400",
+  hover: "#003600",
+  active: "#005400",
+  guide: "#006b00",
+  accent: "#334600",
+  success: "#006b00",
+  danger: "#3a0000",
+  info: "#004b42",
+  ember: "#463000",
+  sand: "#344a00",
+  moss: "#006b00",
+  sky: "#005850",
+  mark: "#006600",
+  plum: "#250050",
+  clay: "#3a0000",
 } as const satisfies SourceBackgroundPalette;
 
 const HACKER_FONT_PALETTE = {
-  text: "oklch(84.00% 0.0750 136.00)",
-  muted: "oklch(67.50% 0.0550 136.00)",
-  faint: "oklch(58.00% 0.0450 136.00)",
-  ember: "oklch(78.00% 0.1000 70.00)",
-  sand: "oklch(86.00% 0.0750 110.00)",
-  moss: "oklch(79.00% 0.1150 142.00)",
-  sky: "oklch(74.00% 0.0800 190.00)",
-  plum: "oklch(70.00% 0.0750 270.00)",
-  clay: "oklch(63.00% 0.1200 24.00)",
+  text: "#b6ff6a",
+  muted: "#80e888",
+  faint: "#46d331",
+  ember: "#ffba3d",
+  sand: "#d8ff4d",
+  moss: "#00ff66",
+  sky: "#00ffe1",
+  plum: "#c59cff",
+  clay: "#ff5c5c",
 } as const satisfies SourceFontPalette;
 
 const HACKER_BORDER_PALETTE = {
-  divider: "#102610",
+  divider: "#003600",
 } as const satisfies SourceBorderPalette;
 
 assertSingleWordPaletteProperties("background", HACKER_BACKGROUND_PALETTE);
